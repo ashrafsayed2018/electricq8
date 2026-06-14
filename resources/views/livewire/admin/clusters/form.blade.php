@@ -1,0 +1,121 @@
+<div>
+    <div class="flex items-center justify-between mb-6">
+        <h1 class="text-xl font-bold text-white">{{ $cluster ? __('admin.clusters.edit') : __('admin.clusters.add_new') }}</h1>
+        <a href="{{ route('admin.clusters.index') }}" class="text-sm text-gray-400 hover:text-white transition">{{ __('admin.common.back') }}</a>
+    </div>
+
+    <form wire:submit="save" class="space-y-6 max-w-4xl">
+
+        {{-- Pillar + Meta --}}
+        <div class="bg-[#1a1d27] rounded-xl border border-white/10 p-6">
+            <h2 class="text-sm font-semibold text-gray-400 uppercase tracking-widest mb-4">{{ __('admin.clusters.basic_settings') }}</h2>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="col-span-2">
+                    <label class="block text-xs text-gray-500 mb-1">{{ __('admin.clusters.pillar_label') }} {{ __('admin.common.required_mark') }}</label>
+                    <select wire:model="pillar_id"
+                        class="w-full bg-[#0f1117] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-purple-500 transition">
+                        <option value="0">{{ __('admin.clusters.pillar_choose') }}</option>
+                        @foreach($pillars as $pillar)
+                            <option value="{{ $pillar->id }}">{{ $pillar->getTranslation('title', 'ar') }}</option>
+                        @endforeach
+                    </select>
+                    @error('pillar_id') <p class="text-red-400 text-xs mt-1">{{ $message }}</p> @enderror
+                </div>
+
+                <div x-data="{ slug: '{{ $slug_ar }}' }">
+                    <label class="block text-xs text-gray-500 mb-1">{{ __('admin.common.title_ar') }} {{ __('admin.common.required_mark') }}</label>
+                    <input wire:model.blur="title_ar" type="text"
+                        x-on:input="slug = $el.value.replace(/[^؀-ۿ\d\s-]/g,'').trim().replace(/[\s-]+/g,'-')"
+                        class="w-full bg-[#0f1117] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-purple-500 transition">
+                    <p x-show="slug" class="text-xs text-gray-500 mt-1 font-mono" dir="rtl">🔗 <span x-text="slug"></span></p>
+                    @error('title_ar') <p class="text-red-400 text-xs mt-1">{{ $message }}</p> @enderror
+                </div>
+                <div x-data="{ slug: '{{ $slug_en }}' }">
+                    <label class="block text-xs text-gray-500 mb-1">{{ __('admin.common.title_en') }} {{ __('admin.common.required_mark') }}</label>
+                    <input wire:model.blur="title_en" type="text"
+                        x-on:input="slug = $el.value.toLowerCase().replace(/[^a-z0-9\s-]/g,'').trim().replace(/[\s-]+/g,'-')"
+                        class="w-full bg-[#0f1117] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-purple-500 transition">
+                    <p x-show="slug" class="text-xs text-gray-500 mt-1 font-mono" dir="ltr">🔗 <span x-text="slug"></span></p>
+                    @error('title_en') <p class="text-red-400 text-xs mt-1">{{ $message }}</p> @enderror
+                </div>
+
+                <div>
+                    <label class="block text-xs text-gray-500 mb-1">{{ __('admin.common.h1_ar') }}</label>
+                    <input wire:model="h1_ar" type="text"
+                        class="w-full bg-[#0f1117] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-purple-500 transition">
+                </div>
+                <div>
+                    <label class="block text-xs text-gray-500 mb-1">{{ __('admin.common.h1_en') }}</label>
+                    <input wire:model="h1_en" type="text"
+                        class="w-full bg-[#0f1117] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-purple-500 transition">
+                </div>
+            </div>
+        </div>
+
+        {{-- Intro --}}
+        <x-admin.bilingual-editor
+            label="{{ __('admin.common.intro') }}"
+            modelAr="intro_ar"
+            modelEn="intro_en"
+            :valueAr="$intro_ar"
+            :valueEn="$intro_en"
+            :rows="4"
+        />
+
+        {{-- Content --}}
+        <x-admin.bilingual-editor
+            label="{{ __('admin.common.content') }}"
+            modelAr="content_ar"
+            modelEn="content_en"
+            :valueAr="$content_ar"
+            :valueEn="$content_en"
+            :rows="8"
+        />
+
+        {{-- Image --}}
+        @livewire('admin.image-picker', ['field' => 'image_url', 'imageUrl' => $image_url, 'label' => __('admin.common.main_image')])
+
+        {{-- SEO & Publish --}}
+        <div class="bg-[#1a1d27] rounded-xl border border-white/10 p-6">
+            <h2 class="text-sm font-semibold text-gray-400 uppercase tracking-widest mb-4">{{ __('admin.clusters.publish_seo') }}</h2>
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs text-gray-500 mb-1">{{ __('admin.clusters.search_intent') }}</label>
+                    <select wire:model="search_intent"
+                        class="w-full bg-[#0f1117] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-purple-500 transition">
+                        <option value="commercial">commercial</option>
+                        <option value="informational">informational</option>
+                        <option value="transactional">transactional</option>
+                        <option value="navigational">navigational</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs text-gray-500 mb-1">{{ __('admin.common.status') }} {{ __('admin.common.required_mark') }}</label>
+                    <select wire:model="status"
+                        class="w-full bg-[#0f1117] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-purple-500 transition">
+                        <option value="active">{{ __('admin.common.active') }}</option>
+                        <option value="draft">{{ __('admin.common.draft') }}</option>
+                        <option value="archived">{{ __('admin.clusters.archived') }}</option>
+                    </select>
+                    @error('status') <p class="text-red-400 text-xs mt-1">{{ $message }}</p> @enderror
+                </div>
+                <div>
+                    <label class="block text-xs text-gray-500 mb-1">{{ __('admin.common.sort_order') }}</label>
+                    <input wire:model="sort_order" type="number"
+                        class="w-full bg-[#0f1117] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-purple-500 transition">
+                </div>
+            </div>
+        </div>
+
+        <div class="flex gap-3">
+            <button type="submit"
+                class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-lg font-semibold text-sm transition">
+                {{ $cluster ? __('admin.common.save_changes') : __('admin.clusters.save') }}
+            </button>
+            <a href="{{ route('admin.clusters.index') }}"
+               class="bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white px-6 py-2 rounded-lg text-sm transition">
+                {{ __('admin.common.cancel') }}
+            </a>
+        </div>
+    </form>
+</div>

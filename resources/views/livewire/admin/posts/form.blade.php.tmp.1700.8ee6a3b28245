@@ -1,0 +1,144 @@
+<div>
+    <div class="flex items-center justify-between mb-6">
+        <h1 class="text-xl font-bold text-white">{{ $post ? 'تعديل مقال' : 'إضافة مقال جديد' }}</h1>
+        <a href="{{ route('admin.posts.index') }}" class="text-sm text-gray-400 hover:text-white transition">← رجوع</a>
+    </div>
+
+    <form wire:submit="save" class="space-y-6 max-w-4xl">
+
+        {{-- Titles & Slugs --}}
+        <div class="bg-[#1a1d27] rounded-xl border border-white/10 p-6">
+            <h2 class="text-sm font-semibold text-gray-400 uppercase tracking-widest mb-4">العنوان والرابط</h2>
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs text-gray-500 mb-1">العنوان (عربي) *</label>
+                    <input wire:model.live="title_ar" type="text"
+                        class="w-full bg-[#0f1117] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-purple-500 transition">
+                    @if($slug_ar)
+                        <p class="text-xs text-gray-500 mt-1 font-mono" dir="rtl">🔗 {{ $slug_ar }}</p>
+                    @endif
+                    @error('title_ar') <p class="text-red-400 text-xs mt-1">{{ $message }}</p> @enderror
+                </div>
+                <div>
+                    <label class="block text-xs text-gray-500 mb-1">العنوان (إنجليزي) *</label>
+                    <input wire:model.live="title_en" type="text"
+                        class="w-full bg-[#0f1117] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-purple-500 transition">
+                    @if($slug_en)
+                        <p class="text-xs text-gray-500 mt-1 font-mono" dir="ltr">🔗 {{ $slug_en }}</p>
+                    @endif
+                    @error('title_en') <p class="text-red-400 text-xs mt-1">{{ $message }}</p> @enderror
+                </div>
+                <div>
+                    <label class="block text-xs text-gray-500 mb-1">H1 (عربي)</label>
+                    <input wire:model="h1_ar" type="text"
+                        class="w-full bg-[#0f1117] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-purple-500 transition">
+                </div>
+                <div>
+                    <label class="block text-xs text-gray-500 mb-1">H1 (إنجليزي)</label>
+                    <input wire:model="h1_en" type="text"
+                        class="w-full bg-[#0f1117] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-purple-500 transition">
+                </div>
+            </div>
+        </div>
+
+        {{-- Excerpt --}}
+        <x-admin.bilingual-editor
+            label="المقتطف"
+            modelAr="excerpt_ar"
+            modelEn="excerpt_en"
+            :rows="3"
+        />
+
+        {{-- Content --}}
+        <x-admin.bilingual-editor
+            label="المحتوى"
+            modelAr="content_ar"
+            modelEn="content_en"
+            :rows="10"
+        />
+
+        {{-- SEO --}}
+        <div class="bg-[#1a1d27] rounded-xl border border-white/10 p-6">
+            <h2 class="text-sm font-semibold text-gray-400 uppercase tracking-widest mb-4">SEO</h2>
+            <div
+                x-data="{ tab: 'ar' }"
+                class="space-y-4"
+            >
+                <div class="flex justify-end">
+                    <div class="flex bg-[#0f1117] rounded-lg p-0.5 gap-0.5 border border-white/10">
+                        <button type="button" @click="tab = 'ar'"
+                            :class="tab === 'ar' ? 'bg-purple-600 text-white' : 'text-gray-400 hover:text-white'"
+                            class="px-4 py-1.5 rounded-md text-xs font-semibold transition">العربية</button>
+                        <button type="button" @click="tab = 'en'"
+                            :class="tab === 'en' ? 'bg-purple-600 text-white' : 'text-gray-400 hover:text-white'"
+                            class="px-4 py-1.5 rounded-md text-xs font-semibold transition">English</button>
+                    </div>
+                </div>
+                <div x-show="tab === 'ar'" x-cloak class="space-y-4">
+                    <div>
+                        <label class="block text-xs text-gray-500 mb-1">Meta Title (عربي)</label>
+                        <input wire:model="meta_title_ar" type="text" dir="rtl"
+                            class="w-full bg-[#0f1117] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-purple-500 transition">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-gray-500 mb-1">Meta Description (عربي)</label>
+                        <textarea wire:model="meta_desc_ar" rows="2" dir="rtl"
+                            class="w-full bg-[#0f1117] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-purple-500 transition resize-none"></textarea>
+                    </div>
+                </div>
+                <div x-show="tab === 'en'" x-cloak class="space-y-4">
+                    <div>
+                        <label class="block text-xs text-gray-500 mb-1">Meta Title (English)</label>
+                        <input wire:model="meta_title_en" type="text" dir="ltr"
+                            class="w-full bg-[#0f1117] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-purple-500 transition">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-gray-500 mb-1">Meta Description (English)</label>
+                        <textarea wire:model="meta_desc_en" rows="2" dir="ltr"
+                            class="w-full bg-[#0f1117] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-purple-500 transition resize-none"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- Featured image --}}
+        @livewire('admin.image-picker', ['field' => 'featured_image', 'imageUrl' => $featured_image, 'label' => 'الصورة المميزة'])
+
+        {{-- Publish settings --}}
+        <div class="bg-[#1a1d27] rounded-xl border border-white/10 p-6">
+            <h2 class="text-sm font-semibold text-gray-400 uppercase tracking-widest mb-4">النشر</h2>
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs text-gray-500 mb-1">تاريخ النشر</label>
+                    <input wire:model="published_at" type="date"
+                        class="w-full bg-[#0f1117] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-purple-500 transition">
+                </div>
+                <div>
+                    <label class="block text-xs text-gray-500 mb-1">الحالة *</label>
+                    <select wire:model="status"
+                        class="w-full bg-[#0f1117] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-purple-500 transition">
+                        <option value="draft">مسودة</option>
+                        <option value="published">منشور</option>
+                    </select>
+                    @error('status') <p class="text-red-400 text-xs mt-1">{{ $message }}</p> @enderror
+                </div>
+                <div>
+                    <label class="block text-xs text-gray-500 mb-1">الترتيب</label>
+                    <input wire:model="sort_order" type="number"
+                        class="w-full bg-[#0f1117] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-purple-500 transition">
+                </div>
+            </div>
+        </div>
+
+        <div class="flex gap-3">
+            <button type="submit"
+                class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-lg font-semibold text-sm transition">
+                {{ $post ? 'حفظ التعديلات' : 'إضافة المقال' }}
+            </button>
+            <a href="{{ route('admin.posts.index') }}"
+               class="bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white px-6 py-2 rounded-lg text-sm transition">
+                إلغاء
+            </a>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,102 @@
+name: Deploy to Hostinger
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.3"
+
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Copy .env
+        run: cp .env.example .env
+
+      - name: Update Composer Lock
+        run: composer update ashraf/laravel-analytics --no-interaction --no-scripts --no-progress --prefer-dist
+
+      - name: Install Composer Dependencies
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+
+      - name: Install Node Dependencies
+        run: npm install
+
+      - name: Build Assets
+        run: npm run build
+
+      - name: Install SSH Key
+        run: |
+          mkdir -p ~/.ssh/
+          echo "${{ secrets.SSH_KEY }}" | tr -d '\r' > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          printf "Host *\n  StrictHostKeyChecking no\n  UserKnownHostsFile=/dev/null\n" > ~/.ssh/config
+          chmod 600 ~/.ssh/config
+
+      - name: Debug Key Fingerprint
+        run: |
+          echo "=== Fingerprint of key in GitHub Secret ==="
+          ssh-keygen -l -f ~/.ssh/id_rsa
+          echo "=== Expected fingerprint (github_deploy) ==="
+          echo "SHA256:P/aA752F0HfC+q+tKjZawiZnSNrIJciGvb8zMMp8aPU"
+
+      - name: SSH into Server and Update Code
+        run: |
+          ssh -T \
+              -i ~/.ssh/id_rsa \
+              -o StrictHostKeyChecking=no \
+              -o UserKnownHostsFile=/dev/null \
+              -o BatchMode=yes \
+              -o ConnectTimeout=30 \
+              -p ${{ secrets.SSH_PORT }} \
+              ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} 'bash -s' << 'ENDSSH'
+            set -e
+            cd domains/coolq8.net
+            git fetch origin
+            git reset --hard origin/main
+            php artisan optimize:clear
+            php artisan cache:clear
+            php artisan config:clear
+            php artisan route:clear
+            php artisan view:clear
+            php -r 'if (function_exists("opcache_reset")) opcache_reset();'
+          ENDSSH
+
+      - name: Deploy Build Files
+        run: |
+          rsync -az \
+            -e "ssh -p ${{ secrets.SSH_PORT }} -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" \
+            public/build/ \
+            ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}:~/domains/coolq8.net/public/build/ \
+            || echo "No build files to sync"
+
+      - name: Final Server Setup
+        run: |
+          ssh -T \
+              -i ~/.ssh/id_rsa \
+              -o StrictHostKeyChecking=no \
+              -o UserKnownHostsFile=/dev/null \
+              -o BatchMode=yes \
+              -o ConnectTimeout=30 \
+              -p ${{ secrets.SSH_PORT }} \
+              ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} 'bash -s' << 'ENDSSH'
+            set -e
+            cd domains/coolq8.net
+            composer update ashraf/laravel-analytics --no-dev --no-interaction --no-scripts
+            composer install --no-dev --optimize-autoloader --no-interaction
+            chmod -R 775 storage bootstrap/cache
+            php artisan migrate --force --no-interaction || echo "Migration failed or no new migrations"
+            mkdir -p public/build
+            php artisan config:cache
+            php artisan route:cache
+            php artisan view:cache
+            php -r 'if (function_exists("opcache_reset")) opcache_reset();'
+          ENDSSH
