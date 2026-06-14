@@ -379,45 +379,47 @@
 
 
 {{-- ══════════════════════════════════════════════════════════
-     SECTION 5 — Brands We Service
+     SECTION 5 — Property Types We Serve
      ════════════════════════════════════════════════════════ --}}
 <section class="py-16 bg-white" dir="{{ $isAr ? 'rtl' : 'ltr' }}" data-reveal>
     <div class="container mx-auto px-4">
 
-        <div class="text-center mb-10">
-            <h2 class="text-3xl font-extrabold text-gray-900 mb-2">{{ $isAr ? 'الماركات التي نخدمها' : 'Brands We Service' }}</h2>
-            <p class="text-gray-500">{{ $isAr ? 'نصلح جميع أنواع وماركات الكهرباء' : 'We repair all types and brands of air conditioners' }}</p>
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-extrabold text-gray-900 mb-2">{{ $isAr ? 'نخدم جميع أنواع المباني' : 'All Property Types We Cover' }}</h2>
+            <p class="text-gray-500">{{ $isAr ? 'فني كهربائي معتمد لكل أنواع المنازل والمنشآت في الكويت' : 'Certified electrician for all types of homes and properties in Kuwait' }}</p>
         </div>
 
-        <div class="flex flex-wrap justify-center gap-3 max-w-3xl mx-auto mb-10">
-            @php
-            $brands = [
-                ['ar' => 'سامسونج',   'en' => 'Samsung'],
-                ['ar' => 'إل جي',     'en' => 'LG'],
-                ['ar' => 'كاريير',    'en' => 'Carrier'],
-                ['ar' => 'دايكن',     'en' => 'Daikin'],
-                ['ar' => 'ميديا',     'en' => 'Midea'],
-                ['ar' => 'جري',       'en' => 'Gree'],
-                ['ar' => 'توشيبا',    'en' => 'Toshiba'],
-                ['ar' => 'باناسونيك', 'en' => 'Panasonic'],
-                ['ar' => 'شارب',      'en' => 'Sharp'],
-                ['ar' => 'يورك',      'en' => 'York'],
-                ['ar' => 'هيتاشي',    'en' => 'Hitachi'],
-                ['ar' => 'ميتسوبيشي','en' => 'Mitsubishi'],
-                ['ar' => 'تي سي إل',  'en' => 'TCL'],
-                ['ar' => 'هايير',     'en' => 'Haier'],
-            ];
-            $locale = app()->getLocale();
-            @endphp
-            @foreach($brands as $brand)
-            <span class="inline-flex items-center px-5 py-2.5 rounded-full border-2 border-yellow-200 bg-white text-yellow-700 font-semibold text-sm hover:bg-yellow-700 hover:text-white hover:border-yellow-700 transition cursor-default select-none">
-                {{ $brand[$locale] ?? $brand['en'] }}
-            </span>
+        @php
+        $propertyTypes = $isAr ? [
+            ['icon' => '🏠', 'title' => 'المنازل والبيوت',        'desc' => 'تمديدات وصيانة وتصليح شورت للمنازل السكنية'],
+            ['icon' => '🏢', 'title' => 'الشركات والمكاتب',       'desc' => 'حلول كهربائية متكاملة للمنشآت التجارية والإدارية'],
+            ['icon' => '🏭', 'title' => 'المصانع والمستودعات',    'desc' => 'تمديدات ثلاثية الأطوار وصيانة للمنشآت الصناعية'],
+            ['icon' => '🏗️', 'title' => 'المباني قيد الإنشاء',   'desc' => 'تمديدات كهربائية كاملة من الصفر للمشاريع الجديدة'],
+            ['icon' => '🛖', 'title' => 'الفلل والقصور',          'desc' => 'خدمة كهربائية شاملة للفلل الخاصة والمجمعات السكنية'],
+            ['icon' => '🏪', 'title' => 'المحلات التجارية',       'desc' => 'تركيب إضاءة وتمديدات للمحلات والمطاعم والمراكز التجارية'],
+        ] : [
+            ['icon' => '🏠', 'title' => 'Houses & Homes',         'desc' => 'Wiring, maintenance and short circuit repair for residential homes'],
+            ['icon' => '🏢', 'title' => 'Companies & Offices',    'desc' => 'Complete electrical solutions for commercial and administrative buildings'],
+            ['icon' => '🏭', 'title' => 'Factories & Warehouses', 'desc' => 'Three-phase wiring and maintenance for industrial facilities'],
+            ['icon' => '🏗️', 'title' => 'Buildings Under Construction', 'desc' => 'Full electrical installations from scratch for new projects'],
+            ['icon' => '🛖', 'title' => 'Villas & Palaces',       'desc' => 'Comprehensive electrical service for private villas and residential compounds'],
+            ['icon' => '🏪', 'title' => 'Shops & Restaurants',    'desc' => 'Lighting installation and wiring for shops, restaurants and malls'],
+        ];
+        @endphp
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto mb-12">
+            @foreach($propertyTypes as $type)
+            <div class="flex items-start gap-4 bg-yellow-50 border border-yellow-100 rounded-2xl p-6 hover:shadow-md transition">
+                <span class="text-3xl shrink-0 mt-1">{{ $type['icon'] }}</span>
+                <div>
+                    <h3 class="font-bold text-gray-900 mb-1">{{ $type['title'] }}</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">{{ $type['desc'] }}</p>
+                </div>
+            </div>
             @endforeach
         </div>
 
         <div class="text-center">
-            <p class="text-gray-500 mb-4">{{ $isAr ? 'لا تجد ماركتك؟ تواصل معنا وسنساعدك' : "Don't see your brand? Contact us and we'll help you" }}</p>
             <a href="{{ \App\Helpers\WhatsAppHelper::url() }}" target="_blank"
                class="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white font-bold px-7 py-3.5 rounded-xl transition">
                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
