@@ -198,19 +198,19 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             @php
             $services = $isAr ? [
-                ['icon' => '🔧', 'title' => 'تمديدات كهربائية',         'body' => 'تركيب جميع أنواع الكهرباءات السبليت والمركزي والشباك والمخفي للمنازل والمكاتب.'],
-                ['icon' => '🛠️', 'title' => 'إصلاح وصيانة',      'body' => 'تشخيص وإصلاح جميع أعطال الكهرباء: ضعف تبريد، تسريب ماء، أصوات غريبة، توقف عن العمل.'],
-                ['icon' => '🧹', 'title' => 'تصليح كهرباء',        'body' => 'تنظيف شامل للفلاتر والملفات والمصرف مع تعقيم بالمواد الآمنة للحفاظ على جودة الهواء.'],
-                ['icon' => '💨', 'title' => 'تصليح شورت فريون',      'body' => 'فحص مستوى الغاز، اكتشاف التسريبات، وشحن R22 أو R410a أو R32 بالكمية المناسبة.'],
-                ['icon' => '🚨', 'title' => 'خدمة طوارئ 24 ساعة', 'body' => 'فني متاح فورًا في أي وقت من الليل أو النهار، يصلك خلال ساعة واحدة في جميع مناطق الكويت.'],
-                ['icon' => '🏢', 'title' => 'صيانة تجارية',       'body' => 'عقود صيانة دورية للمجمعات التجارية والمكاتب والمستودعات بأسعار مخصصة وجداول منتظمة.'],
+                ['icon' => '🔧', 'title' => 'تمديدات كهربائية',      'body' => 'تمديد الأسلاك والكابلات الكهربائية للمنازل والفلل والمكاتب بمعايير السلامة الكاملة.'],
+                ['icon' => '🛠️', 'title' => 'صيانة وإصلاح',         'body' => 'تشخيص وإصلاح جميع أعطال الكهرباء: انقطاع التيار، ضعف الجهد، أعطال القواطع، والأسلاك المحترقة.'],
+                ['icon' => '⚡',  'title' => 'تصليح شورت الكهرباء',  'body' => 'كشف وإصلاح الأعطال الكهربائية والقصر في الدوائر بأدوات تشخيص متطورة وبأمان تام.'],
+                ['icon' => '💡', 'title' => 'تركيب إضاءة وسبوت لايت','body' => 'تركيب جميع أنواع الإضاءة: سبوت لايت، إضاءة LED، لمبات سقف، وإضاءة خارجية للمنازل والمحلات.'],
+                ['icon' => '🚨', 'title' => 'خدمة طوارئ 24 ساعة',   'body' => 'فني كهربائي متاح فورًا في أي وقت من الليل أو النهار، يصلك خلال ساعة في جميع مناطق الكويت.'],
+                ['icon' => '🏢', 'title' => 'تركيب لوحات كهربائية',  'body' => 'تركيب وتوسعة وصيانة لوحات التوزيع الكهربائية للمنازل والمباني التجارية والصناعية.'],
             ] : [
-                ['icon' => '🔧', 'title' => 'Electrical Installation',      'body' => 'Installation of all AC types: split, central, window and concealed units for homes and offices.'],
-                ['icon' => '🛠️', 'title' => 'Repair & Maintenance', 'body' => 'Diagnosis and repair of all AC faults: weak electrical, water leaks, strange noises, unit not starting.'],
-                ['icon' => '🧹', 'title' => 'AC Cleaning',           'body' => 'Full filter, coil and drain cleaning with safe sanitisation to maintain healthy indoor air quality.'],
-                ['icon' => '💨', 'title' => 'Gas Refill',            'body' => 'Gas level check, leak detection, and charging R22, R410a or R32 to the correct specification.'],
-                ['icon' => '🚨', 'title' => '24-Hour Emergency',     'body' => 'A technician available instantly at any hour, reaching you within one hour across all Kuwait areas.'],
-                ['icon' => '🏢', 'title' => 'Commercial Maintenance','body' => 'Regular maintenance contracts for commercial complexes, offices and warehouses at tailored rates.'],
+                ['icon' => '🔧', 'title' => 'Electrical Wiring',          'body' => 'Wiring and cabling for homes, villas and offices to full safety standards.'],
+                ['icon' => '🛠️', 'title' => 'Repair & Maintenance',       'body' => 'Diagnosis and repair of all electrical faults: power cuts, low voltage, tripped breakers and burnt wiring.'],
+                ['icon' => '⚡',  'title' => 'Short Circuit Repair',       'body' => 'Detection and repair of electrical faults and short circuits using advanced diagnostic tools, safely.'],
+                ['icon' => '💡', 'title' => 'Lighting & Spotlight',        'body' => 'Installation of all lighting types: spotlights, LED strips, ceiling lights, and outdoor lighting for homes and shops.'],
+                ['icon' => '🚨', 'title' => '24-Hour Emergency',           'body' => 'An electrician available instantly at any hour, reaching you within one hour across all Kuwait areas.'],
+                ['icon' => '🏢', 'title' => 'Electrical Panel Installation','body' => 'Installation, expansion and maintenance of electrical distribution panels for homes and commercial buildings.'],
             ];
             @endphp
             @foreach($services as $svc)
@@ -225,68 +225,29 @@
 </section>
 
 {{-- ══════════════════════════════════════════════
-     AC TYPES WE SERVICE
+     PROPERTY TYPES WE SERVE
 ════════════════════════════════════════════════ --}}
 <section class="py-14 bg-gray-50">
     <div class="container mx-auto px-4 max-w-4xl">
 
-        <h2 class="text-2xl font-extrabold text-gray-900 mb-10 text-center">
-            {{ $isAr ? 'أنواع الأجهزة التي نخدمها' : 'AC Types We Service' }}
+        <h2 class="text-2xl font-extrabold text-gray-900 mb-3 text-center">
+            {{ $isAr ? 'نخدم جميع أنواع المباني' : 'All Property Types We Cover' }}
         </h2>
+        <p class="text-gray-500 text-center mb-10">
+            {{ $isAr ? 'فني كهربائي معتمد لكل أنواع المنازل والمنشآت في الكويت' : 'Certified electrician for all types of homes and properties in Kuwait' }}
+        </p>
 
-        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 text-center">
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 text-center">
             @php
-            $types = $isAr
-                ? [['🌬️','سبليت'],['❄️','مركزي'],['🪟','شباك'],['🏠','مخفي في السقف'],['🏭','وحدات تجارية']]
-                : [['🌬️','Split'],['❄️','Central'],['🪟','Window'],['🏠','Concealed / Cassette'],['🏭','Commercial Units']];
+            $ptypes = $isAr
+                ? [['🏠','المنازل والبيوت'],['🏢','الشركات والمكاتب'],['🏭','المصانع والمستودعات'],['🏗️','المباني قيد الإنشاء'],['🛖','الفلل والقصور'],['🏪','المحلات التجارية']]
+                : [['🏠','Houses & Homes'],['🏢','Companies & Offices'],['🏭','Factories & Warehouses'],['🏗️','Buildings Under Construction'],['🛖','Villas & Palaces'],['🏪','Shops & Restaurants']];
             @endphp
-            @foreach($types as [$icon, $label])
-            <div class="bg-white rounded-xl border border-gray-200 p-5 hover:border-yellow-300 hover:shadow-sm transition">
+            @foreach($ptypes as [$icon, $label])
+            <div class="bg-white rounded-xl border border-yellow-100 p-5 hover:border-yellow-300 hover:shadow-sm transition">
                 <span class="text-3xl block mb-2" aria-hidden="true">{{ $icon }}</span>
                 <span class="text-sm font-semibold text-gray-700">{{ $label }}</span>
             </div>
-            @endforeach
-        </div>
-    </div>
-</section>
-
-{{-- ══════════════════════════════════════════════
-     BRANDS
-════════════════════════════════════════════════ --}}
-<section class="py-14 bg-white">
-    <div class="container mx-auto px-4 max-w-4xl">
-
-        <h2 class="text-2xl font-extrabold text-gray-900 mb-3 text-center">
-            {{ $isAr ? 'الماركات التي نخدمها' : 'Brands We Service' }}
-        </h2>
-        <p class="text-gray-500 text-center mb-8">
-            {{ $isAr ? 'نصلح جميع الماركات العالمية المتوفرة في الكويت' : 'We repair all international brands available in Kuwait' }}
-        </p>
-
-        <div class="flex flex-wrap justify-center gap-3">
-            @php
-            $brands = [
-                ['ar' => 'سامسونج',    'en' => 'Samsung'],
-                ['ar' => 'إل جي',      'en' => 'LG'],
-                ['ar' => 'كاريير',     'en' => 'Carrier'],
-                ['ar' => 'دايكن',      'en' => 'Daikin'],
-                ['ar' => 'ميديا',      'en' => 'Midea'],
-                ['ar' => 'جري',        'en' => 'Gree'],
-                ['ar' => 'توشيبا',     'en' => 'Toshiba'],
-                ['ar' => 'باناسونيك',  'en' => 'Panasonic'],
-                ['ar' => 'شارب',       'en' => 'Sharp'],
-                ['ar' => 'يورك',       'en' => 'York'],
-                ['ar' => 'هيتاشي',     'en' => 'Hitachi'],
-                ['ar' => 'ميتسوبيشي', 'en' => 'Mitsubishi'],
-                ['ar' => 'جنرال',      'en' => 'General'],
-                ['ar' => 'تي سي إل',   'en' => 'TCL'],
-                ['ar' => 'هايير',      'en' => 'Haier'],
-            ];
-            @endphp
-            @foreach($brands as $brand)
-            <span class="inline-flex items-center px-5 py-2.5 rounded-full border-2 border-yellow-200 bg-white text-yellow-700 font-semibold text-sm hover:bg-yellow-700 hover:text-white hover:border-yellow-700 transition cursor-default select-none">
-                {{ $brand[$locale] ?? $brand['en'] }}
-            </span>
             @endforeach
         </div>
     </div>
