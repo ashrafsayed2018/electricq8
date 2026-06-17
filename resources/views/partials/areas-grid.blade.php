@@ -9,8 +9,8 @@ $governorates = [
         'aria_ar' => 'صيانة كهرباءات محافظة العاصمة الكويت',
         'aria_en' => 'Electrical Repair Capital Governorate Kuwait',
         'areas'   => [
-            'ar' => ['مدينة الكويت','شرق','الصالحية','القبلة','السالم','الدسمة','الروضة','الخالدية','كيفان','النزهة','الفيحاء','الشامية'],
-            'en' => ['Kuwait City','Sharq','Salhiya','Qibla','Salem','Dasman','Rawda','Khaldiya','Kaifan','Nuzha','Faiha','Shamiya'],
+            'ar' => ['مدينة الكويت','دسمان','الشرق','الصوابر','خيطان','قرطبة','غرناطة','شمال غرب الصليبيخات','المرقاب','القبلة','الصالحية','الوطية','السرة','بنيد القار','كيفان','الدوحة','الدسمة','الدعية','اليرموك','الصليبيخات','الروضة','النزهة','الفيحاء','الشامية','الشويخ','النهضة','ضاحية عبدالله السالم','العديلية','الخالدية','القادسية','الري','القيروان','مدينة جابر الأحمد'],
+            'en' => ['Kuwait City','Dasman','Sharq','Sawaber','Khaitan','Qurtuba','Granada','North West Sulaibikhat','Mirqab','Qibla','Salhiya','Watiya','Surra','Bneid Al-Qar','Kaifan','Doha','Dasma','Daiya','Yarmouk','Sulaibikhat','Rawda','Nuzha','Faiha','Shamiya','Shuwaikh','Nahda','Abdullah Al-Salem','Adailiya','Khalidiya','Qadsiya','Rai','Qairawan','Jaber Al-Ahmad City'],
         ],
     ],
     [
@@ -20,8 +20,8 @@ $governorates = [
         'aria_ar' => 'صيانة كهرباءات محافظة حولي الكويت',
         'aria_en' => 'Electrical Repair Hawalli Governorate Kuwait',
         'areas'   => [
-            'ar' => ['حولي','السالمية','الجابرية','الرميثية','بيان','مشرف','البدع','سلوى','الرقعي','الشعب'],
-            'en' => ['Hawalli','Salmiya','Jabriya','Rumaithiya','Bayan','Mishref','Bida','Salwa','Ruqai','Shaab'],
+            'ar' => ['حولي','مشرف','سلوى','ضاحية مبارك العبدالله الجابر','الشعب','بيان','جنوب السرة','السالمية','البدع','حطين','السلام','الجابرية','الرميثية','النقرة','الزهراء','ميدان حولي','الصديق','الشهداء'],
+            'en' => ['Hawalli','Mishrif','Salwa','Mubarak Al-Abdullah Al-Jaber','Shaab','Bayan','South Surra','Salmiya','Bidaa','Hittin','Salam','Jabriya','Rumaithiya','Nuqra','Zahraa','Hawalli Maidan','Siddiq','Shuhada'],
         ],
     ],
     [
@@ -31,8 +31,8 @@ $governorates = [
         'aria_ar' => 'صيانة كهرباءات محافظة الفروانية الكويت',
         'aria_en' => 'Electrical Repair Farwaniya Governorate Kuwait',
         'areas'   => [
-            'ar' => ['الفروانية','خيطان','العارضية','الرابية','أبو فطيرة','الرحاب','جليب الشيوخ','الضجيج'],
-            'en' => ['Farwaniya','Khaitan','Ardiya','Rabiya','Abu Ftaira','Rehab','Jleeb Al-Shuyoukh','Dajeej'],
+            'ar' => ['أبرق خيطان','خيطان الجديدة','العباسية','الرابية','ضاحية عبدالله المبارك','الأندلس','العمرية','الفردوس','الرحاب','أشبيلية','العارضية','الفروانية','الرقعي','غرب عبدالله المبارك','خيطان','العارضية مخازن','الشدادية','ضاحية صباح الناصر','الصبيح','جليب الشيوخ','العارضية الصناعية','الحساوي','الري الصناعية'],
+            'en' => ['Abraq Khaitan','New Khaitan','Abbasiya','Rabiya','Abdullah Al-Mubarak','Andalus','Omariya','Firdous','Rehab','Ishbiliya','Ardiya','Farwaniya','Rigai','West Abdullah Al-Mubarak','Khaitan Farwaniya','Ardiya Stores','Shadadiya','Sabah Al-Naser','Subaiha','Jleeb Al-Shuyoukh','Ardiya Industrial','Hassawi','Rai Industrial'],
         ],
     ],
     [
@@ -42,8 +42,8 @@ $governorates = [
         'aria_ar' => 'صيانة كهرباءات محافظة الجهراء الكويت',
         'aria_en' => 'Electrical Repair Jahra Governorate Kuwait',
         'areas'   => [
-            'ar' => ['الجهراء','العيون','الواحة','النعيم','القصر','تيماء','الوهاب','الصليبيخات'],
-            'en' => ['Jahra','Uyoun','Waha','Naeem','Qasr','Tayma','Wahab','Sulaibikhat'],
+            'ar' => ['الصليبية','تيماء','الجهراء القديمة','كبد','أمغرة','النسيم','الجهراء الجديدة','الروضتين','الصليبية الصناعية','النعيم','العيون','مدينة سعد العبدالله','الصبية','القصر','القصرية','السالمي','جنوب الجهراء','الصليبية الزراعية','الواحة','العبدلي','المطلاع','الجهراء الصناعية'],
+            'en' => ['Sulaibiya','Tayma','Old Jahra','Kabd','Amghara','Naseem','New Jahra','Raudhatain','Sulaibiya Industrial','Naeem','Uyoun','Saad Al-Abdullah City','Subbiya','Qasr','Qasriya','Salmi','South Jahra','Sulaibiya Agricultural','Waha','Abdali','Mutlaa','Jahra Industrial'],
         ],
     ],
     [
@@ -53,8 +53,8 @@ $governorates = [
         'aria_ar' => 'صيانة كهرباءات محافظة مبارك الكبير الكويت',
         'aria_en' => 'Electrical Repair Mubarak Al-Kabeer Governorate Kuwait',
         'areas'   => [
-            'ar' => ['مبارك الكبير','صباح السالم','أبو حليفة','العقيلة','المسيلة','صبحان','القصور','الفنيطيس'],
-            'en' => ['Mubarak Al-Kabeer','Sabah Al-Salem','Abu Halifa','Aqeela','Mesila','Subhan','Qusor','Fintas'],
+            'ar' => ['العدان','أبو فطيرة','القصور','صبحان','القرين','الفنيطيس','ضاحية صباح السالم','المسيلة','ضاحية مبارك الكبير','أبو الحصاني'],
+            'en' => ['Adan','Abu Ftaira','Qusour','Sabhan','Qurain','Funaitees','Sabah Al-Salem','Masayel','Mubarak Al-Kabeer','Abu Al-Hasaniya'],
         ],
     ],
     [
@@ -64,8 +64,8 @@ $governorates = [
         'aria_ar' => 'صيانة كهرباءات محافظة الأحمدي الكويت',
         'aria_en' => 'Electrical Repair Ahmadi Governorate Kuwait',
         'areas'   => [
-            'ar' => ['الأحمدي','الفحيحيل','المنقف','الرقة','أبو حليفة','الظهر','هدية','الزور','الوفرة','الخيران'],
-            'en' => ['Ahmadi','Fahaheel','Mangaf','Ruqa','Abu Halifa','Dhaher','Hadiya','Zour','Wafra','Khiran'],
+            'ar' => ['الفنطاس','الرقة','المهبولة','ضاحية جابر العلي','ميناء عبدالله','العقيلة','هدية','الأحمدي','الوفرة الزراعية','ضاحية فهد الأحمد','شرق الأحمدي','الفحيحيل','المنقف','الخيران','الصناعية','مدينة صباح الأحمد','مدينة الخيران','الظهر','أبو حليفة','الوفرة','بنيدر','الشعيبة','وارة','ميناء الأحمدي','الزور','الجليعة','ضاحية علي صباح السالم - أم الهيمان','النويصيب','مدينة صباح الأحمد البحرية'],
+            'en' => ['Fintas','Ruqa','Mahboula','Jaber Al-Ali','Abdullah Port','Aqaila','Hadiya','Ahmadi','Wafra Agricultural','Fahad Al-Ahmad','East Ahmadi','Fahaheel','Mangaf','Khairan','Industrial Ahmadi','Sabah Al-Ahmad City','Khairan City','Dhaher','Abu Halifa','Wafra','Bnaider','Shuaiba','Wara','Ahmadi Port','Zour','Julaiaa','Ali Sabah Al-Salem - Um Al-Hayman','Nuwaiseeb','Sabah Al-Ahmad Marine City'],
         ],
     ],
 ];
