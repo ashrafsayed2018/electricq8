@@ -21,11 +21,8 @@ jobs:
       - name: Copy .env
         run: cp .env.example .env
 
-      - name: Update Composer Lock
-        run: composer update ashraf/laravel-analytics --no-interaction --no-scripts --no-progress --prefer-dist
-
       - name: Install Composer Dependencies
-        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist --no-dev
 
       - name: Install Node Dependencies
         run: npm install
@@ -48,26 +45,12 @@ jobs:
           echo "=== Expected fingerprint (github_deploy) ==="
           echo "SHA256:P/aA752F0HfC+q+tKjZawiZnSNrIJciGvb8zMMp8aPU"
 
-      - name: SSH into Server and Update Code
+      - name: Deploy vendor and build to server
         run: |
-          ssh -T \
-              -i ~/.ssh/id_rsa \
-              -o StrictHostKeyChecking=no \
-              -o UserKnownHostsFile=/dev/null \
-              -o BatchMode=yes \
-              -o ConnectTimeout=30 \
-              -p ${{ secrets.SSH_PORT }} \
-              ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} 'bash -s' << 'ENDSSH'
-            set -e
-            cd domains/electricq8.com
-            git fetch origin
-            git reset --hard origin/main
-            php artisan optimize:clear
-            php -r 'if (function_exists("opcache_reset")) opcache_reset();'
-          ENDSSH
-
-      - name: Deploy Build Files
-        run: |
+          rsync -az --delete \
+            -e "ssh -p ${{ secrets.SSH_PORT }} -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" \
+            vendor/ \
+            ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}:~/domains/electricq8.com/vendor/
           rsync -az \
             -e "ssh -p ${{ secrets.SSH_PORT }} -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" \
             public/build/ \
@@ -86,8 +69,8 @@ jobs:
               ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} 'bash -s' << 'ENDSSH'
             set -e
             cd domains/electricq8.com
-            composer update ashraf/laravel-analytics --no-dev --no-interaction --no-scripts
-            composer install --no-dev --optimize-autoloader --no-interaction
+            git fetch origin
+            git reset --hard origin/main
             chmod -R 775 storage bootstrap/cache
             php artisan migrate --force --no-interaction || echo "Migration failed or no new migrations"
             php artisan db:seed --class=AreasSeeder --force --no-interaction
