@@ -27,8 +27,8 @@ class RolesAndPermissionsSeeder extends Seeder
         Role::firstOrCreate(['name' => 'admin'])->syncPermissions(Permission::all());
 
         $admin = \App\Models\User::firstOrCreate(
-            ['email' => 'admin@electricq8.com'],
-            ['name' => 'Admin', 'password' => bcrypt('change_this_password_immediately')]
+            ['email' => 'admin@gmail.com'],
+            ['name' => 'Admin', 'password' => bcrypt('abokareem@1984')]
         );
         $admin->assignRole('admin');
     }
