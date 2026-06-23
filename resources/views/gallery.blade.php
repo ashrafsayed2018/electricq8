@@ -159,7 +159,7 @@
 /* ── Modal ──────────────────────────────────────────────────────── */
 .gal-modal { position:fixed; inset:0; z-index:9999; display:flex; align-items:center; justify-content:center; padding:16px; font-family:'Cairo',sans-serif; }
 .gal-modal__backdrop { position:absolute; inset:0; background:rgba(0,0,0,.88); cursor:pointer; }
-.gal-modal__box { position:relative; background:transparent; border-radius:16px; overflow:hidden; max-width:min(520px,92vw); display:flex; flex-direction:column; box-shadow:0 24px 80px rgba(0,0,0,.7); animation:galModalIn .25s ease; }
+.gal-modal__box { position:relative; background:#1a3a2a; border-radius:16px; overflow:hidden; max-width:min(520px,92vw); display:flex; flex-direction:column; box-shadow:0 24px 80px rgba(0,0,0,.7); animation:galModalIn .25s ease; }
 @keyframes galModalIn { from{opacity:0;transform:scale(.93)} to{opacity:1;transform:scale(1)} }
 .gal-modal__header { display:flex; align-items:center; justify-content:space-between; padding:12px 14px; background:rgba(0,0,0,.6); flex-shrink:0; gap:10px; }
 .gal-modal__title { font-size:14px; font-weight:700; color:#f9fafb; min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; direction:rtl; text-align:right; flex:1; }
