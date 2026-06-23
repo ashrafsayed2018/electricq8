@@ -117,10 +117,8 @@
 @media (max-width:560px)  { .gal-grid { grid-template-columns:1fr; } }
 
 /* ── Card ───────────────────────────────────────────────────────── */
-.gal-card { background:#fff; border-radius:16px; box-shadow:0 1px 4px rgba(0,0,0,.07),0 4px 16px rgba(0,0,0,.05); overflow:hidden; opacity:0; transform:translateY(18px); transition:opacity .4s ease,transform .4s ease,box-shadow .25s ease; display:flex; flex-direction:column; }
-.gal-card.revealed { opacity:1; transform:translateY(0); }
-.gal-card:hover { box-shadow:0 8px 32px rgba(22,163,74,.14); }
-.gal-card.revealed:hover { transform:translateY(-4px); }
+.gal-card { background:#fff; border-radius:16px; box-shadow:0 1px 4px rgba(0,0,0,.07),0 4px 16px rgba(0,0,0,.05); overflow:hidden; transition:box-shadow .25s ease,transform .25s ease; display:flex; flex-direction:column; }
+.gal-card:hover { box-shadow:0 8px 32px rgba(22,163,74,.14); transform:translateY(-4px); }
 
 /* ── Card image ─────────────────────────────────────────────────── */
 .gal-card__img-wrap { position:relative; width:100%; aspect-ratio:16/10; overflow:hidden; background:#f1f5f9; }
@@ -172,21 +170,21 @@
 </style>
 
 <script>
-/* ── Reveal on scroll ─────────────────────────────────────────── */
+/* ── Reveal cards ─────────────────────────────────────────────── */
 function galReveal() {
-    var cards = document.querySelectorAll('[data-reveal]:not(.revealed)');
-    if (!cards.length) return;
-    if (!window.IntersectionObserver) { cards.forEach(function(c){c.classList.add('revealed');}); return; }
-    var io = new IntersectionObserver(function(entries){
-        entries.forEach(function(e){ if(e.isIntersecting){e.target.classList.add('revealed');io.unobserve(e.target);} });
-    },{threshold:0.05});
-    cards.forEach(function(c){io.observe(c);});
+    document.querySelectorAll('[data-reveal]').forEach(function(c) {
+        c.classList.add('revealed');
+    });
 }
 galReveal();
 
-/* Re-run reveal after every Livewire update */
-document.addEventListener('livewire:navigated', galReveal);
-document.addEventListener('livewire:updated', galReveal);
+/* Re-run after every Livewire network round-trip */
+document.addEventListener('livewire:request', function() {
+    /* nothing — wait for response */
+});
+document.addEventListener('livewire:commit', galReveal);
+/* Fallback for older Livewire 3 builds */
+window.addEventListener('livewire:update', galReveal);
 
 /* ── Copy URL ─────────────────────────────────────────────────── */
 document.addEventListener('click', function(e) {

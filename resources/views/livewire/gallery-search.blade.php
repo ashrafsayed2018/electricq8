@@ -64,7 +64,7 @@
                 $url     = $image->url;
                 $fullUrl = request()->getSchemeAndHttpHost() . $url;
             @endphp
-            <div class="gal-card" data-reveal style="transition-delay:{{ ($idx % 3) * 70 }}ms">
+            <div class="gal-card">
 
                 {{-- Image --}}
                 <div class="gal-card__img-wrap" data-modal-open data-modal-src="{{ $url }}" data-modal-alt="{{ $alt }}" data-modal-title="{{ $name }}" style="cursor:pointer">
