@@ -63,10 +63,6 @@ jobs:
             git fetch origin
             git reset --hard origin/main
             php artisan optimize:clear
-            php artisan cache:clear
-            php artisan config:clear
-            php artisan route:clear
-            php artisan view:clear
             php -r 'if (function_exists("opcache_reset")) opcache_reset();'
           ENDSSH
 
@@ -94,7 +90,10 @@ jobs:
             composer install --no-dev --optimize-autoloader --no-interaction
             chmod -R 775 storage bootstrap/cache
             php artisan migrate --force --no-interaction || echo "Migration failed or no new migrations"
+            php artisan db:seed --class=AreasSeeder --force --no-interaction
             mkdir -p public/build
+            php artisan optimize:clear
+            php artisan livewire:discover
             php artisan config:cache
             php artisan route:cache
             php artisan view:cache
