@@ -104,6 +104,7 @@ Route::prefix('admin')->middleware(['locale', 'auth', 'role:admin|writer'])->gro
     Route::get('/posts',                        \App\Livewire\Admin\Posts\Index::class)->name('admin.posts.index')->middleware('role_or_permission:admin|posts.index');
     Route::get('/posts/create',                 \App\Livewire\Admin\Posts\Form::class)->name('admin.posts.create')->middleware('role_or_permission:admin|posts.create');
     Route::get('/posts/{post:id}/edit',         \App\Livewire\Admin\Posts\Form::class)->name('admin.posts.edit')->middleware('role_or_permission:admin|posts.edit');
+    Route::get('/tags',                         \App\Livewire\Admin\Tags\Index::class)->name('admin.tags.index');
 
     // Admin-only sections
     Route::middleware('role:admin')->group(function () {

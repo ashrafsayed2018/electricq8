@@ -20,6 +20,7 @@ return [
         'gallery'     => 'Gallery',
         'testimonials'=> 'Testimonials',
         'posts'       => 'Posts',
+        'tags'        => 'Tags',
         'analytics'   => 'Analytics',
         'users'       => 'Users',
         'roles'       => 'Roles',
@@ -125,6 +126,23 @@ return [
         'tags'            => 'Tags',
         'tags_hint'       => 'Or type new tags separated by commas',
         'tags_placeholder'=> 'e.g. electrical, maintenance, kuwait',
+    ],
+
+    // ─── Tags ──────────────────────────────────────────────────────────────
+    'tags' => [
+        'title'          => 'Tags',
+        'subtitle'       => 'Manage post tags',
+        'add'            => '+ Add Tag',
+        'add_new'        => 'Add New Tag',
+        'add_first'      => '+ Add your first tag',
+        'edit'           => 'Edit Tag',
+        'save'           => 'Save Tag',
+        'save_changes'   => 'Save Changes',
+        'search'         => 'Search tags...',
+        'posts_count'    => 'Posts',
+        'confirm_delete' => 'Are you sure you want to delete this tag?',
+        'empty'          => 'No tags yet.',
+        'no_results'     => 'No matching tags found.',
     ],
 
     // ─── Users ─────────────────────────────────────────────────────────────
