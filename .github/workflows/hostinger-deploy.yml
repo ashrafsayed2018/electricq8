@@ -74,6 +74,8 @@ jobs:
             chmod -R 775 storage bootstrap/cache
             php artisan migrate --force --no-interaction || echo "Migration failed or no new migrations"
             php artisan db:seed --class=AreasSeeder --force --no-interaction
+            php artisan db:seed --class=RolesAndPermissionsSeeder --force --no-interaction
+            php artisan permission:cache-reset
             mkdir -p public/build
             php artisan optimize:clear
             php artisan config:cache
