@@ -158,15 +158,15 @@
 
 /* ── Modal ──────────────────────────────────────────────────────── */
 .gal-modal { position:fixed; inset:0; z-index:9999; display:flex; align-items:center; justify-content:center; padding:16px; font-family:'Cairo',sans-serif; }
-.gal-modal__backdrop { position:absolute; inset:0; background:rgba(0,0,0,.85); cursor:pointer; }
-.gal-modal__box { position:relative; background:#1a1a2e; border-radius:16px; overflow:hidden; max-width:90vw; max-height:90vh; display:flex; flex-direction:column; box-shadow:0 24px 80px rgba(0,0,0,.6); animation:galModalIn .25s ease; }
+.gal-modal__backdrop { position:absolute; inset:0; background:rgba(0,0,0,.88); cursor:pointer; }
+.gal-modal__box { position:relative; background:#111; border-radius:16px; overflow:hidden; max-width:min(520px,92vw); display:flex; flex-direction:column; box-shadow:0 24px 80px rgba(0,0,0,.7); animation:galModalIn .25s ease; }
 @keyframes galModalIn { from{opacity:0;transform:scale(.93)} to{opacity:1;transform:scale(1)} }
-.gal-modal__header { display:flex; align-items:center; justify-content:space-between; padding:14px 18px; background:rgba(255,255,255,.05); border-bottom:1px solid rgba(255,255,255,.08); flex-shrink:0; }
-.gal-modal__title { font-size:14px; font-weight:700; color:#f9fafb; max-width:calc(90vw - 80px); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-.gal-modal__close { display:flex; align-items:center; justify-content:center; width:36px; height:36px; border:none; background:rgba(255,255,255,.1); border-radius:8px; color:#f9fafb; cursor:pointer; flex-shrink:0; transition:background .18s; }
-.gal-modal__close:hover { background:rgba(239,68,68,.7); }
-.gal-modal__img-wrap { overflow:auto; display:flex; align-items:center; justify-content:center; max-height:calc(90vh - 65px); padding:12px; }
-.gal-modal__img { max-width:100%; max-height:calc(90vh - 90px); object-fit:contain; border-radius:8px; display:block; }
+.gal-modal__header { display:flex; align-items:center; justify-content:space-between; padding:12px 14px; background:rgba(0,0,0,.6); flex-shrink:0; gap:10px; }
+.gal-modal__title { font-size:14px; font-weight:700; color:#f9fafb; min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; direction:rtl; text-align:right; flex:1; }
+.gal-modal__close { display:flex; align-items:center; justify-content:center; width:34px; height:34px; border:none; background:rgba(255,255,255,.15); border-radius:8px; color:#f9fafb; cursor:pointer; flex-shrink:0; transition:background .18s; }
+.gal-modal__close:hover { background:rgba(239,68,68,.8); }
+.gal-modal__img-wrap { display:flex; align-items:center; justify-content:center; }
+.gal-modal__img { width:100%; height:auto; display:block; max-height:80vh; object-fit:contain; }
 </style>
 
 <script>
