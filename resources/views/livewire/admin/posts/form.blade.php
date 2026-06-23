@@ -105,6 +105,37 @@
             </div>
         </div>
 
+        {{-- Tags --}}
+        <div class="bg-[#1a1d27] rounded-xl border border-white/10 p-6">
+            <h2 class="text-sm font-semibold text-gray-400 uppercase tracking-widest mb-4">{{ __('admin.posts.tags') }}</h2>
+
+            {{-- Existing tags as clickable chips --}}
+            @if($allTags->isNotEmpty())
+            <div class="flex flex-wrap gap-2 mb-3">
+                @foreach($allTags as $tag)
+                @php
+                    $tagName = $tag->getTranslation('name', app()->getLocale()) ?: $tag->getTranslation('name', 'ar');
+                    $active  = collect(array_map('trim', explode(',', $tags_input)))->filter()->contains($tagName);
+                @endphp
+                <button type="button"
+                    wire:click="toggleTag('{{ $tagName }}')"
+                    class="px-3 py-1 rounded-full text-xs font-medium border transition
+                        {{ $active ? 'bg-purple-600 border-purple-600 text-white' : 'bg-white/5 border-white/10 text-gray-400 hover:border-purple-500 hover:text-white' }}">
+                    {{ $tagName }}
+                </button>
+                @endforeach
+            </div>
+            @endif
+
+            {{-- Free-type input --}}
+            <div>
+                <label class="block text-xs text-gray-500 mb-1">{{ __('admin.posts.tags_hint') }}</label>
+                <input wire:model="tags_input" type="text"
+                    placeholder="{{ __('admin.posts.tags_placeholder') }}"
+                    class="w-full bg-[#0f1117] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-purple-500 transition">
+            </div>
+        </div>
+
         {{-- Featured image --}}
         @livewire('admin.image-picker', ['field' => 'featured_image', 'imageUrl' => $featured_image, 'label' => __('admin.posts.featured_image')])
 

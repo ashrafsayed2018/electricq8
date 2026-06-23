@@ -122,6 +122,9 @@ return [
         'meta_desc_ar'    => 'Meta Description (عربي)',
         'meta_title_en'   => 'Meta Title (English)',
         'meta_desc_en'    => 'Meta Description (English)',
+        'tags'            => 'الوسوم',
+        'tags_hint'       => 'أو اكتب وسوماً جديدة مفصولة بفاصلة',
+        'tags_placeholder'=> 'مثال: كهرباء، صيانة، الكويت',
     ],
 
     // ─── Users ─────────────────────────────────────────────────────────────

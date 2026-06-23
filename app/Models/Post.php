@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\PostStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Spatie\Translatable\HasTranslations;
 
 class Post extends Model
@@ -28,6 +29,11 @@ class Post extends Model
             'status'       => PostStatus::class,
             'published_at' => 'datetime',
         ];
+    }
+
+    public function tags(): BelongsToMany
+    {
+        return $this->belongsToMany(Tag::class);
     }
 
     public function scopePublished($query)
