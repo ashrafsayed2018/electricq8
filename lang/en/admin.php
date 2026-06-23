@@ -155,7 +155,7 @@ return [
         'alt_ar'          => 'Alt Text (Arabic)',
         'alt_en'          => 'Alt Text (English)',
         'image_field'     => 'Image',
-        'image_hint'      => '(JPG, PNG, WebP — Max 5MB)',
+        'image_hint'      => '(WebP only — Max 5MB)',
         'search'          => 'Search images...',
         'select'          => 'Select',
         'empty'           => 'No images yet',

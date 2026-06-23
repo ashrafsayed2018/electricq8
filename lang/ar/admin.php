@@ -155,7 +155,7 @@ return [
         'alt_ar'          => 'النص البديل Alt (عربي)',
         'alt_en'          => 'Alt Text (English)',
         'image_field'     => 'الصورة',
-        'image_hint'      => '(JPG, PNG, WebP — الحد الأقصى 5MB)',
+        'image_hint'      => '(WebP فقط — الحد الأقصى 5MB)',
         'search'          => 'بحث عن صورة...',
         'select'          => 'اختيار',
         'empty'           => 'لا توجد صور بعد',
