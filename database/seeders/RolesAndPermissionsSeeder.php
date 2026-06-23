@@ -18,6 +18,10 @@ class RolesAndPermissionsSeeder extends Seeder
             'areas.manage',
             'testimonials.manage',
             'settings.manage',
+            'posts.index',
+            'posts.create',
+            'posts.edit',
+            'posts.delete',
         ];
 
         foreach ($permissions as $perm) {
