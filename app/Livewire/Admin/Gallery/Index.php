@@ -26,7 +26,7 @@ class Index extends Component
     public function saveImage(): void
     {
         $this->validate([
-            'image'   => ['required', 'image', 'mimes:jpg,jpeg,png,gif,webp', 'max:5120'],
+            'image'   => ['required', 'image', 'mimes:webp', 'max:5120'],
             'name_ar' => ['required', 'string', 'max:255'],
             'name_en' => ['required', 'string', 'max:255'],
             'alt_ar'  => ['nullable', 'string', 'max:255'],

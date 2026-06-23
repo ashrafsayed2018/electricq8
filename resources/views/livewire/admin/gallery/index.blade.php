@@ -77,7 +77,7 @@
                 </label>
 
                 <div class="relative">
-                    <input wire:model="image" type="file" accept="image/jpeg,image/png,image/gif,image/webp"
+                    <input wire:model="image" type="file" accept="image/webp"
                         class="block w-full text-sm text-gray-400 cursor-pointer
                                file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0
                                file:text-sm file:font-semibold file:bg-purple-600 file:text-white
