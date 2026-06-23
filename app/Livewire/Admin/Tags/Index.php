@@ -37,6 +37,7 @@ class Index extends Component
     {
         $this->reset('editingId', 'name_ar', 'name_en', 'content_ar', 'content_en');
         $this->showForm = true;
+        $this->dispatch('tag-form-opened', content_ar: '', content_en: '');
     }
 
     public function openEdit(int $id): void
@@ -48,6 +49,7 @@ class Index extends Component
         $this->content_ar  = $tag->getTranslation('content', 'ar') ?? '';
         $this->content_en  = $tag->getTranslation('content', 'en') ?? '';
         $this->showForm    = true;
+        $this->dispatch('tag-form-opened', content_ar: $this->content_ar, content_en: $this->content_en);
     }
 
     public function save(): void

@@ -168,46 +168,54 @@
 
 <script>
 (function () {
-    function initTagEditors() {
-        if (typeof tinymce === 'undefined') { setTimeout(initTagEditors, 100); return; }
+    function initTagEditor(lang, initialContent) {
+        var id       = 'tag_tinymce_content_' + lang;
+        var hiddenId = 'tag_hidden_content_'  + lang;
 
-        ['ar', 'en'].forEach(function (lang) {
-            var id       = 'tag_tinymce_content_' + lang;
-            var hiddenId = 'tag_hidden_content_' + lang;
-            var existing = tinymce.get(id);
-            if (existing) existing.remove();
+        var existing = tinymce.get(id);
+        if (existing) existing.remove();
 
-            if (!document.getElementById(id)) return;
-
-            tinymce.init({
-                selector: '#' + id,
-                directionality: lang === 'ar' ? 'rtl' : 'ltr',
-                height: 300,
-                skin: 'oxide-dark',
-                content_css: 'dark',
-                plugins: ['advlist','autolink','lists','link','charmap','searchreplace','visualblocks','code','fullscreen','wordcount'],
-                toolbar: 'undo redo | blocks | bold italic | alignleft aligncenter alignright | bullist numlist | link | code fullscreen',
-                toolbar_mode: 'sliding',
-                promotion: false,
-                content_style: 'body { font-family: Tahoma, Arial, sans-serif; font-size: 15px; }',
-                setup: function (editor) {
-                    editor.on('init', function () {
-                        var hidden = document.getElementById(hiddenId);
-                        if (hidden && hidden.value) editor.setContent(hidden.value);
-                    });
-                    editor.on('change input', function () {
-                        var hidden = document.getElementById(hiddenId);
-                        if (hidden) {
-                            hidden.value = editor.getContent();
-                            hidden.dispatchEvent(new Event('input', { bubbles: true }));
-                        }
-                    });
-                },
-            });
+        tinymce.init({
+            selector: '#' + id,
+            directionality: lang === 'ar' ? 'rtl' : 'ltr',
+            height: 300,
+            skin: 'oxide-dark',
+            content_css: 'dark',
+            plugins: ['advlist','autolink','lists','link','charmap','searchreplace','visualblocks','code','fullscreen','wordcount'],
+            toolbar: 'undo redo | blocks | bold italic | alignleft aligncenter alignright | bullist numlist | link | code fullscreen',
+            toolbar_mode: 'sliding',
+            promotion: false,
+            content_style: 'body { font-family: Tahoma, Arial, sans-serif; font-size: 15px; }',
+            setup: function (editor) {
+                editor.on('init', function () {
+                    if (initialContent) editor.setContent(initialContent);
+                });
+                editor.on('change input keyup', function () {
+                    var hidden = document.getElementById(hiddenId);
+                    if (hidden) {
+                        hidden.value = editor.getContent();
+                        hidden.dispatchEvent(new Event('input', { bubbles: true }));
+                    }
+                });
+            },
         });
     }
 
-    document.addEventListener('DOMContentLoaded', initTagEditors);
-    document.addEventListener('livewire:update', function () { setTimeout(initTagEditors, 50); });
+    function waitForTinyMCE(callback) {
+        if (typeof tinymce !== 'undefined') { callback(); }
+        else { setTimeout(function () { waitForTinyMCE(callback); }, 100); }
+    }
+
+    document.addEventListener('livewire:initialized', function () {
+        Livewire.on('tag-form-opened', function (data) {
+            waitForTinyMCE(function () {
+                // Wait one tick for Livewire to render the textareas into the DOM
+                setTimeout(function () {
+                    initTagEditor('ar', data.content_ar || '');
+                    initTagEditor('en', data.content_en || '');
+                }, 50);
+            });
+        });
+    });
 })();
 </script>
