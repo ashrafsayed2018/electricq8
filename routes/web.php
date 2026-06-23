@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AboutController;
+use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -25,6 +26,7 @@ Route::middleware('locale')->group(function () {
     Route::get('/areas',                                 [AreaController::class, 'index'])->name('areas.index');
     Route::get('/areas/{location}',       [AreaController::class, 'show'])->name('areas.show');
     Route::get('/about',                  [AboutController::class, 'index'])->name('about');
+    Route::get('/gallery',                [GalleryController::class, 'index'])->name('gallery');
     Route::get('/contact',                [ContactController::class, 'index'])->name('contact');
     Route::get('/privacy',                [PageController::class, 'privacy'])->name('privacy');
     Route::get('/blog',                   [PostController::class, 'index'])->name('posts.index');
@@ -41,6 +43,7 @@ Route::middleware('locale')->group(function () {
         Route::get('/areas',                                 [AreaController::class, 'index'])->name('areas.index');
         Route::get('/areas/{location}',       [AreaController::class, 'show'])->name('areas.show');
         Route::get('/about',                  [AboutController::class, 'index'])->name('about');
+        Route::get('/gallery',                [GalleryController::class, 'index'])->name('gallery');
         Route::get('/contact',                [ContactController::class, 'index'])->name('contact');
         Route::get('/blog',                   [PostController::class, 'index'])->name('posts.index');
         Route::get('/blog/{post}',            [PostController::class, 'show'])->name('posts.show');

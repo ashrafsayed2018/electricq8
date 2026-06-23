@@ -13,6 +13,7 @@ $links = [
     ['route' => $prefix . 'about',          'base' => 'about',         'label' => __('site.nav.about')],
     ['route' => $prefix . 'contact',        'base' => 'contact',       'label' => __('site.nav.contact')],
     ['route' => $prefix . 'posts.index',    'base' => 'posts.index',   'label' => __('site.nav.blog')],
+    ['route' => $prefix . 'gallery',        'base' => 'gallery',       'label' => __('site.nav.gallery')],
 ];
 @endphp
 

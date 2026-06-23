@@ -8,6 +8,7 @@ return [
         'about'    => 'About Us',
         'contact'  => 'Contact',
         'blog'     => 'Blog',
+        'gallery'  => 'Gallery',
     ],
     'hero' => [
         'title'        => 'Electrician in Kuwait 24/7 | Wiring, Maintenance & Short Circuit Repair',
