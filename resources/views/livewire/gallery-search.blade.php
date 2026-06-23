@@ -15,7 +15,7 @@
                 </span>
                 <input
                     type="search"
-                    wire:model.live.debounce.400ms="search"
+                    wire:model.live.debounce.300ms="search"
                     placeholder="{{ $isAr ? 'ابحث عن صورة...' : 'Search images...' }}"
                     class="gal-search__input"
                     autocomplete="off"
