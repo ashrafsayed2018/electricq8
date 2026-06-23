@@ -59,7 +59,7 @@ jobs:
               -p ${{ secrets.SSH_PORT }} \
               ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} 'bash -s' << 'ENDSSH'
             set -e
-            cd domains/coolq8.net
+            cd domains/electricq8.com
             git fetch origin
             git reset --hard origin/main
             php artisan optimize:clear
@@ -71,7 +71,7 @@ jobs:
           rsync -az \
             -e "ssh -p ${{ secrets.SSH_PORT }} -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" \
             public/build/ \
-            ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}:~/domains/coolq8.net/public/build/ \
+            ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}:~/domains/electricq8.com/public/build/ \
             || echo "No build files to sync"
 
       - name: Final Server Setup
@@ -85,7 +85,7 @@ jobs:
               -p ${{ secrets.SSH_PORT }} \
               ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} 'bash -s' << 'ENDSSH'
             set -e
-            cd domains/coolq8.net
+            cd domains/electricq8.com
             composer update ashraf/laravel-analytics --no-dev --no-interaction --no-scripts
             composer install --no-dev --optimize-autoloader --no-interaction
             chmod -R 775 storage bootstrap/cache
