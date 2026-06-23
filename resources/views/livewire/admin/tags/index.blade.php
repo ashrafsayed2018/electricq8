@@ -36,21 +36,26 @@
                     placeholder="e.g. electrical">
                 @error('name_en') <p class="text-red-400 text-xs mt-1">{{ $message }}</p> @enderror
             </div>
+        </div>
+
+        {{-- TinyMCE content editors (full width, below name row) --}}
+        <input type="hidden" wire:model="content_ar" id="tag_hidden_content_ar">
+        <input type="hidden" wire:model="content_en" id="tag_hidden_content_en">
+
+        <div wire:ignore class="grid grid-cols-2 gap-4 mt-4">
             <div>
                 <label class="block text-xs text-gray-500 mb-1">{{ __('admin.tags.content_ar') }}</label>
-                <textarea wire:model="content_ar" rows="4" dir="rtl"
-                    class="w-full bg-[#0f1117] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-purple-500 transition resize-none"
-                    placeholder="وصف الوسم بالعربية..."></textarea>
+                <textarea id="tag_tinymce_content_ar" dir="rtl">{{ $content_ar }}</textarea>
             </div>
             <div>
                 <label class="block text-xs text-gray-500 mb-1">{{ __('admin.tags.content_en') }}</label>
-                <textarea wire:model="content_en" rows="4" dir="ltr"
-                    class="w-full bg-[#0f1117] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-purple-500 transition resize-none"
-                    placeholder="Tag description in English..."></textarea>
+                <textarea id="tag_tinymce_content_en" dir="ltr">{{ $content_en }}</textarea>
             </div>
         </div>
+
         <div class="flex gap-3 mt-4">
-            <button wire:click="save"
+            <button
+                @click="['ar','en'].forEach(function(l){var e=tinymce&&tinymce.get('tag_tinymce_content_'+l);if(e){var h=document.getElementById('tag_hidden_content_'+l);if(h){h.value=e.getContent();h.dispatchEvent(new Event('input',{bubbles:true}));}}});$nextTick(()=>$wire.save())"
                 class="bg-purple-600 hover:bg-purple-700 text-white px-5 py-2 rounded-lg text-sm font-semibold transition">
                 {{ $editingId ? __('admin.tags.save_changes') : __('admin.tags.save') }}
             </button>
@@ -160,3 +165,49 @@
     </div>
 
 </div>
+
+<script>
+(function () {
+    function initTagEditors() {
+        if (typeof tinymce === 'undefined') { setTimeout(initTagEditors, 100); return; }
+
+        ['ar', 'en'].forEach(function (lang) {
+            var id       = 'tag_tinymce_content_' + lang;
+            var hiddenId = 'tag_hidden_content_' + lang;
+            var existing = tinymce.get(id);
+            if (existing) existing.remove();
+
+            if (!document.getElementById(id)) return;
+
+            tinymce.init({
+                selector: '#' + id,
+                directionality: lang === 'ar' ? 'rtl' : 'ltr',
+                height: 300,
+                skin: 'oxide-dark',
+                content_css: 'dark',
+                plugins: ['advlist','autolink','lists','link','charmap','searchreplace','visualblocks','code','fullscreen','wordcount'],
+                toolbar: 'undo redo | blocks | bold italic | alignleft aligncenter alignright | bullist numlist | link | code fullscreen',
+                toolbar_mode: 'sliding',
+                promotion: false,
+                content_style: 'body { font-family: Tahoma, Arial, sans-serif; font-size: 15px; }',
+                setup: function (editor) {
+                    editor.on('init', function () {
+                        var hidden = document.getElementById(hiddenId);
+                        if (hidden && hidden.value) editor.setContent(hidden.value);
+                    });
+                    editor.on('change input', function () {
+                        var hidden = document.getElementById(hiddenId);
+                        if (hidden) {
+                            hidden.value = editor.getContent();
+                            hidden.dispatchEvent(new Event('input', { bubbles: true }));
+                        }
+                    });
+                },
+            });
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', initTagEditors);
+    document.addEventListener('livewire:update', function () { setTimeout(initTagEditors, 50); });
+})();
+</script>
