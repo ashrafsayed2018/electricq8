@@ -133,11 +133,13 @@
                     <button
                         type="button"
                         class="gal-btn gal-btn--copy"
-                        onclick="galCopy(this, '{{ $url }}')"
+                        data-copy-url="{{ $url }}"
+                        data-copied-label="{{ $isAr ? 'تم النسخ' : 'Copied!' }}"
                         title="{{ $isAr ? 'نسخ الرابط' : 'Copy URL' }}"
                     >
-                        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
-                        {{ $isAr ? 'نسخ' : 'Copy' }}
+                        <svg class="gal-copy-icon" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                        <svg class="gal-check-icon" style="display:none" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                        <span class="gal-btn-label">{{ $isAr ? 'نسخ' : 'Copy' }}</span>
                     </button>
                     @endauth
                     <a href="{{ $url }}" target="_blank" rel="noopener" class="gal-btn gal-btn--view">
@@ -551,13 +553,45 @@
 })();
 
 /* ── Copy URL ─────────────────────────────────────────────────── */
-function galCopy(btn, url) {
-    navigator.clipboard.writeText(url).then(function () {
-        var orig = btn.innerHTML;
+document.addEventListener('click', function (e) {
+    var btn = e.target.closest('[data-copy-url]');
+    if (!btn) return;
+    var url       = btn.dataset.copyUrl;
+    var label     = btn.querySelector('.gal-btn-label');
+    var iconCopy  = btn.querySelector('.gal-copy-icon');
+    var iconCheck = btn.querySelector('.gal-check-icon');
+    var origLabel = label.textContent;
+
+    function showCopied() {
         btn.classList.add('copied');
-        btn.innerHTML = '<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg> {{ $isAr ? "تم النسخ" : "Copied!" }}';
-        setTimeout(function () { btn.innerHTML = orig; btn.classList.remove('copied'); }, 2000);
-    });
+        iconCopy.style.display  = 'none';
+        iconCheck.style.display = '';
+        label.textContent = btn.dataset.copiedLabel;
+        setTimeout(function () {
+            btn.classList.remove('copied');
+            iconCopy.style.display  = '';
+            iconCheck.style.display = 'none';
+            label.textContent = origLabel;
+        }, 2000);
+    }
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(showCopied).catch(function () {
+            fallbackCopy(url); showCopied();
+        });
+    } else {
+        fallbackCopy(url); showCopied();
+    }
+});
+
+function fallbackCopy(text) {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0;pointer-events:none';
+    document.body.appendChild(ta);
+    ta.focus(); ta.select();
+    try { document.execCommand('copy'); } catch(e) {}
+    document.body.removeChild(ta);
 }
 </script>
 @endsection
