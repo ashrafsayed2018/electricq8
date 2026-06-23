@@ -357,7 +357,7 @@
 </div>
 
     @livewireScripts
-    <script src="https://cdn.tiny.cloud/1/d511hcu7aj6rq7u1nigl0r0br5glk9owgudzw25ni7bxmnet/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="https://cdn.tiny.cloud/1/{{ env('TINYMCE_API_KEY') }}/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
         window.initTinyMCE = function (selector, dir, wireModel) {
             var id = selector.replace('#', '');
