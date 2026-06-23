@@ -10,9 +10,9 @@ class Tag extends Model
 {
     use HasTranslations;
 
-    public array $translatable = ['name', 'slug'];
+    public array $translatable = ['name', 'slug', 'content'];
 
-    protected $fillable = ['name', 'slug'];
+    protected $fillable = ['name', 'slug', 'content'];
 
     public function posts(): BelongsToMany
     {

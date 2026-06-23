@@ -143,6 +143,8 @@ return [
         'confirm_delete' => 'Are you sure you want to delete this tag?',
         'empty'          => 'No tags yet.',
         'no_results'     => 'No matching tags found.',
+        'content_ar'     => 'Content (Arabic)',
+        'content_en'     => 'Content (English)',
     ],
 
     // ─── Users ─────────────────────────────────────────────────────────────

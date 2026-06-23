@@ -36,6 +36,18 @@
                     placeholder="e.g. electrical">
                 @error('name_en') <p class="text-red-400 text-xs mt-1">{{ $message }}</p> @enderror
             </div>
+            <div>
+                <label class="block text-xs text-gray-500 mb-1">{{ __('admin.tags.content_ar') }}</label>
+                <textarea wire:model="content_ar" rows="4" dir="rtl"
+                    class="w-full bg-[#0f1117] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-purple-500 transition resize-none"
+                    placeholder="وصف الوسم بالعربية..."></textarea>
+            </div>
+            <div>
+                <label class="block text-xs text-gray-500 mb-1">{{ __('admin.tags.content_en') }}</label>
+                <textarea wire:model="content_en" rows="4" dir="ltr"
+                    class="w-full bg-[#0f1117] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-purple-500 transition resize-none"
+                    placeholder="Tag description in English..."></textarea>
+            </div>
         </div>
         <div class="flex gap-3 mt-4">
             <button wire:click="save"

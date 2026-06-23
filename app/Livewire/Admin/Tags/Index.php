@@ -16,8 +16,10 @@ class Index extends Component
     public string $search      = '';
     public bool   $showForm    = false;
     public ?int   $editingId   = null;
-    public string $name_ar     = '';
-    public string $name_en     = '';
+    public string $name_ar       = '';
+    public string $name_en       = '';
+    public string $content_ar    = '';
+    public string $content_en    = '';
 
     public function updatingSearch(): void
     {
@@ -33,17 +35,19 @@ class Index extends Component
 
     public function openCreate(): void
     {
-        $this->reset('editingId', 'name_ar', 'name_en');
+        $this->reset('editingId', 'name_ar', 'name_en', 'content_ar', 'content_en');
         $this->showForm = true;
     }
 
     public function openEdit(int $id): void
     {
         $tag = Tag::findOrFail($id);
-        $this->editingId = $id;
-        $this->name_ar   = $tag->getTranslation('name', 'ar');
-        $this->name_en   = $tag->getTranslation('name', 'en');
-        $this->showForm  = true;
+        $this->editingId   = $id;
+        $this->name_ar     = $tag->getTranslation('name', 'ar');
+        $this->name_en     = $tag->getTranslation('name', 'en');
+        $this->content_ar  = $tag->getTranslation('content', 'ar') ?? '';
+        $this->content_en  = $tag->getTranslation('content', 'en') ?? '';
+        $this->showForm    = true;
     }
 
     public function save(): void
@@ -54,8 +58,9 @@ class Index extends Component
         ]);
 
         $data = [
-            'name' => ['ar' => $this->name_ar, 'en' => $this->name_en],
-            'slug' => ['ar' => Str::slug($this->name_ar), 'en' => Str::slug($this->name_en)],
+            'name'    => ['ar' => $this->name_ar,    'en' => $this->name_en],
+            'slug'    => ['ar' => Str::slug($this->name_ar), 'en' => Str::slug($this->name_en)],
+            'content' => ['ar' => $this->content_ar, 'en' => $this->content_en],
         ];
 
         if ($this->editingId) {
@@ -64,7 +69,7 @@ class Index extends Component
             Tag::create($data);
         }
 
-        $this->reset('showForm', 'editingId', 'name_ar', 'name_en');
+        $this->reset('showForm', 'editingId', 'name_ar', 'name_en', 'content_ar', 'content_en');
     }
 
     public function delete(int $id): void
@@ -74,7 +79,7 @@ class Index extends Component
 
     public function cancelForm(): void
     {
-        $this->reset('showForm', 'editingId', 'name_ar', 'name_en');
+        $this->reset('showForm', 'editingId', 'name_ar', 'name_en', 'content_ar', 'content_en');
     }
 
     public function render()
