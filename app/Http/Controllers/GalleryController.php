@@ -8,7 +8,18 @@ class GalleryController extends Controller
 {
     public function index()
     {
-        $images = Media::latest()->get();
-        return view('gallery', compact('images'));
+        $search = request('q');
+
+        $images = Media::when($search, function ($query) use ($search) {
+                $query->where('name->ar', 'like', "%{$search}%")
+                      ->orWhere('name->en', 'like', "%{$search}%");
+            })
+            ->latest()
+            ->paginate(12)
+            ->withQueryString();
+
+        $total = Media::count();
+
+        return view('gallery', compact('images', 'total', 'search'));
     }
 }
