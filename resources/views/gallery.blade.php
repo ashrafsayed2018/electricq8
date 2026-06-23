@@ -97,20 +97,21 @@
         <div class="gal-grid">
             @foreach($images as $idx => $image)
             @php
-                $name = $image->getTranslation('name', $locale) ?: $image->getTranslation('name', 'ar');
-                $alt  = $image->getTranslation('alt',  $locale) ?: $name;
-                $url  = $image->url;
+                $name    = $image->getTranslation('name', $locale) ?: $image->getTranslation('name', 'ar');
+                $alt     = $image->getTranslation('alt',  $locale) ?: $name;
+                $url     = $image->url;
+                $fullUrl = request()->getSchemeAndHttpHost() . $url;
             @endphp
             <div class="gal-card" data-reveal style="transition-delay:{{ ($idx % 3) * 70 }}ms">
 
                 {{-- Image --}}
-                <div class="gal-card__img-wrap">
+                <div class="gal-card__img-wrap" data-modal-open data-modal-src="{{ $url }}" data-modal-alt="{{ $alt }}" data-modal-title="{{ $name }}" style="cursor:pointer">
                     <img src="{{ $url }}" alt="{{ $alt }}" class="gal-card__img" loading="lazy" decoding="async">
                     <div class="gal-card__overlay">
-                        <a href="{{ $url }}" target="_blank" rel="noopener" class="gal-card__view-btn">
+                        <button type="button" class="gal-card__view-btn" data-modal-open data-modal-src="{{ $url }}" data-modal-alt="{{ $alt }}" data-modal-title="{{ $name }}">
                             <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
                             {{ $isAr ? 'عرض' : 'View' }}
-                        </a>
+                        </button>
                     </div>
                 </div>
 
@@ -133,7 +134,7 @@
                     <button
                         type="button"
                         class="gal-btn gal-btn--copy"
-                        data-copy-url="{{ $url }}"
+                        data-copy-url="{{ $fullUrl }}"
                         data-copied-label="{{ $isAr ? 'تم النسخ' : 'Copied!' }}"
                         title="{{ $isAr ? 'نسخ الرابط' : 'Copy URL' }}"
                     >
@@ -142,10 +143,10 @@
                         <span class="gal-btn-label">{{ $isAr ? 'نسخ' : 'Copy' }}</span>
                     </button>
                     @endauth
-                    <a href="{{ $url }}" target="_blank" rel="noopener" class="gal-btn gal-btn--view">
-                        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                    <button type="button" class="gal-btn gal-btn--view" data-modal-open data-modal-src="{{ $url }}" data-modal-alt="{{ $alt }}" data-modal-title="{{ $name }}">
+                        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
                         {{ $isAr ? 'عرض' : 'View' }}
-                    </a>
+                    </button>
                 </div>
 
             </div>
@@ -189,6 +190,22 @@
         @endif
 
         @endif
+    </div>
+</div>
+
+{{-- ── Lightbox Modal ───────────────────────────────────────────── --}}
+<div id="galModal" class="gal-modal" role="dialog" aria-modal="true" aria-label="{{ $isAr ? 'عرض الصورة' : 'Image viewer' }}" style="display:none">
+    <div class="gal-modal__backdrop"></div>
+    <div class="gal-modal__box">
+        <div class="gal-modal__header">
+            <span class="gal-modal__title" id="galModalTitle"></span>
+            <button type="button" class="gal-modal__close" aria-label="{{ $isAr ? 'إغلاق' : 'Close' }}">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+        </div>
+        <div class="gal-modal__img-wrap">
+            <img id="galModalImg" src="" alt="" class="gal-modal__img">
+        </div>
     </div>
 </div>
 
@@ -533,6 +550,88 @@
     color: #9ca3af;
     font-size: 1rem;
 }
+
+/* ── Lightbox Modal ─────────────────────────────────────────────── */
+.gal-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    font-family: 'Cairo', sans-serif;
+}
+.gal-modal__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    cursor: pointer;
+}
+.gal-modal__box {
+    position: relative;
+    background: #1a1a2e;
+    border-radius: 16px;
+    overflow: hidden;
+    max-width: 90vw;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.6);
+    animation: galModalIn 0.25s ease;
+}
+@keyframes galModalIn {
+    from { opacity: 0; transform: scale(0.93); }
+    to   { opacity: 1; transform: scale(1); }
+}
+.gal-modal__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 18px;
+    background: rgba(255,255,255,0.05);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    flex-shrink: 0;
+}
+.gal-modal__title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #f9fafb;
+    max-width: calc(90vw - 80px);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.gal-modal__close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border: none;
+    background: rgba(255,255,255,0.1);
+    border-radius: 8px;
+    color: #f9fafb;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background 0.18s;
+}
+.gal-modal__close:hover { background: rgba(239,68,68,0.7); }
+.gal-modal__img-wrap {
+    overflow: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-height: calc(90vh - 65px);
+    padding: 12px;
+}
+.gal-modal__img {
+    max-width: 100%;
+    max-height: calc(90vh - 90px);
+    object-fit: contain;
+    border-radius: 8px;
+    display: block;
+}
 </style>
 
 <script>
@@ -593,5 +692,46 @@ function fallbackCopy(text) {
     try { document.execCommand('copy'); } catch(e) {}
     document.body.removeChild(ta);
 }
+
+/* ── Lightbox Modal ────────────────────────────────────────────── */
+(function () {
+    var modal    = document.getElementById('galModal');
+    var modalImg = document.getElementById('galModalImg');
+    var modalTitle = document.getElementById('galModalTitle');
+
+    function openModal(src, alt, title) {
+        modalImg.src = src;
+        modalImg.alt = alt || '';
+        modalTitle.textContent = title || '';
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+        modal.querySelector('.gal-modal__close').focus();
+    }
+
+    function closeModal() {
+        modal.style.display = 'none';
+        document.body.style.overflow = '';
+        modalImg.src = '';
+    }
+
+    document.addEventListener('click', function (e) {
+        var trigger = e.target.closest('[data-modal-open]');
+        if (trigger) {
+            e.preventDefault();
+            openModal(
+                trigger.dataset.modalSrc,
+                trigger.dataset.modalAlt,
+                trigger.dataset.modalTitle
+            );
+            return;
+        }
+        if (e.target === modal.querySelector('.gal-modal__backdrop')) closeModal();
+        if (e.target.closest('.gal-modal__close')) closeModal();
+    });
+
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && modal.style.display !== 'none') closeModal();
+    });
+})();
 </script>
 @endsection
