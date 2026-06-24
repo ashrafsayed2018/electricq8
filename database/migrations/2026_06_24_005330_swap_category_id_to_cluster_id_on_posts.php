@@ -12,15 +12,21 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->foreignId('category_id')->nullable()->after('sort_order')->constrained()->nullOnDelete();
+            if (Schema::hasColumn('posts', 'category_id')) {
+                $table->dropForeign(['category_id']);
+                $table->dropColumn('category_id');
+            }
+            if (!Schema::hasColumn('posts', 'cluster_id')) {
+                $table->foreignId('cluster_id')->nullable()->constrained()->nullOnDelete();
+            }
         });
     }
 
     public function down(): void
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->dropForeign(['category_id']);
-            $table->dropColumn('category_id');
+            $table->dropForeign(['cluster_id']);
+            $table->dropColumn('cluster_id');
         });
     }
 };

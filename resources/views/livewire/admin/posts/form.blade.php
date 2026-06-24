@@ -28,38 +28,40 @@
                     @endif
                     @error('title_en') <p class="text-red-400 text-xs mt-1">{{ $message }}</p> @enderror
                 </div>
-                <div>
-                    <label class="block text-xs text-gray-500 mb-1">{{ __('admin.common.h1_ar') }}</label>
-                    <input wire:model="h1_ar" type="text"
-                        class="w-full bg-[#0f1117] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-purple-500 transition">
-                </div>
-                <div>
-                    <label class="block text-xs text-gray-500 mb-1">{{ __('admin.common.h1_en') }}</label>
-                    <input wire:model="h1_en" type="text"
-                        class="w-full bg-[#0f1117] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-purple-500 transition">
-                </div>
             </div>
         </div>
 
-        {{-- Excerpt --}}
-        <x-admin.bilingual-editor
-            label="{{ __('admin.posts.excerpt') }}"
-            modelAr="excerpt_ar"
-            modelEn="excerpt_en"
-            :valueAr="$excerpt_ar"
-            :valueEn="$excerpt_en"
-            :rows="3"
-        />
+        {{-- Content + Excerpt (combined card) --}}
+        <div class="bg-[#1a1d27] rounded-xl border border-white/10 p-6" x-data="{ tab: 'ar' }">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-sm font-semibold text-gray-400 uppercase tracking-widest">{{ __('admin.common.content') }}</h2>
+                <div class="flex bg-[#0f1117] rounded-lg p-0.5 gap-0.5 border border-white/10">
+                    <button type="button" @click="tab = 'ar'"
+                        :class="tab === 'ar' ? 'bg-purple-600 text-white' : 'text-gray-400 hover:text-white'"
+                        class="px-4 py-1.5 rounded-md text-xs font-semibold transition">العربية</button>
+                    <button type="button" @click="tab = 'en'"
+                        :class="tab === 'en' ? 'bg-purple-600 text-white' : 'text-gray-400 hover:text-white'"
+                        class="px-4 py-1.5 rounded-md text-xs font-semibold transition">English</button>
+                </div>
+            </div>
 
-        {{-- Content --}}
-        <x-admin.bilingual-editor
-            label="{{ __('admin.common.content') }}"
-            modelAr="content_ar"
-            modelEn="content_en"
-            :valueAr="$content_ar"
-            :valueEn="$content_en"
-            :rows="10"
-        />
+            <input type="hidden" wire:model="content_ar" id="hidden_tinymce_content_ar">
+            <input type="hidden" wire:model="content_en" id="hidden_tinymce_content_en">
+
+            <div wire:ignore>
+                {{-- Arabic --}}
+                <div :style="tab === 'ar' ? '' : 'display:none'">
+                    <textarea id="tinymce_content_ar" dir="rtl" rows="10"
+                        class="w-full bg-[#0f1117] border border-white/10 rounded-lg px-3 py-2 text-sm text-white">{{ $content_ar }}</textarea>
+                </div>
+
+                {{-- English --}}
+                <div :style="tab === 'en' ? '' : 'display:none'">
+                    <textarea id="tinymce_content_en" dir="ltr" rows="10"
+                        class="w-full bg-[#0f1117] border border-white/10 rounded-lg px-3 py-2 text-sm text-white">{{ $content_en }}</textarea>
+                </div>
+            </div>
+        </div>
 
         {{-- SEO --}}
         <div class="bg-[#1a1d27] rounded-xl border border-white/10 p-6">
@@ -105,18 +107,18 @@
             </div>
         </div>
 
-        {{-- Category & Tags --}}
+        {{-- Cluster & Tags --}}
         <div class="bg-[#1a1d27] rounded-xl border border-white/10 p-6 space-y-6">
 
-            {{-- Category --}}
+            {{-- Cluster --}}
             <div>
-                <label class="block text-xs text-gray-500 mb-2">{{ __('admin.posts.category') }}</label>
-                <select wire:model="category_id"
+                <label class="block text-xs text-gray-500 mb-2">{{ __('admin.posts.cluster') }}</label>
+                <select wire:model="cluster_id"
                     class="w-full bg-[#0f1117] border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-purple-500 transition">
-                    <option value="">— {{ __('admin.posts.no_category') }} —</option>
-                    @foreach($allCategories as $cat)
-                    <option value="{{ $cat->id }}">
-                        {{ $cat->getTranslation('name', app()->getLocale()) ?: $cat->getTranslation('name', 'ar') }}
+                    <option value="">— {{ __('admin.posts.no_cluster') }} —</option>
+                    @foreach($allClusters as $cluster)
+                    <option value="{{ $cluster->id }}">
+                        {{ $cluster->getTranslation('title', app()->getLocale()) ?: $cluster->getTranslation('title', 'ar') }}
                     </option>
                     @endforeach
                 </select>
@@ -199,11 +201,6 @@
                     </select>
                     @error('status') <p class="text-red-400 text-xs mt-1">{{ $message }}</p> @enderror
                 </div>
-                <div>
-                    <label class="block text-xs text-gray-500 mb-1">{{ __('admin.posts.sort_order') }}</label>
-                    <input wire:model="sort_order" type="number"
-                        class="w-full bg-[#0f1117] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-purple-500 transition">
-                </div>
             </div>
         </div>
 
@@ -219,3 +216,50 @@
         </div>
     </form>
 </div>
+
+<script>
+(function () {
+    var _editors = [
+        { id: 'tinymce_content_ar', dir: 'rtl', hidden: 'hidden_tinymce_content_ar' },
+        { id: 'tinymce_content_en', dir: 'ltr', hidden: 'hidden_tinymce_content_en' },
+    ];
+
+    function initEditor(cfg) {
+        var existing = tinymce.get(cfg.id);
+        if (existing) existing.remove();
+
+        tinymce.init({
+            selector: '#' + cfg.id,
+            directionality: cfg.dir,
+            height: 500,
+            skin: 'oxide-dark',
+            content_css: 'dark',
+            plugins: ['advlist','autolink','lists','link','image','charmap','preview','searchreplace','visualblocks','code','fullscreen','insertdatetime','media','table','wordcount'],
+            toolbar: 'undo redo | blocks | bold italic | alignleft aligncenter alignright | bullist numlist | link image | code fullscreen',
+            toolbar_mode: 'sliding',
+            promotion: false,
+            content_style: 'body { font-family: Tahoma, Arial, sans-serif; font-size: 15px; }',
+            setup: function (editor) {
+                editor.on('init', function () {
+                    var hidden = document.getElementById(cfg.hidden);
+                    if (hidden && hidden.value) editor.setContent(hidden.value);
+                });
+                editor.on('change input', function () {
+                    var hidden = document.getElementById(cfg.hidden);
+                    if (hidden) {
+                        hidden.value = editor.getContent();
+                        hidden.dispatchEvent(new Event('input', { bubbles: true }));
+                    }
+                });
+            },
+        });
+    }
+
+    function tryInit() {
+        if (typeof tinymce === 'undefined') { setTimeout(tryInit, 100); return; }
+        _editors.forEach(initEditor);
+    }
+
+    tryInit();
+})();
+</script>

@@ -32,6 +32,11 @@ class Cluster extends Model
         return $this->hasMany(Service::class);
     }
 
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
+
     public function resolveRouteBinding($value, $field = null): ?static
     {
         // Admin routes bind by id (the route key field is explicitly 'id')

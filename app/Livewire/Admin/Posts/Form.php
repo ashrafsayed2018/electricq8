@@ -2,10 +2,9 @@
 
 namespace App\Livewire\Admin\Posts;
 
-use App\Models\Category;
+use App\Models\Cluster;
 use App\Models\Post;
 use App\Models\Tag;
-use Illuminate\Support\Str;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -30,11 +29,11 @@ class Form extends Component
     public string $meta_desc_ar    = '';
     public string $meta_desc_en    = '';
     public string $featured_image  = '';
-    public string $status          = 'draft';
+    public string $status          = 'published';
     public string $published_at    = '';
     public int    $sort_order      = 0;
 
-    public ?int   $category_id     = null;
+    public ?int   $cluster_id      = null;
     public array  $selected_tags   = [];
     public string $tag_search      = '';
 
@@ -82,7 +81,7 @@ class Form extends Component
             $this->status         = $post->status->value;
             $this->published_at   = $post->published_at?->format('Y-m-d') ?? '';
             $this->sort_order     = (int) $post->sort_order;
-            $this->category_id    = $post->category_id;
+            $this->cluster_id     = $post->cluster_id;
             $this->selected_tags  = $post->tags->pluck('id')->map(fn($id) => (string) $id)->toArray();
         }
     }
@@ -100,7 +99,7 @@ class Form extends Component
         $data = [
             'title'            => ['ar' => $this->title_ar,      'en' => $this->title_en],
             'slug'             => ['ar' => $this->slug_ar,       'en' => $this->slug_en],
-            'h1'               => ['ar' => $this->h1_ar,         'en' => $this->h1_en],
+            'h1'               => ['ar' => $this->title_ar,      'en' => $this->title_en],
             'excerpt'          => ['ar' => $this->excerpt_ar,    'en' => $this->excerpt_en],
             'content'          => ['ar' => $this->content_ar,    'en' => $this->content_en],
             'meta_title'       => ['ar' => $this->meta_title_ar, 'en' => $this->meta_title_en],
@@ -109,7 +108,7 @@ class Form extends Component
             'status'           => $this->status,
             'published_at'     => $this->published_at ?: null,
             'sort_order'       => $this->sort_order,
-            'category_id'      => $this->category_id ?: null,
+            'cluster_id'       => $this->cluster_id ?: null,
         ];
 
         $post = $this->post ? tap($this->post)->update($data) : Post::create($data);
@@ -127,8 +126,8 @@ class Form extends Component
             )->orderBy('id')->get();
 
         return view('livewire.admin.posts.form', [
-            'allTags'       => $allTags,
-            'allCategories' => Category::orderBy('id')->get(),
+            'allTags'      => $allTags,
+            'allClusters'  => Cluster::orderBy('id')->get(),
         ]);
     }
 }

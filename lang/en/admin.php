@@ -128,9 +128,8 @@ return [
         'select_tags'     => 'Select tags',
         'search_tags'     => 'Search by tag name',
         'tags_selected'   => 'tag(s) selected',
-        'category'        => 'Category',
-        'no_category'     => 'Select category',
-        'search_category' => 'Search category',
+        'cluster'         => 'Cluster',
+        'no_cluster'      => 'Select cluster',
     ],
 
     // ─── Tags ──────────────────────────────────────────────────────────────

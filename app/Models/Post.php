@@ -21,7 +21,7 @@ class Post extends Model
     protected $fillable = [
         'title', 'slug', 'h1', 'excerpt', 'content',
         'meta_title', 'meta_description', 'canonical_url',
-        'featured_image', 'status', 'published_at', 'sort_order', 'category_id',
+        'featured_image', 'status', 'published_at', 'sort_order', 'cluster_id',
     ];
 
     protected function casts(): array
@@ -32,9 +32,9 @@ class Post extends Model
         ];
     }
 
-    public function category(): BelongsTo
+    public function cluster(): BelongsTo
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(Cluster::class);
     }
 
     public function tags(): BelongsToMany
