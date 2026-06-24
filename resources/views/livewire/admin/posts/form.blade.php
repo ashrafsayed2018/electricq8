@@ -124,29 +124,56 @@
 
             {{-- Tags --}}
             <div>
-                <label class="block text-xs text-gray-500 mb-3">{{ __('admin.posts.tags') }}</label>
-                @if($allTags->isNotEmpty())
-                <div class="flex flex-wrap gap-2">
-                    @foreach($allTags as $tag)
-                    @php
-                        $tagName  = $tag->getTranslation('name', app()->getLocale()) ?: $tag->getTranslation('name', 'ar');
-                        $checked  = in_array((string)$tag->id, array_map('strval', $selected_tags));
-                    @endphp
-                    <label class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border cursor-pointer transition select-none
-                        {{ $checked
-                            ? 'bg-purple-600 border-purple-600 text-white'
-                            : 'bg-white/5 border-white/10 text-gray-400 hover:border-purple-500 hover:text-white' }}">
-                        <input type="checkbox"
-                            wire:model="selected_tags"
-                            value="{{ $tag->id }}"
-                            class="sr-only">
-                        <span class="text-xs font-medium">{{ $tagName }}</span>
-                    </label>
-                    @endforeach
+                <label class="block text-xs text-gray-500 mb-2">{{ __('admin.posts.tags') }}</label>
+                <div class="bg-[#0f1117] border border-white/10 rounded-lg overflow-hidden focus-within:border-purple-500 transition">
+
+                    {{-- Search input --}}
+                    <div class="flex items-center gap-2 px-3 py-2 border-b border-white/10">
+                        <svg class="w-4 h-4 text-gray-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                        </svg>
+                        <input wire:model.live.debounce.200ms="tag_search"
+                            type="text"
+                            placeholder="{{ __('admin.posts.search_tags') }}"
+                            class="flex-1 bg-transparent text-sm text-white placeholder-gray-600 focus:outline-none">
+                        @if($tag_search)
+                        <button type="button" wire:click="$set('tag_search','')" class="text-gray-600 hover:text-white transition">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg>
+                        </button>
+                        @endif
+                    </div>
+
+                    {{-- Scrollable checkbox list --}}
+                    <div class="max-h-48 overflow-y-auto divide-y divide-white/5">
+                        @forelse($allTags as $tag)
+                        @php
+                            $tagName = $tag->getTranslation('name', app()->getLocale()) ?: $tag->getTranslation('name', 'ar');
+                            $isSelected = in_array((string)$tag->id, array_map('strval', $selected_tags));
+                        @endphp
+                        <label class="flex items-center gap-3 px-4 py-2.5 cursor-pointer hover:bg-white/5 transition {{ $isSelected ? 'bg-purple-600/10' : '' }}">
+                            <input type="checkbox"
+                                wire:model.live="selected_tags"
+                                value="{{ $tag->id }}"
+                                @checked($isSelected)
+                                class="w-4 h-4 rounded border-white/20 bg-[#1a1d27] text-purple-600 focus:ring-purple-500 focus:ring-offset-0 cursor-pointer">
+                            <span class="text-sm {{ $isSelected ? 'text-white font-medium' : 'text-gray-400' }} flex-1">{{ $tagName }}</span>
+                            @if($isSelected)
+                            <svg class="w-3.5 h-3.5 text-purple-400 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                            @endif
+                        </label>
+                        @empty
+                        <div class="px-4 py-6 text-center text-xs text-gray-600">{{ __('admin.posts.no_tags') }}</div>
+                        @endforelse
+                    </div>
+
+                    {{-- Selected count footer --}}
+                    @if(count($selected_tags) > 0)
+                    <div class="px-4 py-2 border-t border-white/10 bg-purple-600/10">
+                        <span class="text-xs text-purple-400">{{ count($selected_tags) }} {{ __('admin.posts.tags_selected') }}</span>
+                    </div>
+                    @endif
+
                 </div>
-                @else
-                <p class="text-xs text-gray-600">{{ __('admin.posts.no_tags') }}</p>
-                @endif
             </div>
 
         </div>

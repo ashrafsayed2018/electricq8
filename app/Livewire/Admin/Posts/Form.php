@@ -36,6 +36,7 @@ class Form extends Component
 
     public ?int   $category_id     = null;
     public array  $selected_tags   = [];
+    public string $tag_search      = '';
 
     #[On('image-picked-featured_image')]
     public function mediaSelected(string $url): void
@@ -120,8 +121,13 @@ class Form extends Component
 
     public function render()
     {
+        $allTags = Tag::when($this->tag_search, fn($q) =>
+                $q->where('name->ar', 'like', "%{$this->tag_search}%")
+                  ->orWhere('name->en', 'like', "%{$this->tag_search}%")
+            )->orderBy('id')->get();
+
         return view('livewire.admin.posts.form', [
-            'allTags'      => Tag::orderBy('id')->get(),
+            'allTags'       => $allTags,
             'allCategories' => Category::orderBy('id')->get(),
         ]);
     }
