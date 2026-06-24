@@ -25,10 +25,7 @@ class FakeDataSeeder extends Seeder
             Cluster::factory(3)->create(['pillar_id' => $pillar->id]);
         });
 
-        // 3. Services – 3-4 per cluster
-        Cluster::all()->each(function ($cluster) {
-            Service::factory(4)->create(['cluster_id' => $cluster->id]);
-        });
+        // 3. Services – seeded by ServicesSeeder, skip fake generation
 
         // 4. Locations (real Kuwait neighbourhoods)
         Location::factory(20)->create();
