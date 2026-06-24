@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\PostStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Spatie\Translatable\HasTranslations;
 
@@ -20,7 +21,7 @@ class Post extends Model
     protected $fillable = [
         'title', 'slug', 'h1', 'excerpt', 'content',
         'meta_title', 'meta_description', 'canonical_url',
-        'featured_image', 'status', 'published_at', 'sort_order',
+        'featured_image', 'status', 'published_at', 'sort_order', 'category_id',
     ];
 
     protected function casts(): array
@@ -29,6 +30,11 @@ class Post extends Model
             'status'       => PostStatus::class,
             'published_at' => 'datetime',
         ];
+    }
+
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(Category::class);
     }
 
     public function tags(): BelongsToMany

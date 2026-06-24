@@ -105,35 +105,44 @@
             </div>
         </div>
 
-        {{-- Tags --}}
-        <div class="bg-[#1a1d27] rounded-xl border border-white/10 p-6">
-            <h2 class="text-sm font-semibold text-gray-400 uppercase tracking-widest mb-4">{{ __('admin.posts.tags') }}</h2>
+        {{-- Category & Tags --}}
+        <div class="bg-[#1a1d27] rounded-xl border border-white/10 p-6 space-y-5">
 
-            {{-- Existing tags as clickable chips --}}
-            @if($allTags->isNotEmpty())
-            <div class="flex flex-wrap gap-2 mb-3">
-                @foreach($allTags as $tag)
-                @php
-                    $tagName = $tag->getTranslation('name', app()->getLocale()) ?: $tag->getTranslation('name', 'ar');
-                    $active  = collect(array_map('trim', explode(',', $tags_input)))->filter()->contains($tagName);
-                @endphp
-                <button type="button"
-                    wire:click="toggleTag('{{ $tagName }}')"
-                    class="px-3 py-1 rounded-full text-xs font-medium border transition
-                        {{ $active ? 'bg-purple-600 border-purple-600 text-white' : 'bg-white/5 border-white/10 text-gray-400 hover:border-purple-500 hover:text-white' }}">
-                    {{ $tagName }}
-                </button>
-                @endforeach
-            </div>
-            @endif
-
-            {{-- Free-type input --}}
+            {{-- Category select --}}
             <div>
-                <label class="block text-xs text-gray-500 mb-1">{{ __('admin.posts.tags_hint') }}</label>
-                <input wire:model="tags_input" type="text"
-                    placeholder="{{ __('admin.posts.tags_placeholder') }}"
+                <h2 class="text-sm font-semibold text-gray-400 uppercase tracking-widest mb-3">{{ __('admin.posts.category') }}</h2>
+                <select wire:model="category_id"
                     class="w-full bg-[#0f1117] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-purple-500 transition">
+                    <option value="">— {{ __('admin.posts.no_category') }} —</option>
+                    @foreach($allCategories as $cat)
+                    <option value="{{ $cat->id }}">
+                        {{ $cat->getTranslation('name', app()->getLocale()) ?: $cat->getTranslation('name', 'ar') }}
+                    </option>
+                    @endforeach
+                </select>
             </div>
+
+            {{-- Tags checkboxes --}}
+            <div>
+                <h2 class="text-sm font-semibold text-gray-400 uppercase tracking-widest mb-3">{{ __('admin.posts.tags') }}</h2>
+                @if($allTags->isNotEmpty())
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                    @foreach($allTags as $tag)
+                    @php $tagName = $tag->getTranslation('name', app()->getLocale()) ?: $tag->getTranslation('name', 'ar'); @endphp
+                    <label class="flex items-center gap-2 cursor-pointer group">
+                        <input type="checkbox"
+                            wire:model="selected_tags"
+                            value="{{ $tag->id }}"
+                            class="w-4 h-4 rounded border-white/20 bg-[#0f1117] text-purple-600 focus:ring-purple-500 focus:ring-offset-0 cursor-pointer">
+                        <span class="text-sm text-gray-400 group-hover:text-white transition">{{ $tagName }}</span>
+                    </label>
+                    @endforeach
+                </div>
+                @else
+                <p class="text-xs text-gray-600">{{ __('admin.posts.no_tags') }}</p>
+                @endif
+            </div>
+
         </div>
 
         {{-- Featured image --}}

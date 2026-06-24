@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Admin\Posts;
 
+use App\Models\Category;
 use App\Models\Post;
 use App\Models\Tag;
 use Illuminate\Support\Str;
@@ -33,13 +34,8 @@ class Form extends Component
     public string $published_at    = '';
     public int    $sort_order      = 0;
 
-    // Tags: comma-separated input string
-    public string $tags_input      = '';
-
-    public function getAvailableTagsProperty()
-    {
-        return Tag::orderBy('id')->get();
-    }
+    public ?int   $category_id     = null;
+    public array  $selected_tags   = [];
 
     #[On('image-picked-featured_image')]
     public function mediaSelected(string $url): void
@@ -85,9 +81,8 @@ class Form extends Component
             $this->status         = $post->status->value;
             $this->published_at   = $post->published_at?->format('Y-m-d') ?? '';
             $this->sort_order     = (int) $post->sort_order;
-            $this->tags_input     = $post->tags->pluck('name')
-                ->map(fn($n) => is_array($n) ? ($n[app()->getLocale()] ?? $n['ar'] ?? '') : $n)
-                ->implode(', ');
+            $this->category_id    = $post->category_id;
+            $this->selected_tags  = $post->tags->pluck('id')->map(fn($id) => (string) $id)->toArray();
         }
     }
 
@@ -113,50 +108,21 @@ class Form extends Component
             'status'           => $this->status,
             'published_at'     => $this->published_at ?: null,
             'sort_order'       => $this->sort_order,
+            'category_id'      => $this->category_id ?: null,
         ];
 
         $post = $this->post ? tap($this->post)->update($data) : Post::create($data);
 
-        $post->tags()->sync($this->resolveTagIds());
+        $post->tags()->sync($this->selected_tags);
 
         $this->redirect(route('admin.posts.index'));
-    }
-
-    public function toggleTag(string $name): void
-    {
-        $tags = collect(array_map('trim', explode(',', $this->tags_input)))->filter();
-
-        if ($tags->contains($name)) {
-            $tags = $tags->reject(fn($t) => $t === $name);
-        } else {
-            $tags->push($name);
-        }
-
-        $this->tags_input = $tags->implode(', ');
-    }
-
-    private function resolveTagIds(): array
-    {
-        $names = array_filter(array_map('trim', explode(',', $this->tags_input)));
-        $ids = [];
-
-        foreach ($names as $name) {
-            if (empty($name)) continue;
-            $slug = Str::slug($name);
-            $tag = Tag::firstOrCreate(
-                ['slug->ar' => $slug],
-                ['name' => ['ar' => $name, 'en' => $name], 'slug' => ['ar' => $slug, 'en' => $slug]]
-            );
-            $ids[] = $tag->id;
-        }
-
-        return $ids;
     }
 
     public function render()
     {
         return view('livewire.admin.posts.form', [
-            'allTags' => Tag::orderBy('id')->get(),
+            'allTags'      => Tag::orderBy('id')->get(),
+            'allCategories' => Category::orderBy('id')->get(),
         ]);
     }
 }

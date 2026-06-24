@@ -124,8 +124,9 @@ return [
         'meta_title_en'   => 'Meta Title (English)',
         'meta_desc_en'    => 'Meta Description (English)',
         'tags'            => 'Tags',
-        'tags_hint'       => 'Or type new tags separated by commas',
-        'tags_placeholder'=> 'e.g. electrical, maintenance, kuwait',
+        'no_tags'         => 'No tags yet — add tags from the Tags page first.',
+        'category'        => 'Category',
+        'no_category'     => 'No category',
     ],
 
     // ─── Tags ──────────────────────────────────────────────────────────────

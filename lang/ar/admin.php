@@ -124,8 +124,9 @@ return [
         'meta_title_en'   => 'Meta Title (English)',
         'meta_desc_en'    => 'Meta Description (English)',
         'tags'            => 'الوسوم',
-        'tags_hint'       => 'أو اكتب وسوماً جديدة مفصولة بفاصلة',
-        'tags_placeholder'=> 'مثال: كهرباء، صيانة، الكويت',
+        'no_tags'         => 'لا توجد وسوم — أضف وسوماً من صفحة الوسوم أولاً.',
+        'category'        => 'التصنيف',
+        'no_category'     => 'بدون تصنيف',
     ],
 
     // ─── Tags ──────────────────────────────────────────────────────────────
