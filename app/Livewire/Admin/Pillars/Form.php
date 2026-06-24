@@ -16,10 +16,6 @@ class Form extends Component
     public string $title_en   = '';
     public string $slug_ar    = '';
     public string $slug_en    = '';
-    public string $h1_ar      = '';
-    public string $h1_en      = '';
-    public string $intro_ar    = '';
-    public string $intro_en    = '';
     public string $content_ar  = '';
     public string $content_en  = '';
     public string $status      = 'active';
@@ -56,10 +52,6 @@ class Form extends Component
             $this->title_en   = $pillar->getTranslation('title', 'en');
             $this->slug_ar    = $pillar->getTranslation('slug', 'ar');
             $this->slug_en    = $pillar->getTranslation('slug', 'en');
-            $this->h1_ar      = $pillar->getTranslation('h1', 'ar') ?? '';
-            $this->h1_en      = $pillar->getTranslation('h1', 'en') ?? '';
-            $this->intro_ar   = $pillar->getTranslation('intro', 'ar') ?? '';
-            $this->intro_en   = $pillar->getTranslation('intro', 'en') ?? '';
             $this->content_ar = $pillar->getTranslation('content', 'ar') ?? '';
             $this->content_en = $pillar->getTranslation('content', 'en') ?? '';
             $this->status     = $pillar->status;
@@ -81,8 +73,6 @@ class Form extends Component
         $data = [
             'title'      => ['ar' => $this->title_ar, 'en' => $this->title_en],
             'slug'       => ['ar' => $this->slug_ar,  'en' => $this->slug_en],
-            'h1'         => ['ar' => $this->h1_ar,    'en' => $this->h1_en],
-            'intro'      => ['ar' => $this->intro_ar,   'en' => $this->intro_en],
             'content'    => ['ar' => $this->content_ar, 'en' => $this->content_en],
             'status'     => $this->status,
             'sort_order' => $this->sort_order,

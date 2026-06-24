@@ -6,12 +6,11 @@
     $prefix = $isAr ? '' : 'en.';
 
     $title   = $cluster->getTranslation('title',  $locale);
-    $h1      = $cluster->getTranslation('h1',     $locale) ?: $title;
-    $intro   = $cluster->getTranslation('intro',  $locale);
+    $h1      = $title;
     $content = $cluster->getTranslation('content',$locale);
 
     $metaTitle = $cluster->getTranslation('meta_title', $locale)       ?: $title;
-    $metaDesc  = $cluster->getTranslation('meta_description', $locale) ?: $intro;
+    $metaDesc  = $cluster->getTranslation('meta_description', $locale) ?: '';
 @endphp
 
 @section('meta_title'){{ $metaTitle }}@endsection
@@ -41,9 +40,6 @@
                      class="w-24 h-24 rounded-2xl object-cover mx-auto mb-6 shadow-lg">
             @endif
             <h1 class="text-3xl md:text-4xl font-extrabold mb-4">{{ $h1 }}</h1>
-            @if($intro)
-                <div class="text-lg opacity-90">{!! \App\Helpers\RichText::clean($intro) !!}</div>
-            @endif
         </div>
     </section>
 

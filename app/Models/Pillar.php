@@ -11,12 +11,12 @@ class Pillar extends Model
     use HasFactory, HasTranslations;
 
     public array $translatable = [
-        'title', 'slug', 'h1', 'intro', 'content',
+        'title', 'slug', 'content',
         'meta_title', 'meta_description', 'canonical_url',
     ];
 
     protected $fillable = [
-        'title', 'slug', 'h1', 'intro', 'content',
+        'title', 'slug', 'content',
         'meta_title', 'meta_description', 'canonical_url',
         'status', 'sort_order', 'image_url',
     ];

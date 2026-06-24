@@ -11,13 +11,13 @@ class Cluster extends Model
     use HasFactory, HasTranslations;
 
     public array $translatable = [
-        'title', 'slug', 'h1', 'intro', 'content',
+        'title', 'slug', 'content',
         'meta_title', 'meta_description', 'canonical_url',
     ];
 
     protected $fillable = [
         'pillar_id',
-        'title', 'slug', 'h1', 'intro', 'content',
+        'title', 'slug', 'content',
         'meta_title', 'meta_description', 'canonical_url',
         'search_intent', 'status', 'sort_order', 'image_url',
     ];

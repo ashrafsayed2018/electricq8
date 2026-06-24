@@ -39,28 +39,8 @@
                     @error('title_en') <p class="text-red-400 text-xs mt-1">{{ $message }}</p> @enderror
                 </div>
 
-                <div>
-                    <label class="block text-xs text-gray-500 mb-1">{{ __('admin.common.h1_ar') }}</label>
-                    <input wire:model="h1_ar" type="text"
-                        class="w-full bg-[#0f1117] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-purple-500 transition">
-                </div>
-                <div>
-                    <label class="block text-xs text-gray-500 mb-1">{{ __('admin.common.h1_en') }}</label>
-                    <input wire:model="h1_en" type="text"
-                        class="w-full bg-[#0f1117] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-purple-500 transition">
-                </div>
             </div>
         </div>
-
-        {{-- Intro --}}
-        <x-admin.bilingual-editor
-            label="{{ __('admin.common.intro') }}"
-            modelAr="intro_ar"
-            modelEn="intro_en"
-            :valueAr="$intro_ar"
-            :valueEn="$intro_en"
-            :rows="4"
-        />
 
         {{-- Content --}}
         <x-admin.bilingual-editor

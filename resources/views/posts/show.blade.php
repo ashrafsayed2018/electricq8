@@ -3,7 +3,7 @@
 @php
     $isAr      = app()->getLocale() === 'ar';
     $locale    = app()->getLocale();
-    $postTitle = $post->getTranslation('h1', $locale) ?: $post->getTranslation('title', $locale);
+    $postTitle = $post->getTranslation('title', $locale);
     $postExcerpt = strip_tags($post->getTranslation('excerpt', $locale) ?: $post->getTranslation('meta_description', $locale));
     $wordCount   = str_word_count(strip_tags($post->getTranslation('content', $locale) ?? ''));
     $readMinutes = max(1, (int) ceil($wordCount / 200));

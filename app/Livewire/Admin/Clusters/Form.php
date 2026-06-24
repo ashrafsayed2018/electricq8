@@ -18,10 +18,6 @@ class Form extends Component
     public string $title_en      = '';
     public string $slug_ar       = '';
     public string $slug_en       = '';
-    public string $h1_ar         = '';
-    public string $h1_en         = '';
-    public string $intro_ar      = '';
-    public string $intro_en      = '';
     public string $content_ar    = '';
     public string $content_en    = '';
     public string $search_intent = 'commercial';
@@ -54,10 +50,6 @@ class Form extends Component
             $this->title_en      = $cluster->getTranslation('title', 'en');
             $this->slug_ar       = $cluster->getTranslation('slug', 'ar');
             $this->slug_en       = $cluster->getTranslation('slug', 'en');
-            $this->h1_ar         = $cluster->getTranslation('h1', 'ar') ?? '';
-            $this->h1_en         = $cluster->getTranslation('h1', 'en') ?? '';
-            $this->intro_ar      = $cluster->getTranslation('intro', 'ar') ?? '';
-            $this->intro_en      = $cluster->getTranslation('intro', 'en') ?? '';
             $this->content_ar    = $cluster->getTranslation('content', 'ar') ?? '';
             $this->content_en    = $cluster->getTranslation('content', 'en') ?? '';
             $this->search_intent = $cluster->search_intent ?? 'commercial';
@@ -88,8 +80,6 @@ class Form extends Component
             'pillar_id'     => $this->pillar_id,
             'title'         => ['ar' => $this->title_ar,   'en' => $this->title_en],
             'slug'          => ['ar' => $this->slug_ar,    'en' => $this->slug_en],
-            'h1'            => ['ar' => $this->h1_ar,      'en' => $this->h1_en],
-            'intro'         => ['ar' => $this->intro_ar,   'en' => $this->intro_en],
             'content'       => ['ar' => $this->content_ar, 'en' => $this->content_en],
             'search_intent' => $this->search_intent,
             'status'        => $this->status,

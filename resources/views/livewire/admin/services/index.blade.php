@@ -22,8 +22,18 @@
                 @foreach($services as $service)
                     <tr class="hover:bg-white/5 transition">
                         <td class="px-4 py-3 text-gray-500">{{ $service->sort_order }}</td>
-                        <td class="px-4 py-3 text-white font-medium">{{ $service->getTranslation('title', 'ar') }}</td>
-                        <td class="px-4 py-3 text-gray-300">{{ $service->getTranslation('title', 'en') }}</td>
+                        <td class="px-4 py-3 text-white font-medium">
+                            <a href="{{ route('services.show', $service->getTranslation('slug', 'ar')) }}"
+                               target="_blank" class="hover:text-purple-400 transition">
+                                {{ $service->getTranslation('title', 'ar') }}
+                            </a>
+                        </td>
+                        <td class="px-4 py-3 text-gray-300">
+                            <a href="{{ route('en.services.show', $service->getTranslation('slug', 'en')) }}"
+                               target="_blank" class="hover:text-purple-400 transition">
+                                {{ $service->getTranslation('title', 'en') }}
+                            </a>
+                        </td>
                         <td class="px-4 py-3">
                             <span class="px-2 py-1 rounded-md text-xs font-semibold
                                 {{ $service->status->value === 'active' ? 'bg-green-500/20 text-green-400' : 'bg-gray-500/20 text-gray-400' }}">

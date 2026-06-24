@@ -6,12 +6,11 @@
     $prefix = $isAr ? '' : 'en.';
 
     $title   = $pillar->getTranslation('title',   $locale);
-    $h1      = $pillar->getTranslation('h1',      $locale) ?: $title;
-    $intro   = $pillar->getTranslation('intro',   $locale);
+    $h1      = $title;
     $content = $pillar->getTranslation('content', $locale);
 
     $metaTitle = $pillar->getTranslation('meta_title',       $locale) ?: $title;
-    $metaDesc  = $pillar->getTranslation('meta_description', $locale) ?: $intro;
+    $metaDesc  = $pillar->getTranslation('meta_description', $locale) ?: '';
 @endphp
 
 @section('meta_title'){{ $metaTitle }}@endsection
@@ -41,9 +40,6 @@
                      class="w-24 h-24 rounded-2xl object-cover mx-auto mb-6 shadow-lg">
             @endif
             <h1 class="text-3xl md:text-4xl font-extrabold mb-4">{{ $h1 }}</h1>
-            @if($intro)
-                <div class="text-lg opacity-90">{!! \App\Helpers\RichText::clean($intro) !!}</div>
-            @endif
         </div>
     </section>
 
@@ -67,7 +63,6 @@
                 @php
                     $clusterSlug = $cluster->getTranslation('slug', $locale);
                     $clusterName = $cluster->getTranslation('title', $locale);
-                    $clusterIntro = $cluster->getTranslation('intro', $locale);
                 @endphp
                 <a href="{{ route($prefix . 'clusters.show', $clusterSlug) }}"
                    class="block bg-white rounded-2xl shadow hover:shadow-lg transition p-6 border border-gray-100 hover:border-yellow-300">
@@ -76,9 +71,6 @@
                              class="w-12 h-12 rounded-xl object-cover mb-4">
                     @endif
                     <h3 class="text-lg font-bold mb-2 text-gray-900">{{ $clusterName }}</h3>
-                    @if($clusterIntro)
-                        <p class="text-gray-500 text-sm leading-relaxed">{{ html_entity_decode(strip_tags($clusterIntro), ENT_QUOTES | ENT_HTML5, 'UTF-8') }}</p>
-                    @endif
                     <p class="text-xs text-yellow-600 mt-3 font-semibold">
                         {{ $cluster->services->count() }} {{ $isAr ? 'خدمة' : 'services' }}
                     </p>
