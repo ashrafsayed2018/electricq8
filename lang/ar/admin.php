@@ -125,8 +125,12 @@ return [
         'meta_desc_en'    => 'Meta Description (English)',
         'tags'            => 'الوسوم',
         'no_tags'         => 'لا توجد وسوم — أضف وسوماً من صفحة الوسوم أولاً.',
-        'category'        => 'التصنيف',
-        'no_category'     => 'بدون تصنيف',
+        'select_tags'     => 'اختر الوسوم',
+        'search_tags'     => 'ابحث باسم الوسم',
+        'tags_selected'   => 'وسم مختار',
+        'category'        => 'القسم',
+        'no_category'     => 'اختر القسم',
+        'search_category' => 'ابحث عن القسم',
     ],
 
     // ─── Tags ──────────────────────────────────────────────────────────────

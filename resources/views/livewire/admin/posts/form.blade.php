@@ -108,35 +108,113 @@
         {{-- Category & Tags --}}
         <div class="bg-[#1a1d27] rounded-xl border border-white/10 p-6 space-y-5">
 
-            {{-- Category select --}}
+            {{-- Category — custom searchable dropdown --}}
             <div>
-                <h2 class="text-sm font-semibold text-gray-400 uppercase tracking-widest mb-3">{{ __('admin.posts.category') }}</h2>
-                <select wire:model="category_id"
-                    class="w-full bg-[#0f1117] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-purple-500 transition">
-                    <option value="">— {{ __('admin.posts.no_category') }} —</option>
-                    @foreach($allCategories as $cat)
-                    <option value="{{ $cat->id }}">
-                        {{ $cat->getTranslation('name', app()->getLocale()) ?: $cat->getTranslation('name', 'ar') }}
-                    </option>
-                    @endforeach
-                </select>
+                <label class="block text-xs text-gray-500 mb-2 text-right">{{ __('admin.posts.category') }}</label>
+                <div x-data="{
+                        open: false,
+                        search: '',
+                        selectedId: @entangle('category_id'),
+                        get filtered() {
+                            if (!this.search) return this.$refs.list.querySelectorAll('[data-option]');
+                            return Array.from(this.$refs.list.querySelectorAll('[data-option]'))
+                                       .filter(el => el.dataset.label.includes(this.search));
+                        },
+                        label() {
+                            const el = this.$refs.list ? this.$refs.list.querySelector('[data-value=\"'+this.selectedId+'\"]') : null;
+                            return el ? el.dataset.label : '{{ __('admin.posts.no_category') }}';
+                        }
+                     }"
+                     @click.outside="open = false"
+                     class="relative">
+
+                    {{-- Trigger --}}
+                    <button type="button" @click="open = !open"
+                        class="w-full flex items-center justify-between bg-[#0f1117] border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-purple-500 transition"
+                        :class="open ? 'border-purple-500' : ''">
+                        <span x-text="label()" class="truncate text-right flex-1"></span>
+                        <svg :class="open ? 'rotate-180' : ''" class="w-4 h-4 text-gray-500 shrink-0 transition-transform ml-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg>
+                    </button>
+
+                    {{-- Dropdown --}}
+                    <div x-show="open" x-transition.opacity
+                         class="absolute z-50 mt-1 w-full bg-[#0f1117] border border-white/10 rounded-lg shadow-xl overflow-hidden">
+                        <div class="p-2 border-b border-white/10">
+                            <input x-model="search" type="text"
+                                placeholder="{{ __('admin.posts.search_category') }}"
+                                class="w-full bg-[#1a1d27] border border-white/10 rounded-md px-3 py-1.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-purple-500 transition text-right"
+                                @click.stop>
+                        </div>
+                        <div class="max-h-52 overflow-y-auto" x-ref="list">
+                            <div data-option data-value="" data-label="{{ __('admin.posts.no_category') }}"
+                                 @click="selectedId = ''; open = false"
+                                 class="flex items-center gap-3 px-4 py-2.5 cursor-pointer hover:bg-white/5 transition"
+                                 x-show="!'{{ addslashes(__('admin.posts.no_category')) }}'.includes(search) ? search === '' : true">
+                                <input type="radio" :checked="!selectedId" class="w-4 h-4 text-purple-600 bg-[#0f1117] border-white/20" readonly>
+                                <span class="text-sm text-gray-400 flex-1 text-right">{{ __('admin.posts.no_category') }}</span>
+                            </div>
+                            @foreach($allCategories as $cat)
+                            @php $catName = $cat->getTranslation('name', app()->getLocale()) ?: $cat->getTranslation('name', 'ar'); @endphp
+                            <div data-option data-value="{{ $cat->id }}" data-label="{{ $catName }}"
+                                 @click="selectedId = {{ $cat->id }}; open = false"
+                                 x-show="search === '' || '{{ $catName }}'.includes(search)"
+                                 class="flex items-center gap-3 px-4 py-2.5 cursor-pointer hover:bg-white/5 transition">
+                                <input type="radio" :checked="selectedId == {{ $cat->id }}" class="w-4 h-4 text-purple-600 bg-[#0f1117] border-white/20" readonly>
+                                <span class="text-sm text-gray-300 flex-1 text-right">{{ $catName }}</span>
+                            </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            {{-- Tags checkboxes --}}
+            {{-- Tags — custom searchable dropdown with checkboxes --}}
             <div>
-                <h2 class="text-sm font-semibold text-gray-400 uppercase tracking-widest mb-3">{{ __('admin.posts.tags') }}</h2>
+                <label class="block text-xs text-gray-500 mb-2 text-right">{{ __('admin.posts.tags') }}</label>
                 @if($allTags->isNotEmpty())
-                <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                    @foreach($allTags as $tag)
-                    @php $tagName = $tag->getTranslation('name', app()->getLocale()) ?: $tag->getTranslation('name', 'ar'); @endphp
-                    <label class="flex items-center gap-2 cursor-pointer group">
-                        <input type="checkbox"
-                            wire:model="selected_tags"
-                            value="{{ $tag->id }}"
-                            class="w-4 h-4 rounded border-white/20 bg-[#0f1117] text-purple-600 focus:ring-purple-500 focus:ring-offset-0 cursor-pointer">
-                        <span class="text-sm text-gray-400 group-hover:text-white transition">{{ $tagName }}</span>
-                    </label>
-                    @endforeach
+                <div x-data="{
+                        open: false,
+                        search: '',
+                        get label() {
+                            const count = document.querySelectorAll('input[name=tag_cb]:checked').length;
+                            return count ? count + ' {{ __('admin.posts.tags_selected') }}' : '{{ __('admin.posts.select_tags') }}';
+                        }
+                     }"
+                     @click.outside="open = false"
+                     class="relative">
+
+                    {{-- Trigger --}}
+                    <button type="button" @click="open = !open"
+                        class="w-full flex items-center justify-between bg-[#0f1117] border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-purple-500 transition"
+                        :class="open ? 'border-purple-500' : ''">
+                        <span x-text="label" class="truncate text-right flex-1"></span>
+                        <svg :class="open ? 'rotate-180' : ''" class="w-4 h-4 text-gray-500 shrink-0 transition-transform ml-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg>
+                    </button>
+
+                    {{-- Dropdown --}}
+                    <div x-show="open" x-transition.opacity
+                         class="absolute z-40 mt-1 w-full bg-[#0f1117] border border-white/10 rounded-lg shadow-xl overflow-hidden">
+                        <div class="p-2 border-b border-white/10">
+                            <input x-model="search" type="text"
+                                placeholder="{{ __('admin.posts.search_tags') }}"
+                                class="w-full bg-[#1a1d27] border border-white/10 rounded-md px-3 py-1.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-purple-500 transition text-right"
+                                @click.stop>
+                        </div>
+                        <div class="max-h-52 overflow-y-auto">
+                            @foreach($allTags as $tag)
+                            @php $tagName = $tag->getTranslation('name', app()->getLocale()) ?: $tag->getTranslation('name', 'ar'); @endphp
+                            <label x-show="search === '' || '{{ $tagName }}'.includes(search)"
+                                   class="flex items-center gap-3 px-4 py-2.5 cursor-pointer hover:bg-white/5 transition">
+                                <input type="checkbox"
+                                    name="tag_cb"
+                                    wire:model="selected_tags"
+                                    value="{{ $tag->id }}"
+                                    class="w-4 h-4 rounded border-white/20 bg-[#1a1d27] text-purple-600 focus:ring-purple-500 focus:ring-offset-0 cursor-pointer">
+                                <span class="text-sm text-gray-300 flex-1 text-right">{{ $tagName }}</span>
+                            </label>
+                            @endforeach
+                        </div>
+                    </div>
                 </div>
                 @else
                 <p class="text-xs text-gray-600">{{ __('admin.posts.no_tags') }}</p>

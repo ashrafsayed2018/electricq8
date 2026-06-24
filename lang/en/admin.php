@@ -125,8 +125,12 @@ return [
         'meta_desc_en'    => 'Meta Description (English)',
         'tags'            => 'Tags',
         'no_tags'         => 'No tags yet — add tags from the Tags page first.',
+        'select_tags'     => 'Select tags',
+        'search_tags'     => 'Search by tag name',
+        'tags_selected'   => 'tag(s) selected',
         'category'        => 'Category',
-        'no_category'     => 'No category',
+        'no_category'     => 'Select category',
+        'search_category' => 'Search category',
     ],
 
     // ─── Tags ──────────────────────────────────────────────────────────────
