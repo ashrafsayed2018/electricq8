@@ -12,6 +12,7 @@
         <table class="w-full text-sm">
             <thead class="border-b border-white/10 text-gray-500 text-xs uppercase">
                 <tr>
+                    <th class="px-4 py-3 text-start text-gray-600 w-10">#</th>
                     <th class="px-4 py-3 text-start">{{ __('admin.common.image') }}</th>
                     <th class="px-4 py-3 text-start">{{ $locale === 'ar' ? __('admin.common.title_ar') : __('admin.common.title_en') }}</th>
                     <th class="px-4 py-3 text-start">{{ __('admin.clusters.pillar') }}</th>
@@ -29,6 +30,8 @@
                     $pillarTitle = $cluster->pillar?->getTranslation('title', $locale) ?? '—';
                 @endphp
                     <tr class="hover:bg-white/5 transition">
+
+                        <td class="px-4 py-3 text-gray-600 text-xs font-mono">{{ $loop->iteration }}</td>
 
                         {{-- Image thumbnail → links to public page --}}
                         <td class="px-4 py-3">
@@ -93,7 +96,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="6" class="px-4 py-8 text-center text-gray-600">{{ __('admin.clusters.empty') }}</td>
+                        <td colspan="7" class="px-4 py-8 text-center text-gray-600">{{ __('admin.clusters.empty') }}</td>
                     </tr>
                 @endforelse
             </tbody>
