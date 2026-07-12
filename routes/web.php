@@ -15,6 +15,11 @@ use App\Http\Controllers\ClusterController;
 use App\Http\Controllers\PillarController;
 use App\Http\Controllers\ServiceLocationController;
 use Illuminate\Support\Facades\Route;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+
+Route::get('/favicon.ico', fn () => new BinaryFileResponse(public_path('favicon.ico'), 200, [
+    'Content-Type' => 'image/x-icon',
+]));
 
 Route::middleware('locale')->group(function () {
 
