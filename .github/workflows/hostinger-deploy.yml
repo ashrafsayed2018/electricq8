@@ -81,8 +81,7 @@ jobs:
             php artisan db:seed --class=RolesAndPermissionsSeeder --force --no-interaction
             php artisan permission:cache-reset
             mkdir -p public/build
-            php artisan storage:link --force || echo "Storage link already exists"
-            ln -sfn ~/domains/electricq8.com/storage/app/public ~/domains/electricq8.com/public_html/storage || echo "public_html/storage symlink already exists"
+            ln -sfn /home/u877833033/domains/electricq8.com/storage/app/public /home/u877833033/domains/electricq8.com/public_html/storage || echo "symlink already exists"
             php artisan optimize:clear
             php artisan config:cache
             php artisan route:cache
