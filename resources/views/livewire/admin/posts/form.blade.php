@@ -80,29 +80,15 @@
                             class="px-4 py-1.5 rounded-md text-xs font-semibold transition">{{ __('admin.common.english') }}</button>
                     </div>
                 </div>
-                <div x-show="tab === 'ar'" x-cloak class="space-y-4">
-                    <div>
-                        <label class="block text-xs text-gray-500 mb-1">{{ __('admin.posts.meta_title_ar') }}</label>
-                        <input wire:model="meta_title_ar" type="text" dir="rtl"
-                            class="w-full bg-[#0f1117] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-purple-500 transition">
-                    </div>
-                    <div>
-                        <label class="block text-xs text-gray-500 mb-1">{{ __('admin.posts.meta_desc_ar') }}</label>
-                        <textarea wire:model="meta_desc_ar" rows="2" dir="rtl"
-                            class="w-full bg-[#0f1117] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-purple-500 transition resize-none"></textarea>
-                    </div>
+                <div x-show="tab === 'ar'" x-cloak>
+                    <label class="block text-xs text-gray-500 mb-1">{{ __('admin.posts.meta_desc_ar') }}</label>
+                    <textarea wire:model="meta_desc_ar" rows="2" dir="rtl"
+                        class="w-full bg-[#0f1117] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-purple-500 transition resize-none"></textarea>
                 </div>
-                <div x-show="tab === 'en'" x-cloak class="space-y-4">
-                    <div>
-                        <label class="block text-xs text-gray-500 mb-1">{{ __('admin.posts.meta_title_en') }}</label>
-                        <input wire:model="meta_title_en" type="text" dir="ltr"
-                            class="w-full bg-[#0f1117] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-purple-500 transition">
-                    </div>
-                    <div>
-                        <label class="block text-xs text-gray-500 mb-1">{{ __('admin.posts.meta_desc_en') }}</label>
-                        <textarea wire:model="meta_desc_en" rows="2" dir="ltr"
-                            class="w-full bg-[#0f1117] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-purple-500 transition resize-none"></textarea>
-                    </div>
+                <div x-show="tab === 'en'" x-cloak>
+                    <label class="block text-xs text-gray-500 mb-1">{{ __('admin.posts.meta_desc_en') }}</label>
+                    <textarea wire:model="meta_desc_en" rows="2" dir="ltr"
+                        class="w-full bg-[#0f1117] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-purple-500 transition resize-none"></textarea>
                 </div>
             </div>
         </div>

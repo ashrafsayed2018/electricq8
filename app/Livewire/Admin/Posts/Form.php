@@ -24,8 +24,6 @@ class Form extends Component
     public string $excerpt_en      = '';
     public string $content_ar      = '';
     public string $content_en      = '';
-    public string $meta_title_ar   = '';
-    public string $meta_title_en   = '';
     public string $meta_desc_ar    = '';
     public string $meta_desc_en    = '';
     public string $featured_image  = '';
@@ -73,8 +71,6 @@ class Form extends Component
             $this->excerpt_en     = $post->getTranslation('excerpt', 'en') ?? '';
             $this->content_ar     = $post->getTranslation('content', 'ar') ?? '';
             $this->content_en     = $post->getTranslation('content', 'en') ?? '';
-            $this->meta_title_ar  = $post->getTranslation('meta_title', 'ar') ?? '';
-            $this->meta_title_en  = $post->getTranslation('meta_title', 'en') ?? '';
             $this->meta_desc_ar   = $post->getTranslation('meta_description', 'ar') ?? '';
             $this->meta_desc_en   = $post->getTranslation('meta_description', 'en') ?? '';
             $this->featured_image = $post->featured_image ?? '';
@@ -102,7 +98,7 @@ class Form extends Component
             'h1'               => ['ar' => $this->title_ar,      'en' => $this->title_en],
             'excerpt'          => ['ar' => $this->excerpt_ar,    'en' => $this->excerpt_en],
             'content'          => ['ar' => $this->content_ar,    'en' => $this->content_en],
-            'meta_title'       => ['ar' => $this->meta_title_ar, 'en' => $this->meta_title_en],
+            'meta_title'       => ['ar' => $this->title_ar, 'en' => $this->title_en],
             'meta_description' => ['ar' => $this->meta_desc_ar,  'en' => $this->meta_desc_en],
             'featured_image'   => $this->featured_image ?: null,
             'status'           => $this->status,
