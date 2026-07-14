@@ -200,6 +200,30 @@ return [
         'email'                 => 'email address',
         'password'              => 'password',
         'password_confirmation' => 'password confirmation',
+
+        // Gallery
+        'image'                 => 'image',
+        'name_ar'               => 'image name (Arabic)',
+        'name_en'               => 'image name (English)',
+        'alt_ar'                => 'alt text (Arabic)',
+        'alt_en'                => 'alt text (English)',
+
+        // Common bilingual fields
+        'title_ar'              => 'title (Arabic)',
+        'title_en'              => 'title (English)',
+        'slug_ar'               => 'slug (Arabic)',
+        'slug_en'               => 'slug (English)',
+        'content_ar'            => 'content (Arabic)',
+        'content_en'            => 'content (English)',
+        'meta_description_ar'   => 'meta description (Arabic)',
+        'meta_description_en'   => 'meta description (English)',
+        'meta_desc_ar'          => 'meta description (Arabic)',
+        'meta_desc_en'          => 'meta description (English)',
+        'status'                => 'status',
+        'pillar_id'             => 'pillar',
+        'featured_image'        => 'featured image',
+        'published_at'          => 'publish date',
+        'sort_order'            => 'sort order',
     ],
 
 ];

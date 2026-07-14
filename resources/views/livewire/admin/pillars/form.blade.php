@@ -42,20 +42,24 @@
             :valueEn="$content_en"
             :rows="8"
         />
+        @error('content_ar') <p class="text-red-400 text-xs -mt-4">{{ $message }}</p> @enderror
+        @error('content_en') <p class="text-red-400 text-xs -mt-4">{{ $message }}</p> @enderror
 
         {{-- Meta Description --}}
         <div class="bg-[#1a1d27] rounded-xl border border-white/10 p-6">
             <h2 class="text-sm font-semibold text-gray-400 uppercase tracking-widest mb-4">{{ __('admin.common.meta_description') }}</h2>
             <div class="grid grid-cols-2 gap-4">
                 <div>
-                    <label class="block text-xs text-gray-500 mb-1">{{ __('admin.common.meta_description_ar') }}</label>
+                    <label class="block text-xs text-gray-500 mb-1">{{ __('admin.common.meta_description_ar') }} {{ __('admin.common.required_mark') }}</label>
                     <textarea wire:model="meta_description_ar" rows="3" dir="rtl"
                         class="w-full bg-[#0f1117] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-purple-500 transition resize-none"></textarea>
+                    @error('meta_description_ar') <p class="text-red-400 text-xs mt-1">{{ $message }}</p> @enderror
                 </div>
                 <div>
-                    <label class="block text-xs text-gray-500 mb-1">{{ __('admin.common.meta_description_en') }}</label>
+                    <label class="block text-xs text-gray-500 mb-1">{{ __('admin.common.meta_description_en') }} {{ __('admin.common.required_mark') }}</label>
                     <textarea wire:model="meta_description_en" rows="3" dir="ltr"
                         class="w-full bg-[#0f1117] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-purple-500 transition resize-none"></textarea>
+                    @error('meta_description_en') <p class="text-red-400 text-xs mt-1">{{ $message }}</p> @enderror
                 </div>
             </div>
         </div>

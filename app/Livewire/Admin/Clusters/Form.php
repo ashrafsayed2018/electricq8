@@ -72,12 +72,16 @@ class Form extends Component
     public function save(): void
     {
         $this->validate([
-            'pillar_id' => 'required|exists:pillars,id',
-            'title_ar'  => 'required|string|max:200',
-            'title_en'  => 'required|string|max:200',
-            'slug_ar'   => 'required|string|max:200',
-            'slug_en'   => 'required|string|max:200',
-            'status'    => 'required|in:active,draft,archived',
+            'pillar_id'           => 'required|exists:pillars,id',
+            'title_ar'            => 'required|string|max:200',
+            'title_en'            => 'required|string|max:200',
+            'slug_ar'             => 'required|string|max:200',
+            'slug_en'             => 'required|string|max:200',
+            'content_ar'          => 'required|string',
+            'content_en'          => 'required|string',
+            'meta_description_ar' => 'required|string|max:320',
+            'meta_description_en' => 'required|string|max:320',
+            'status'              => 'required|in:active,draft,archived',
         ]);
 
         $data = [

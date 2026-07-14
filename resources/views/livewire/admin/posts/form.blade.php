@@ -63,6 +63,9 @@
             </div>
         </div>
 
+        @error('content_ar') <p class="text-red-400 text-xs -mt-4">{{ $message }}</p> @enderror
+        @error('content_en') <p class="text-red-400 text-xs -mt-4">{{ $message }}</p> @enderror
+
         {{-- SEO --}}
         <div class="bg-[#1a1d27] rounded-xl border border-white/10 p-6">
             <h2 class="text-sm font-semibold text-gray-400 uppercase tracking-widest mb-4">{{ __('admin.posts.seo') }}</h2>
@@ -81,14 +84,16 @@
                     </div>
                 </div>
                 <div x-show="tab === 'ar'" x-cloak>
-                    <label class="block text-xs text-gray-500 mb-1">{{ __('admin.posts.meta_desc_ar') }}</label>
+                    <label class="block text-xs text-gray-500 mb-1">{{ __('admin.posts.meta_desc_ar') }} {{ __('admin.common.required_mark') }}</label>
                     <textarea wire:model="meta_desc_ar" rows="2" dir="rtl"
                         class="w-full bg-[#0f1117] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-purple-500 transition resize-none"></textarea>
+                    @error('meta_desc_ar') <p class="text-red-400 text-xs mt-1">{{ $message }}</p> @enderror
                 </div>
                 <div x-show="tab === 'en'" x-cloak>
-                    <label class="block text-xs text-gray-500 mb-1">{{ __('admin.posts.meta_desc_en') }}</label>
+                    <label class="block text-xs text-gray-500 mb-1">{{ __('admin.posts.meta_desc_en') }} {{ __('admin.common.required_mark') }}</label>
                     <textarea wire:model="meta_desc_en" rows="2" dir="ltr"
                         class="w-full bg-[#0f1117] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-purple-500 transition resize-none"></textarea>
+                    @error('meta_desc_en') <p class="text-red-400 text-xs mt-1">{{ $message }}</p> @enderror
                 </div>
             </div>
         </div>
