@@ -52,6 +52,23 @@
             :rows="8"
         />
 
+        {{-- Meta Description --}}
+        <div class="bg-[#1a1d27] rounded-xl border border-white/10 p-6">
+            <h2 class="text-sm font-semibold text-gray-400 uppercase tracking-widest mb-4">{{ __('admin.common.meta_description') }}</h2>
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs text-gray-500 mb-1">{{ __('admin.common.meta_description_ar') }}</label>
+                    <textarea wire:model="meta_description_ar" rows="3" dir="rtl"
+                        class="w-full bg-[#0f1117] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-purple-500 transition resize-none"></textarea>
+                </div>
+                <div>
+                    <label class="block text-xs text-gray-500 mb-1">{{ __('admin.common.meta_description_en') }}</label>
+                    <textarea wire:model="meta_description_en" rows="3" dir="ltr"
+                        class="w-full bg-[#0f1117] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-purple-500 transition resize-none"></textarea>
+                </div>
+            </div>
+        </div>
+
         {{-- Image --}}
         @livewire('admin.image-picker', ['field' => 'image_url', 'imageUrl' => $image_url, 'label' => __('admin.common.main_image')])
 
