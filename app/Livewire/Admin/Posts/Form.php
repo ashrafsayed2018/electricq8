@@ -7,6 +7,7 @@ use App\Models\Post;
 use App\Models\Tag;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\On;
+use Illuminate\Validation\ValidationException;
 use Livewire\Component;
 
 #[Layout('layouts.admin')]
@@ -84,6 +85,7 @@ class Form extends Component
 
     public function save(): void
     {
+        try {
         $this->validate([
             'title_ar'       => 'required|string|max:200',
             'title_en'       => 'required|string|max:200',
@@ -120,6 +122,10 @@ class Form extends Component
         $post->tags()->sync($this->selected_tags);
 
         $this->redirect(route('admin.posts.index'));
+        } catch (ValidationException $e) {
+            $this->dispatch('scroll-to-error');
+            throw $e;
+        }
     }
 
     public function render()

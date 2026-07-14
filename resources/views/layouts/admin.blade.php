@@ -406,6 +406,17 @@
             tinymce.remove();
         });
 
+        document.addEventListener('livewire:initialized', function () {
+            Livewire.on('scroll-to-error', function () {
+                setTimeout(function () {
+                    var first = document.querySelector('.text-red-400');
+                    if (first) {
+                        first.closest('div')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                }, 50);
+            });
+        });
+
     </script>
 </body>
 </html>

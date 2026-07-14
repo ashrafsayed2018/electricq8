@@ -5,6 +5,7 @@ namespace App\Livewire\Admin\Pillars;
 use App\Models\Pillar;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\On;
+use Illuminate\Validation\ValidationException;
 use Livewire\Component;
 
 #[Layout('layouts.admin')]
@@ -66,6 +67,7 @@ class Form extends Component
 
     public function save(): void
     {
+        try {
         $this->validate([
             'title_ar'           => 'required|string|max:200',
             'title_en'           => 'required|string|max:200',
@@ -95,6 +97,10 @@ class Form extends Component
         }
 
         $this->redirect(route('admin.pillars.index'));
+        } catch (ValidationException $e) {
+            $this->dispatch('scroll-to-error');
+            throw $e;
+        }
     }
 
     public function render()

@@ -6,6 +6,7 @@ use App\Models\Cluster;
 use App\Models\Pillar;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\On;
+use Illuminate\Validation\ValidationException;
 use Livewire\Component;
 
 #[Layout('layouts.admin')]
@@ -71,6 +72,7 @@ class Form extends Component
 
     public function save(): void
     {
+        try {
         $this->validate([
             'pillar_id'           => 'required|exists:pillars,id',
             'title_ar'            => 'required|string|max:200',
@@ -103,6 +105,10 @@ class Form extends Component
         }
 
         $this->redirect(route('admin.clusters.index'));
+        } catch (ValidationException $e) {
+            $this->dispatch('scroll-to-error');
+            throw $e;
+        }
     }
 
     public function render()
