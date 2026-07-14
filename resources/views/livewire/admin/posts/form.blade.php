@@ -103,7 +103,7 @@
 
             {{-- Cluster --}}
             <div>
-                <label class="block text-xs text-gray-500 mb-2">{{ __('admin.posts.cluster') }}</label>
+                <label class="block text-xs text-gray-500 mb-2">{{ __('admin.posts.cluster') }} {{ __('admin.common.required_mark') }}</label>
                 <select wire:model="cluster_id"
                     class="w-full bg-[#0f1117] border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-purple-500 transition">
                     <option value="">— {{ __('admin.posts.no_cluster') }} —</option>
@@ -113,6 +113,7 @@
                     </option>
                     @endforeach
                 </select>
+                @error('cluster_id') <p class="text-red-400 text-xs mt-1">{{ $message }}</p> @enderror
             </div>
 
             {{-- Tags --}}
@@ -173,15 +174,17 @@
 
         {{-- Featured image --}}
         @livewire('admin.image-picker', ['field' => 'featured_image', 'imageUrl' => $featured_image, 'label' => __('admin.posts.featured_image')])
+        @error('featured_image') <p class="text-red-400 text-xs mt-1">{{ $message }}</p> @enderror
 
         {{-- Publish settings --}}
         <div class="bg-[#1a1d27] rounded-xl border border-white/10 p-6">
             <h2 class="text-sm font-semibold text-gray-400 uppercase tracking-widest mb-4">{{ __('admin.common.publish') }}</h2>
             <div class="grid grid-cols-2 gap-4">
                 <div>
-                    <label class="block text-xs text-gray-500 mb-1">{{ __('admin.posts.publish_date') }}</label>
+                    <label class="block text-xs text-gray-500 mb-1">{{ __('admin.posts.publish_date') }} {{ __('admin.common.required_mark') }}</label>
                     <input wire:model="published_at" type="date"
                         class="w-full bg-[#0f1117] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-purple-500 transition">
+                    @error('published_at') <p class="text-red-400 text-xs mt-1">{{ $message }}</p> @enderror
                 </div>
                 <div>
                     <label class="block text-xs text-gray-500 mb-1">{{ __('admin.common.status') }} {{ __('admin.common.required_mark') }}</label>

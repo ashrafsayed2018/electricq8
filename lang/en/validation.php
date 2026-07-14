@@ -221,6 +221,7 @@ return [
         'meta_desc_en'          => 'meta description (English)',
         'status'                => 'status',
         'pillar_id'             => 'pillar',
+        'cluster_id'            => 'category',
         'featured_image'        => 'featured image',
         'published_at'          => 'publish date',
         'sort_order'            => 'sort order',
