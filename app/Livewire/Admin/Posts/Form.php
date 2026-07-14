@@ -94,6 +94,7 @@ class Form extends Component
             'meta_desc_ar'   => 'required|string|max:320',
             'meta_desc_en'   => 'required|string|max:320',
             'cluster_id'     => 'required|exists:clusters,id',
+            'selected_tags'  => 'required|array|min:1',
             'featured_image' => 'required|string',
             'published_at'   => 'required|date',
             'status'         => 'required|in:draft,published',

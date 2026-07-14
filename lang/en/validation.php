@@ -222,6 +222,7 @@ return [
         'status'                => 'status',
         'pillar_id'             => 'pillar',
         'cluster_id'            => 'category',
+        'selected_tags'         => 'tags',
         'featured_image'        => 'featured image',
         'published_at'          => 'publish date',
         'sort_order'            => 'sort order',

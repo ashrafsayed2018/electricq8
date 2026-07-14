@@ -118,7 +118,7 @@
 
             {{-- Tags --}}
             <div>
-                <label class="block text-xs text-gray-500 mb-2">{{ __('admin.posts.tags') }}</label>
+                <label class="block text-xs text-gray-500 mb-2">{{ __('admin.posts.tags') }} {{ __('admin.common.required_mark') }}</label>
                 <div class="bg-[#0f1117] border border-white/10 rounded-lg overflow-hidden focus-within:border-purple-500 transition">
 
                     {{-- Search input --}}
@@ -168,6 +168,7 @@
                     @endif
 
                 </div>
+                @error('selected_tags') <p class="text-red-400 text-xs mt-2">{{ $message }}</p> @enderror
             </div>
 
         </div>

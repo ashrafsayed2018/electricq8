@@ -161,6 +161,7 @@ return [
         'governorate'           => 'المحافظة',
         'pillar_id'             => 'الركيزة',
         'cluster_id'            => 'التصنيف',
+        'selected_tags'         => 'الوسوم',
         'featured_image'        => 'الصورة المميزة',
         'published_at'          => 'تاريخ النشر',
         'sort_order'            => 'الترتيب',
