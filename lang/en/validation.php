@@ -220,6 +220,7 @@ return [
         'meta_desc_ar'          => 'meta description (Arabic)',
         'meta_desc_en'          => 'meta description (English)',
         'status'                => 'status',
+        'image_url'             => 'main image',
         'pillar_id'             => 'pillar',
         'cluster_id'            => 'category',
         'selected_tags'         => 'tags',

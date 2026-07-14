@@ -77,6 +77,7 @@ class Form extends Component
             'content_en'         => 'required|string',
             'meta_description_ar'=> 'required|string|max:320',
             'meta_description_en'=> 'required|string|max:320',
+            'image_url'          => 'required|string',
             'status'             => 'required|in:active,draft',
         ]);
 

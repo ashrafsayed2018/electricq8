@@ -159,6 +159,7 @@ return [
         'meta_desc_en'          => 'الوصف التعريفي (إنجليزي)',
         'status'                => 'الحالة',
         'governorate'           => 'المحافظة',
+        'image_url'             => 'الصورة الرئيسية',
         'pillar_id'             => 'الركيزة',
         'cluster_id'            => 'التصنيف',
         'selected_tags'         => 'الوسوم',

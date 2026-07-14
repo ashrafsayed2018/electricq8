@@ -66,6 +66,7 @@
 
         {{-- Image --}}
         @livewire('admin.image-picker', ['field' => 'image_url', 'imageUrl' => $image_url, 'label' => __('admin.common.main_image')])
+        @error('image_url') <p class="text-red-400 text-xs mt-1">{{ $message }}</p> @enderror
 
         {{-- Publish Settings --}}
         <div class="bg-[#1a1d27] rounded-xl border border-white/10 p-6">
