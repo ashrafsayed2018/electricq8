@@ -66,8 +66,11 @@ return [
         'draft'           => 'مسودة',
         'arabic'          => 'العربية',
         'english'         => 'English',
-        'required_mark'   => '*',
-        'saving'          => 'جاري الحفظ...',
+        'required_mark'        => '*',
+        'saving'               => 'جاري الحفظ...',
+        'meta_description'     => 'الوصف التعريفي',
+        'meta_description_ar'  => 'الوصف التعريفي (عربي)',
+        'meta_description_en'  => 'الوصف التعريفي (إنجليزي)',
     ],
 
     // ─── Dashboard ─────────────────────────────────────────────────────────

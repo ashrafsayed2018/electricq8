@@ -66,8 +66,11 @@ return [
         'draft'           => 'Draft',
         'arabic'          => 'Arabic',
         'english'         => 'English',
-        'required_mark'   => '*',
-        'saving'          => 'Saving...',
+        'required_mark'        => '*',
+        'saving'               => 'Saving...',
+        'meta_description'     => 'Meta Description',
+        'meta_description_ar'  => 'Meta Description (Arabic)',
+        'meta_description_en'  => 'Meta Description (English)',
     ],
 
     // ─── Dashboard ─────────────────────────────────────────────────────────

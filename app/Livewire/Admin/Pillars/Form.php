@@ -16,9 +16,11 @@ class Form extends Component
     public string $title_en   = '';
     public string $slug_ar    = '';
     public string $slug_en    = '';
-    public string $content_ar  = '';
-    public string $content_en  = '';
-    public string $status      = 'active';
+    public string $content_ar          = '';
+    public string $content_en          = '';
+    public string $meta_description_ar = '';
+    public string $meta_description_en = '';
+    public string $status              = 'active';
     public int    $sort_order = 0;
     public string $image_url  = '';
 
@@ -52,8 +54,10 @@ class Form extends Component
             $this->title_en   = $pillar->getTranslation('title', 'en');
             $this->slug_ar    = $pillar->getTranslation('slug', 'ar');
             $this->slug_en    = $pillar->getTranslation('slug', 'en');
-            $this->content_ar = $pillar->getTranslation('content', 'ar') ?? '';
-            $this->content_en = $pillar->getTranslation('content', 'en') ?? '';
+            $this->content_ar          = $pillar->getTranslation('content', 'ar') ?? '';
+            $this->content_en          = $pillar->getTranslation('content', 'en') ?? '';
+            $this->meta_description_ar = $pillar->getTranslation('meta_description', 'ar') ?? '';
+            $this->meta_description_en = $pillar->getTranslation('meta_description', 'en') ?? '';
             $this->status     = $pillar->status;
             $this->sort_order = (int) $pillar->sort_order;
             $this->image_url  = $pillar->image_url ?? '';
@@ -73,7 +77,8 @@ class Form extends Component
         $data = [
             'title'      => ['ar' => $this->title_ar, 'en' => $this->title_en],
             'slug'       => ['ar' => $this->slug_ar,  'en' => $this->slug_en],
-            'content'    => ['ar' => $this->content_ar, 'en' => $this->content_en],
+            'content'          => ['ar' => $this->content_ar, 'en' => $this->content_en],
+            'meta_description' => ['ar' => $this->meta_description_ar, 'en' => $this->meta_description_en],
             'status'     => $this->status,
             'sort_order' => $this->sort_order,
             'image_url'  => $this->image_url ?: null,
