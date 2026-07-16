@@ -122,6 +122,8 @@
 
     @include('partials.footer')
 
+    @include('partials.sticky-bar')
+
     @livewireScripts
 
     {{-- Analytics tracker --}}

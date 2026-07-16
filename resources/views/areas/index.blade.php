@@ -3,6 +3,7 @@
 @php
     $isAr   = app()->getLocale() === 'ar';
     $locale = $isAr ? 'ar' : 'en';
+    $prefix = $isAr ? '' : 'en.';
 @endphp
 
 @section('meta_title')
@@ -18,28 +19,41 @@
 @endsection
 
 @section('content')
-<div dir="{{ $isAr ? 'rtl' : 'ltr' }}">
+<div dir="{{ $isAr ? 'rtl' : 'ltr' }}" style="background:var(--bg)">
+
+    {{-- Breadcrumb --}}
+    <nav class="eq8-bc">
+        <div class="eq8-bc__inner">
+            <ol class="eq8-bc__list">
+                <li><a href="{{ route($prefix . 'home') }}" class="eq8-bc__link">{{ $isAr ? 'الرئيسية' : 'Home' }}</a></li>
+                <li class="eq8-bc__sep">/</li>
+                <li class="eq8-bc__current" aria-current="page">{{ $isAr ? 'مناطق الخدمة' : 'Service Areas' }}</li>
+            </ol>
+        </div>
+    </nav>
 
     {{-- Hero --}}
     <section class="eq8-page-hero">
         <div class="eq8-page-hero__inner">
+            <span class="eq8-areas-badge">
+                <span class="eq8-areas-badge__dot"></span>
+                {{ $isAr ? 'تغطية كاملة لجميع محافظات الكويت' : 'Full coverage across all Kuwait governorates' }}
+            </span>
             <h1 class="eq8-page-hero__title">
                 {{ $isAr ? 'فني كهربائي في جميع مناطق الكويت' : 'Electrician in All Kuwait Areas' }}
             </h1>
             <p class="eq8-page-hero__sub">
                 {{ $isAr
                     ? 'نغطي جميع محافظات الكويت الست — استجابة خلال ساعة في أي منطقة'
-                    : 'Covering all 6 Kuwait governorates — response within one hour' }}
+                    : 'Covering all 6 Kuwait governorates — response within one hour anywhere' }}
             </p>
-            <div class="eq8-page-hero__btns">
-                <a href="{{ \App\Helpers\WhatsAppHelper::url() }}" target="_blank" class="eq8-btn eq8-btn--wa">
-                    <svg class="eq8-btn__icon" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.116 1.528 5.845L0 24l6.335-1.505A11.946 11.946 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.882a9.872 9.872 0 01-5.031-1.378l-.361-.214-3.741.981.999-3.648-.235-.374A9.869 9.869 0 012.118 12C2.118 6.963 6.963 2.118 12 2.118s9.882 4.845 9.882 9.882-4.845 9.882-9.882 9.882z"/></svg>
-                    {{ $isAr ? 'واتساب الآن' : 'WhatsApp Now' }}
-                </a>
-                <a href="tel:{{ \App\Models\SiteSetting::get('phone_number') }}" class="eq8-btn eq8-btn--call">
-                    <svg class="eq8-btn__icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
-                    {{ $isAr ? 'اتصل الآن' : 'Call Now' }}
-                </a>
+            @include('partials.hero-btns')
+            {{-- Trust badges --}}
+            <div class="eq8-page-hero__badges">
+                <span class="eq8-page-hero__trust">⚡ {{ $isAr ? 'فني معتمد' : 'Certified Tech' }}</span>
+                <span class="eq8-page-hero__trust">🕐 {{ $isAr ? 'طوارئ 24/7' : '24/7 Emergency' }}</span>
+                <span class="eq8-page-hero__trust">🛡️ {{ $isAr ? 'ضمان 3 أشهر' : '3-Month Warranty' }}</span>
+                <span class="eq8-page-hero__trust">📍 {{ $isAr ? 'جميع المناطق' : 'All Areas' }}</span>
             </div>
         </div>
     </section>
@@ -48,9 +62,9 @@
     @include('partials.areas-grid', ['locations' => $locations])
 
     {{-- Coverage strip --}}
-    <section style="padding:40px 0;background:var(--bg)" dir="{{ $isAr ? 'rtl' : 'ltr' }}">
-        <div class="container mx-auto px-4" style="max-width:780px;text-align:center">
-            <p style="color:var(--body);line-height:1.8;font-family:'Cairo',sans-serif;font-size:.9rem">
+    <section class="eq8-coverage-strip">
+        <div class="eq8-coverage-strip__inner">
+            <p class="eq8-coverage-strip__text">
                 {{ $isAr
                     ? 'تخدم إلكتريك كويت جميع المناطق السكنية والتجارية في الكويت، من مدينة الكويت والسالمية شمالاً حتى الأحمدي والخيران جنوبًا. سواء كنت في شقة أو فيلا أو مبنى تجاري، فنيونا يصلون إليك خلال ساعة واحدة، مزودين بالأدوات والقطع اللازمة لإنهاء الخدمة في نفس الزيارة.'
                     : 'ElectricQ8 serves all residential and commercial areas in Kuwait, from Kuwait City and Salmiya in the north to Ahmadi and Khiran in the south. Whether you are in an apartment, villa or commercial building, our technicians reach you within one hour, equipped with all tools and parts to complete the service in a single visit.' }}
@@ -61,10 +75,105 @@
 </div>
 
 <style>
-.eq8-page-hero { background:linear-gradient(135deg,#43230E 0%,#6B3A17 60%,#8B4D20 100%); color:#fff; padding:56px 20px; text-align:center; }
-.eq8-page-hero__inner { max-width:700px; margin:0 auto; }
-.eq8-page-hero__title { font-size:clamp(1.6rem,4vw,2.4rem); font-weight:800; margin:0 0 12px; font-family:'Cairo',system-ui,sans-serif; }
-.eq8-page-hero__sub { font-size:1rem; color:#F3D9BB; margin:0 0 28px; font-family:'Cairo',system-ui,sans-serif; }
-.eq8-page-hero__btns { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+/* Breadcrumb */
+.eq8-bc { background:var(--altBg); border-bottom:1px solid var(--border); padding:10px 0; font-family:'Cairo',system-ui,sans-serif; font-size:13px; }
+.eq8-bc__inner { max-width:1200px; margin:0 auto; padding:0 24px; }
+.eq8-bc__list { display:flex; align-items:center; gap:8px; list-style:none; margin:0; padding:0; flex-wrap:wrap; color:var(--muted); }
+.eq8-bc__link { color:var(--primary); text-decoration:none; font-weight:600; }
+.eq8-bc__link:hover { text-decoration:underline; }
+.eq8-bc__sep { color:var(--border); }
+.eq8-bc__current { color:var(--text); font-weight:600; }
+
+/* Hero */
+.eq8-page-hero {
+    background: linear-gradient(135deg,#43230E 0%,#6B3A17 60%,#8B4D20 100%);
+    color: #fff;
+    padding: 64px 24px 72px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+.eq8-page-hero::before {
+    content:'';
+    position:absolute; inset:0;
+    background: radial-gradient(ellipse at 60% 40%, rgba(217,123,46,.2) 0%, transparent 65%);
+    pointer-events:none;
+}
+.eq8-page-hero__inner {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+}
+.eq8-areas-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(217,123,46,.25);
+    border: 1px solid rgba(217,123,46,.4);
+    color: #F3D9BB;
+    font-size: .82rem;
+    font-weight: 700;
+    padding: 6px 16px;
+    border-radius: 999px;
+    margin-bottom: 20px;
+    font-family: 'Cairo',system-ui,sans-serif;
+}
+.eq8-areas-badge__dot {
+    width:8px; height:8px; border-radius:50%;
+    background:#25D366;
+    animation: areaDot 1.5s ease-in-out infinite;
+}
+@keyframes areaDot { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+.eq8-page-hero__title {
+    font-size: clamp(1.7rem,4.5vw,2.6rem);
+    font-weight: 800;
+    margin: 0 0 14px;
+    line-height: 1.2;
+    font-family: 'Cairo',system-ui,sans-serif;
+}
+.eq8-page-hero__sub {
+    font-size: 1rem;
+    color: #F3D9BB;
+    margin: 0 0 28px;
+    font-family: 'Cairo',system-ui,sans-serif;
+    opacity: .9;
+}
+.eq8-page-hero__badges {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 24px;
+}
+.eq8-page-hero__trust {
+    background: rgba(255,255,255,.12);
+    border: 1px solid rgba(255,255,255,.2);
+    color: #F3D9BB;
+    font-size: .8rem;
+    font-weight: 600;
+    padding: 6px 16px;
+    border-radius: 999px;
+    font-family: 'Cairo',system-ui,sans-serif;
+}
+
+/* Coverage text strip */
+.eq8-coverage-strip {
+    padding: 48px 24px;
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+}
+.eq8-coverage-strip__inner {
+    max-width: 760px;
+    margin: 0 auto;
+    text-align: center;
+}
+.eq8-coverage-strip__text {
+    color: var(--body);
+    line-height: 1.85;
+    font-family: 'Cairo',system-ui,sans-serif;
+    font-size: .9rem;
+    margin: 0;
+}
 </style>
 @endsection
