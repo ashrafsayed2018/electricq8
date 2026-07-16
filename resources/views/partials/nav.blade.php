@@ -15,7 +15,23 @@ $links = [
 ];
 @endphp
 
-<nav class="eq8-nav" dir="{{ $isAr ? 'rtl' : 'ltr' }}" x-data="{ open: false }"
+<nav class="eq8-nav" dir="{{ $isAr ? 'rtl' : 'ltr' }}"
+     x-data="{
+         open: false,
+         dark: false,
+         init() {
+             const saved = localStorage.getItem('eq8-theme');
+             const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+             this.dark = saved ? saved === 'dark' : prefersDark;
+             this.applyTheme();
+         },
+         toggle() { this.dark = !this.dark; this.applyTheme(); },
+         applyTheme() {
+             const t = this.dark ? 'dark' : 'light';
+             document.documentElement.setAttribute('data-theme', t);
+             localStorage.setItem('eq8-theme', t);
+         }
+     }"
      @keydown.escape.window="open = false; $nextTick(() => $el.querySelector('.eq8-nav__burger')?.focus())">
 
     <div class="eq8-nav__inner">
@@ -39,6 +55,21 @@ $links = [
         </ul>
 
         <div class="eq8-nav__actions">
+            <button class="eq8-theme-toggle" @click="toggle()"
+                    :aria-label="dark ? '{{ $isAr ? 'تفعيل الوضع النهاري' : 'Switch to light mode' }}' : '{{ $isAr ? 'تفعيل الوضع الليلي' : 'Switch to dark mode' }}'">
+                {{-- Sun icon (shown in dark mode) --}}
+                <svg x-show="dark" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="12" cy="12" r="5"/>
+                    <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                    <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                </svg>
+                {{-- Moon icon (shown in light mode) --}}
+                <svg x-show="!dark" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
+                </svg>
+            </button>
             <livewire:language-switcher />
             <button class="eq8-nav__burger"
                     aria-label="{{ $isAr ? 'فتح القائمة' : 'Open menu' }}"
@@ -90,6 +121,20 @@ $links = [
 
             <div class="eq8-drawer__foot">
                 <livewire:language-switcher />
+                <button class="eq8-theme-toggle eq8-theme-toggle--drawer" @click="toggle()"
+                        :aria-label="dark ? '{{ $isAr ? 'تفعيل الوضع النهاري' : 'Switch to light mode' }}' : '{{ $isAr ? 'تفعيل الوضع الليلي' : 'Switch to dark mode' }}'">
+                    <svg x-show="dark" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="5"/>
+                        <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                        <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                    </svg>
+                    <svg x-show="!dark" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24">
+                        <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
+                    </svg>
+                    <span x-text="dark ? '{{ $isAr ? 'وضع النهار' : 'Light mode' }}' : '{{ $isAr ? 'وضع الليل' : 'Dark mode' }}'"></span>
+                </button>
             </div>
         </div>
     </div>
@@ -285,6 +330,36 @@ $links = [
     padding: 16px 20px 24px;
     border-top: 1px solid var(--border);
     flex-shrink: 0;
+}
+
+/* ── Theme toggle ────────────────────────────────────────────── */
+.eq8-theme-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border: 1px solid var(--border);
+    background: var(--altBg);
+    border-radius: 10px;
+    color: var(--muted);
+    cursor: pointer;
+    transition: background .18s ease, color .18s ease, border-color .18s ease;
+    flex-shrink: 0;
+}
+.eq8-theme-toggle:hover { background: var(--accentTint); color: var(--primary); border-color: var(--primary); }
+
+.eq8-theme-toggle--drawer {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    padding: 10px 14px;
+    gap: 10px;
+    margin-top: 10px;
+    font-size: .88rem;
+    font-weight: 700;
+    font-family: 'Cairo', system-ui, sans-serif;
+    justify-content: flex-start;
 }
 
 /* ── Language toggle (global) ────────────────────────────────── */

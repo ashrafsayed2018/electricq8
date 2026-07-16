@@ -43,6 +43,16 @@
 
     @yield('schema_markup')
 
+    {{-- Apply saved theme before first paint to avoid flash --}}
+    <script>
+        (function(){
+            var s = localStorage.getItem('eq8-theme');
+            if (s) { document.documentElement.setAttribute('data-theme', s); return; }
+            if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+        })();
+    </script>
     @livewireStyles
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
