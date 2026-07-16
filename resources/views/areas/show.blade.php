@@ -298,8 +298,8 @@
 .eq8-area-h2--center { text-align:center; }
 
 .eq8-section-head { text-align:center; margin-bottom:32px; }
-.eq8-section-title { font-size:1.5rem; font-weight:800; color:var(--text); margin:0 0 8px; font-family:'Cairo',sans-serif; }
-.eq8-section-sub { font-size:.9rem; color:var(--muted); margin:0; font-family:'Cairo',sans-serif; }
+.eq8-section-title { font-size:1.8rem; font-weight:800; color:var(--text); margin:0 0 10px; font-family:'Cairo',sans-serif; }
+.eq8-section-sub { font-size:1rem; color:var(--muted); margin:0; font-family:'Cairo',sans-serif; }
 
 .eq8-area-svc-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; max-width:900px; margin:0 auto; }
 @media(max-width:760px){ .eq8-area-svc-grid { grid-template-columns:repeat(2,1fr); } }
