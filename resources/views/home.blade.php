@@ -59,17 +59,21 @@
             <h1 class="eq8-hero__title">{{ __('site.hero.title') }}</h1>
             <p class="eq8-hero__sub">{{ __('site.hero.subtitle') }}</p>
             <div class="eq8-hero__ctas">
-                <a href="{{ \App\Helpers\WhatsAppHelper::url() }}" target="_blank" class="eq8-btn eq8-btn--wa">
-                    <svg class="eq8-btn__icon" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.116 1.528 5.845L0 24l6.335-1.505A11.946 11.946 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.882a9.872 9.872 0 01-5.031-1.378l-.361-.214-3.741.981.999-3.648-.235-.374A9.869 9.869 0 012.118 12C2.118 6.963 6.963 2.118 12 2.118s9.882 4.845 9.882 9.882-4.845 9.882-9.882 9.882z"/>
-                    </svg>
-                    {{ __('site.hero.cta_whatsapp') }}
+                <a href="{{ \App\Helpers\WhatsAppHelper::url() }}" target="_blank" class="eq8-hero-btn eq8-hero-btn--wa">
+                    <span class="eq8-hero-btn__icon-wrap eq8-hero-btn__icon-wrap--wa">
+                        <svg width="26" height="26" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.116 1.528 5.845L0 24l6.335-1.505A11.946 11.946 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.882a9.872 9.872 0 01-5.031-1.378l-.361-.214-3.741.981.999-3.648-.235-.374A9.869 9.869 0 012.118 12C2.118 6.963 6.963 2.118 12 2.118s9.882 4.845 9.882 9.882-4.845 9.882-9.882 9.882z"/>
+                        </svg>
+                    </span>
+                    <span class="eq8-hero-btn__label">{{ __('site.hero.cta_whatsapp') }}</span>
                 </a>
-                <a href="tel:{{ \App\Models\SiteSetting::get('phone_number') }}" class="eq8-btn eq8-btn--call">
-                    <svg class="eq8-btn__icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
-                    </svg>
-                    {{ __('site.hero.cta_call') }}
+                <a href="tel:{{ \App\Models\SiteSetting::get('phone_number') }}" class="eq8-hero-btn eq8-hero-btn--call">
+                    <span class="eq8-hero-btn__icon-wrap eq8-hero-btn__icon-wrap--call">
+                        <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                        </svg>
+                    </span>
+                    <span class="eq8-hero-btn__label">{{ __('site.hero.cta_call') }}</span>
                 </a>
             </div>
             <div class="eq8-hero__badges">
@@ -82,6 +86,7 @@
     </section>
 
     <style>
+    /* ── Hero shell ─────────────────────────────────────────────── */
     .eq8-hero {
         background: linear-gradient(135deg, #43230E 0%, #6B3A17 60%, #8B4D20 100%);
         color: #fff;
@@ -123,10 +128,7 @@
         background: #D97B2E;
         animation: heroFlash 1.5s ease-in-out infinite;
     }
-    @keyframes heroFlash {
-        0%, 100% { opacity: 1; }
-        50% { opacity: .3; }
-    }
+    @keyframes heroFlash { 0%,100%{opacity:1} 50%{opacity:.3} }
     .eq8-hero__title {
         font-size: clamp(2rem, 5vw, 3rem);
         font-weight: 800;
@@ -142,29 +144,64 @@
     }
     .eq8-hero__ctas {
         display: flex;
-        gap: 14px;
+        gap: 16px;
         justify-content: center;
         flex-wrap: wrap;
         margin-bottom: 32px;
     }
-    .eq8-btn {
+
+    /* ── Hero CTA buttons ────────────────────────────────────────── */
+    .eq8-hero-btn {
         display: inline-flex;
         align-items: center;
-        gap: 8px;
-        font-weight: 700;
-        font-size: .95rem;
-        padding: 14px 28px;
-        border-radius: 12px;
-        text-decoration: none;
-        transition: transform .2s ease, box-shadow .2s ease, background .18s ease;
+        gap: 12px;
         font-family: 'Cairo', system-ui, sans-serif;
+        font-weight: 800;
+        font-size: 1rem;
+        padding: 6px 24px 6px 6px;
+        border-radius: 999px;
+        text-decoration: none;
+        transition: transform .22s ease, box-shadow .22s ease, background .18s ease;
+        white-space: nowrap;
     }
-    .eq8-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.25); }
-    .eq8-btn__icon { width: 20px; height: 20px; flex-shrink: 0; }
-    .eq8-btn--wa  { background: #25D366; color: #fff; }
-    .eq8-btn--wa:hover  { background: #20ba58; }
-    .eq8-btn--call { background: rgba(255,255,255,.12); color: #fff; border: 1.5px solid rgba(255,255,255,.3); backdrop-filter: blur(4px); }
-    .eq8-btn--call:hover { background: rgba(255,255,255,.22); }
+    [dir="rtl"] .eq8-hero-btn { padding: 6px 6px 6px 24px; }
+    .eq8-hero-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(0,0,0,.3); }
+
+    .eq8-hero-btn__icon-wrap {
+        width: 52px; height: 52px;
+        border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        flex-shrink: 0;
+        transition: transform .22s ease;
+    }
+    .eq8-hero-btn:hover .eq8-hero-btn__icon-wrap { transform: scale(1.08); }
+
+    /* WhatsApp button */
+    .eq8-hero-btn--wa {
+        background: #25D366;
+        color: #fff;
+    }
+    .eq8-hero-btn--wa:hover { background: #1fba5a; }
+    .eq8-hero-btn__icon-wrap--wa {
+        background: rgba(0,0,0,.15);
+    }
+
+    /* Call button — outlined style */
+    .eq8-hero-btn--call {
+        background: transparent;
+        color: #fff;
+        border: 2px solid rgba(255,255,255,.55);
+        backdrop-filter: blur(6px);
+    }
+    .eq8-hero-btn--call:hover {
+        background: rgba(255,255,255,.1);
+        border-color: #fff;
+    }
+    .eq8-hero-btn__icon-wrap--call {
+        background: rgba(255,255,255,.18);
+        border: 1.5px solid rgba(255,255,255,.35);
+    }
+
     .eq8-hero__badges {
         display: flex;
         flex-wrap: wrap;
@@ -180,6 +217,60 @@
         padding: 6px 16px;
         border-radius: 999px;
     }
+
+    /* ── Sticky CTA bar ─────────────────────────────────────────── */
+    .eq8-sticky-bar {
+        position: fixed;
+        bottom: 0; left: 0; right: 0;
+        z-index: 800;
+        background: #1a1008;
+        border-top: 1px solid rgba(255,255,255,.1);
+        padding: 10px 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        transform: translateY(100%);
+        transition: transform .35s cubic-bezier(.4,0,.2,1);
+        box-shadow: 0 -4px 24px rgba(0,0,0,.35);
+    }
+    .eq8-sticky-bar.eq8-sticky-bar--visible { transform: translateY(0); }
+
+    .eq8-sticky-bar__site {
+        font-family: 'Cairo', system-ui, sans-serif;
+        font-size: .78rem;
+        font-weight: 700;
+        color: rgba(255,255,255,.45);
+        white-space: nowrap;
+        display: none;
+    }
+    @media(min-width:500px){ .eq8-sticky-bar__site { display: block; } }
+
+    .eq8-sticky-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-family: 'Cairo', system-ui, sans-serif;
+        font-weight: 800;
+        font-size: .88rem;
+        padding: 10px 22px;
+        border-radius: 999px;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+        transition: opacity .18s ease, transform .18s ease;
+        white-space: nowrap;
+    }
+    .eq8-sticky-btn:hover { opacity: .88; transform: scale(1.03); }
+    .eq8-sticky-btn svg { width: 18px; height: 18px; flex-shrink: 0; }
+
+    .eq8-sticky-btn--wa  { background: #25D366; color: #fff; }
+    .eq8-sticky-btn--call {
+        background: transparent;
+        color: #fff;
+        border: 2px solid rgba(255,255,255,.45);
+    }
+    .eq8-sticky-btn--call:hover { border-color: #fff; }
     </style>
 
     @include('partials.services-grid', ['services' => $services])
@@ -187,4 +278,46 @@
     @include('partials.testimonials', ['testimonials' => $testimonials])
 
     @include('partials.home-sections')
+
+    {{-- Sticky CTA bar (slides in after hero) --}}
+    @php $phone = \App\Models\SiteSetting::get('phone_number'); @endphp
+    <div class="eq8-sticky-bar" id="eq8StickyBar" dir="{{ $isAr ? 'rtl' : 'ltr' }}" aria-hidden="true">
+        <span class="eq8-sticky-bar__site">ElectricQ8 |</span>
+        <a href="{{ \App\Helpers\WhatsAppHelper::url() }}" target="_blank" rel="noopener"
+           class="eq8-sticky-btn eq8-sticky-btn--wa" onclick="window.analyticsTrack&&analyticsTrack('whatsapp_click',{placement:'sticky_bar'})">
+            <svg fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.116 1.528 5.845L0 24l6.335-1.505A11.946 11.946 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.882a9.872 9.872 0 01-5.031-1.378l-.361-.214-3.741.981.999-3.648-.235-.374A9.869 9.869 0 012.118 12C2.118 6.963 6.963 2.118 12 2.118s9.882 4.845 9.882 9.882-4.845 9.882-9.882 9.882z"/>
+            </svg>
+            {{ $isAr ? 'احجز الآن' : 'WhatsApp' }}
+        </a>
+        <a href="tel:{{ $phone }}" class="eq8-sticky-btn eq8-sticky-btn--call"
+           onclick="window.analyticsTrack&&analyticsTrack('phone_click',{placement:'sticky_bar'})">
+            <svg fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+            </svg>
+            {{ $isAr ? 'اتصل بنا' : 'Call Now' }}
+        </a>
+    </div>
+
+    <script>
+    (function () {
+        var bar    = document.getElementById('eq8StickyBar');
+        var hero   = document.querySelector('.eq8-hero');
+        if (!bar || !hero) return;
+        var shown  = false;
+        function check() {
+            var heroBottom = hero.getBoundingClientRect().bottom;
+            if (!shown && heroBottom < 0) {
+                shown = true;
+                bar.classList.add('eq8-sticky-bar--visible');
+                bar.removeAttribute('aria-hidden');
+            } else if (shown && heroBottom >= 0) {
+                shown = false;
+                bar.classList.remove('eq8-sticky-bar--visible');
+                bar.setAttribute('aria-hidden', 'true');
+            }
+        }
+        window.addEventListener('scroll', check, { passive: true });
+    })();
+    </script>
 @endsection
