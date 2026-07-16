@@ -212,11 +212,11 @@
 .eq8-contact-info { background:linear-gradient(145deg,#43230E 0%,#6B3A17 60%,#8B4D20 100%); color:#fff; padding:48px 36px; display:flex; flex-direction:column; gap:0; }
 .eq8-contact-info__brand { display:flex; align-items:center; gap:10px; margin-bottom:28px; font-size:22px; font-weight:800; }
 .eq8-contact-info__name { font-size:22px; font-weight:800; }
-.eq8-contact-info__sub { font-size:.9rem; opacity:.85; line-height:1.7; margin:0 0 32px; }
+.eq8-contact-info__sub { font-size:.9rem; color:rgba(255,255,255,.82); line-height:1.7; margin:0 0 32px; }
 .eq8-contact-info__list { list-style:none; padding:0; margin:0 0 32px; display:flex; flex-direction:column; gap:18px; }
 .eq8-contact-info__list li { display:flex; align-items:flex-start; gap:14px; }
 .eq8-info-icon { font-size:18px; flex-shrink:0; margin-top:2px; }
-.eq8-info-label { display:block; font-size:10px; text-transform:uppercase; letter-spacing:.08em; opacity:.6; margin-bottom:2px; }
+.eq8-info-label { display:block; font-size:10px; text-transform:uppercase; letter-spacing:.08em; color:rgba(255,255,255,.58); margin-bottom:2px; }
 .eq8-info-value { display:block; font-size:.9rem; font-weight:600; color:#fff; text-decoration:none; }
 .eq8-info-value:hover { text-decoration:underline; }
 .eq8-contact-info__badges { display:flex; flex-wrap:wrap; gap:8px; margin-top:auto; padding-top:20px; border-top:1px solid rgba(255,255,255,.15); }

@@ -11,15 +11,18 @@
             </select>
             <div class="flex rounded-lg overflow-hidden border border-white/10 text-sm">
                 <a href="{{ route('admin.contacts.index') }}"
-                   class="px-4 py-2 {{ $locale === '' ? 'bg-purple-600 text-white' : 'bg-[#1a1d27] text-gray-400 hover:text-white' }}">
+                   class="px-4 py-2 bg-[#1a1d27]"
+                   style="{{ $locale === '' ? 'background:var(--ad-accentdk);color:#fff' : 'color:var(--ad-text3)' }}">
                     {{ __('admin.contacts.all') }}
                 </a>
                 <a href="{{ route('admin.contacts.index', 'ar') }}"
-                   class="px-4 py-2 {{ $locale === 'ar' ? 'bg-purple-600 text-white' : 'bg-[#1a1d27] text-gray-400 hover:text-white' }}">
+                   class="px-4 py-2 bg-[#1a1d27]"
+                   style="{{ $locale === 'ar' ? 'background:var(--ad-accentdk);color:#fff' : 'color:var(--ad-text3)' }}">
                     {{ __('admin.contacts.arabic') }}
                 </a>
                 <a href="{{ route('admin.contacts.index', 'en') }}"
-                   class="px-4 py-2 {{ $locale === 'en' ? 'bg-purple-600 text-white' : 'bg-[#1a1d27] text-gray-400 hover:text-white' }}">
+                   class="px-4 py-2 bg-[#1a1d27]"
+                   style="{{ $locale === 'en' ? 'background:var(--ad-accentdk);color:#fff' : 'color:var(--ad-text3)' }}">
                     English
                 </a>
             </div>
@@ -67,7 +70,7 @@
                         <td class="px-4 py-3">
                             @if($contact->status->value === 'new')
                                 <button wire:click="markRead({{ $contact->id }})"
-                                    class="text-xs text-purple-400 hover:text-purple-300 transition">
+                                    class="text-xs transition" style="color:var(--ad-accent)">
                                     {{ __('admin.contacts.mark_read') }}
                                 </button>
                             @endif

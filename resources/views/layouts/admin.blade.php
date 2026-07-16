@@ -8,24 +8,179 @@
     @livewireStyles
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
+        /* ── Admin design tokens ──────────────────────────────────── */
+        :root {
+            /* Light mode admin */
+            --ad-bg:      #F5EFE8;
+            --ad-surface: #FFFFFF;
+            --ad-input:   #FAF6F1;
+            --ad-modal:   #F0E8DE;
+            --ad-border:  rgba(107,58,23,.18);
+            --ad-text:    #2B211A;
+            --ad-text2:   #5C4033;
+            --ad-text3:   #7A6A5C;
+            --ad-text4:   #9E8878;
+            --ad-muted:   #B8A898;
+            --ad-accent:  #D97B2E;
+            --ad-accentdk:#6B3A17;
+            --ad-accentlt:rgba(217,123,46,.15);
+            --ad-focus:   #D97B2E;
+            --ad-active:  rgba(217,123,46,.15);
+            --ad-divide:  rgba(107,58,23,.10);
+            --ad-tooltip: #43230E;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --ad-bg:      #0f1117;
+                --ad-surface: #1a1d27;
+                --ad-input:   #0f1117;
+                --ad-modal:   #12141f;
+                --ad-border:  rgba(255,255,255,.10);
+                --ad-text:    #F3E9DC;
+                --ad-text2:   #D8C7B4;
+                --ad-text3:   #B0998A;
+                --ad-text4:   #8A7060;
+                --ad-muted:   #6A5848;
+                --ad-accent:  #D97B2E;
+                --ad-accentdk:#6B3A17;
+                --ad-accentlt:rgba(217,123,46,.15);
+                --ad-focus:   #D97B2E;
+                --ad-active:  rgba(255,255,255,.10);
+                --ad-divide:  rgba(255,255,255,.05);
+                --ad-tooltip: #43230E;
+            }
+        }
+        :root[data-theme="dark"] {
+            --ad-bg:      #0f1117;
+            --ad-surface: #1a1d27;
+            --ad-input:   #0f1117;
+            --ad-modal:   #12141f;
+            --ad-border:  rgba(255,255,255,.10);
+            --ad-text:    #F3E9DC;
+            --ad-text2:   #D8C7B4;
+            --ad-text3:   #B0998A;
+            --ad-text4:   #8A7060;
+            --ad-muted:   #6A5848;
+            --ad-active:  rgba(255,255,255,.10);
+            --ad-divide:  rgba(255,255,255,.05);
+            --ad-tooltip: #43230E;
+        }
+        :root[data-theme="light"] {
+            --ad-bg:      #F5EFE8;
+            --ad-surface: #FFFFFF;
+            --ad-input:   #FAF6F1;
+            --ad-modal:   #F0E8DE;
+            --ad-border:  rgba(107,58,23,.18);
+            --ad-text:    #2B211A;
+            --ad-text2:   #5C4033;
+            --ad-text3:   #7A6A5C;
+            --ad-text4:   #9E8878;
+            --ad-muted:   #B8A898;
+            --ad-active:  rgba(217,123,46,.15);
+            --ad-divide:  rgba(107,58,23,.10);
+            --ad-tooltip: #43230E;
+        }
+
         [x-cloak] { display: none !important; }
 
-        /* Tooltip — appears outside the collapsed sidebar */
+        /* ── Global admin base ───────────────────────────────────── */
+        body { background: var(--ad-bg) !important; color: var(--ad-text) !important; }
+
+        /* ── Hardcoded hex overrides → tokens ────────────────────── */
+        .bg-\[\#0f1117\]  { background-color: var(--ad-bg)      !important; }
+        .bg-\[\#1a1d27\]  { background-color: var(--ad-surface)  !important; }
+        .bg-\[\#12141f\]  { background-color: var(--ad-modal)    !important; }
+        .text-white       { color: var(--ad-text)   !important; }
+        .text-gray-300    { color: var(--ad-text2)  !important; }
+        .text-gray-400    { color: var(--ad-text3)  !important; }
+        .text-gray-500    { color: var(--ad-text4)  !important; }
+        .text-gray-600    { color: var(--ad-muted)  !important; }
+        .text-gray-700    { color: var(--ad-muted)  !important; }
+        .border-white\/10 { border-color: var(--ad-border) !important; }
+        .border-white\/8  { border-color: var(--ad-border) !important; }
+        .divide-white\/5 > * + * { border-color: var(--ad-divide) !important; }
+        .hover\:bg-white\/5:hover   { background-color: var(--ad-active) !important; }
+        .bg-white\/5                { background-color: var(--ad-active) !important; }
+        .bg-white\/10               { background-color: var(--ad-accentlt) !important; }
+
+        /* Purple → brown accent */
+        .bg-purple-600              { background-color: var(--ad-accentdk) !important; }
+        .hover\:bg-purple-600:hover { background-color: var(--ad-accentdk) !important; }
+        .bg-purple-600\/10          { background-color: var(--ad-accentlt) !important; }
+        .bg-purple-500\/20          { background-color: var(--ad-accentlt) !important; }
+        .bg-purple-500\/15          { background-color: var(--ad-accentlt) !important; }
+        .bg-purple-500\/10          { background-color: var(--ad-accentlt) !important; }
+        .text-purple-400            { color: var(--ad-accent)   !important; }
+        .text-purple-300            { color: var(--ad-accent)   !important; }
+        .hover\:text-purple-300:hover { color: var(--ad-accent) !important; }
+        .focus\:border-purple-500:focus { border-color: var(--ad-focus) !important; }
+        .hover\:border-purple-500:hover { border-color: var(--ad-focus) !important; }
+        .border-purple-500\/40      { border-color: rgba(217,123,46,.4) !important; }
+        .shadow-purple-900\/30      { --tw-shadow-color: rgba(107,58,23,.3) !important; }
+        .hover\:border-yellow-500\/40:hover { border-color: rgba(217,123,46,.4) !important; }
+        .hover\:border-purple-500\/40:hover { border-color: rgba(217,123,46,.4) !important; }
+
+        /* Gray badge → neutral brown */
+        .bg-gray-500\/20            { background-color: var(--ad-accentlt) !important; }
+        .bg-gray-600                { background-color: var(--ad-text4)    !important; }
+
+        /* Additional purple → brown overrides */
+        .hover\:bg-purple-700:hover { background-color: var(--ad-accentdk) !important; }
+        .hover\:bg-purple-500:hover { background-color: var(--ad-accent)   !important; }
+        .hover\:bg-purple-600:hover { background-color: var(--ad-accentdk) !important; }
+        .hover\:bg-purple-600\/20:hover { background-color: var(--ad-accentlt) !important; }
+        .hover\:border-purple-500\/50:hover { border-color: rgba(217,123,46,.5) !important; }
+        .hover\:text-purple-300:hover { color: var(--ad-accent) !important; }
+        .file\:bg-purple-600::file-selector-button { background-color: var(--ad-accentdk) !important; }
+        input[type="checkbox"]:checked ~ div.peer-checked\:bg-purple-600,
+        input:checked + * .peer-checked\:bg-purple-600,
+        .peer:checked ~ .peer-checked\:bg-purple-600 {
+            background-color: var(--ad-accentdk) !important;
+        }
+
+        /* Inputs */
+        input, textarea, select {
+            background-color: var(--ad-input) !important;
+            color: var(--ad-text) !important;
+            border-color: var(--ad-border) !important;
+        }
+        input::placeholder, textarea::placeholder { color: var(--ad-muted) !important; }
+        .placeholder-gray-600::placeholder { color: var(--ad-muted) !important; }
+        input:focus, textarea:focus, select:focus {
+            border-color: var(--ad-focus) !important;
+            box-shadow: 0 0 0 2px rgba(217,123,46,.2) !important;
+        }
+        select option { background: var(--ad-surface); color: var(--ad-text); }
+
+        /* ── Sidebar ─────────────────────────────────────────────── */
+        aside, .fixed.inset-y-0.start-0 {
+            background-color: var(--ad-surface) !important;
+            border-color: var(--ad-border) !important;
+        }
+        header {
+            background-color: var(--ad-surface) !important;
+            border-color: var(--ad-border) !important;
+        }
+        /* Language switcher bg */
+        .flex.bg-\[\#0f1117\].rounded-lg {
+            background-color: var(--ad-bg) !important;
+        }
+
+        /* ── Tooltip ─────────────────────────────────────────────── */
         .nav-item { position: relative; }
         .nav-item .tooltip {
             position: absolute;
             top: 50%;
-            /* RTL: sidebar is on the right, tooltip goes to the left */
             right: calc(100% + 10px);
             transform: translateY(-50%);
-            background: #2d3148;
+            background: var(--ad-tooltip);
             color: #fff;
             font-size: 12px;
             padding: 5px 12px;
             border-radius: 6px;
             white-space: nowrap;
             pointer-events: none;
-            box-shadow: 0 2px 12px rgba(0,0,0,.6);
+            box-shadow: 0 2px 12px rgba(0,0,0,.4);
             opacity: 0;
             transition: opacity 0.15s;
             z-index: 9999;
@@ -37,9 +192,8 @@
             top: 50%;
             transform: translateY(-50%);
             border: 5px solid transparent;
-            border-left-color: #2d3148;
+            border-left-color: var(--ad-tooltip);
         }
-        /* LTR: sidebar is on the left, tooltip goes to the right */
         [dir="ltr"] .nav-item .tooltip {
             right: auto;
             left: calc(100% + 10px);
@@ -48,19 +202,49 @@
             left: auto;
             right: 100%;
             border-left-color: transparent;
-            border-right-color: #2d3148;
+            border-right-color: var(--ad-tooltip);
         }
-        body[data-sidebar-collapsed="true"] .nav-item:hover .tooltip {
-            opacity: 1;
-        }
-        /* Allow tooltips to overflow the sidebar bounds */
+        body[data-sidebar-collapsed="true"] .nav-item:hover .tooltip { opacity: 1; }
         body[data-sidebar-collapsed="true"] aside,
-        body[data-sidebar-collapsed="true"] aside nav {
-            overflow: visible !important;
+        body[data-sidebar-collapsed="true"] aside nav { overflow: visible !important; }
+
+        /* ── Table ───────────────────────────────────────────────── */
+        table { color: var(--ad-text); }
+        thead { color: var(--ad-text4); }
+        tbody tr:hover { background-color: var(--ad-active) !important; }
+
+        /* ── Pagination links ─────────────────────────────────────── */
+        nav[aria-label="Pagination Navigation"] span,
+        nav[aria-label="Pagination Navigation"] a {
+            background-color: var(--ad-surface) !important;
+            border-color: var(--ad-border) !important;
+            color: var(--ad-text3) !important;
         }
+        nav[aria-label="Pagination Navigation"] span[aria-current],
+        nav[aria-label="Pagination Navigation"] .bg-white {
+            background-color: var(--ad-accentdk) !important;
+            color: #fff !important;
+        }
+
+        /* ── Theme toggle button in admin topbar ─────────────────── */
+        .ad-theme-toggle {
+            display: flex; align-items: center; justify-content: center;
+            width: 32px; height: 32px; border-radius: 8px;
+            background: var(--ad-active); border: 1px solid var(--ad-border);
+            color: var(--ad-text3); cursor: pointer; transition: background .18s, color .18s;
+            flex-shrink: 0;
+        }
+        .ad-theme-toggle:hover { background: var(--ad-accentlt); color: var(--ad-accent); }
     </style>
+    <script>
+    (function(){
+        var s=localStorage.getItem('eq8-theme');
+        if(s){document.documentElement.setAttribute('data-theme',s);return;}
+        if(window.matchMedia('(prefers-color-scheme:dark)').matches){document.documentElement.setAttribute('data-theme','dark');}
+    })();
+    </script>
 </head>
-<body class="bg-[#0f1117] text-white antialiased">
+<body class="antialiased">
 
 <div x-data="{
     sidebarOpen: false,
@@ -101,14 +285,14 @@
 
             {{-- Logo + text (hidden when collapsed) --}}
             <div x-show="!collapsed" class="flex items-center gap-3 min-w-0">
-                <div class="w-9 h-9 rounded-full bg-purple-600 flex items-center justify-center text-sm font-bold shrink-0">Q</div>
+                <div class="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold shrink-0" style="background:var(--ad-accentdk);color:#fff">Q</div>
                 <span class="font-bold text-sm leading-tight whitespace-nowrap">
                     ElectricQ8<br><span class="text-gray-400 font-normal text-xs">{{ __('admin.panel_title') }}</span>
                 </span>
             </div>
 
             {{-- Logo only (shown when collapsed) --}}
-            <div x-show="collapsed" class="w-9 h-9 rounded-full bg-purple-600 flex items-center justify-center text-sm font-bold shrink-0">Q</div>
+            <div x-show="collapsed" class="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold shrink-0" style="background:var(--ad-accentdk);color:#fff">Q</div>
 
             {{-- Close button mobile --}}
             <button @click="sidebarOpen = false" class="lg:hidden text-gray-400 hover:text-white shrink-0" x-show="sidebarOpen">
@@ -135,7 +319,7 @@
         </button>
 
         {{-- Nav --}}
-        <nav :class="collapsed ? 'px-1' : 'px-2'" class="flex-1 py-1.5 text-sm flex flex-col justify-between overflow-hidden">
+        <nav :class="collapsed ? 'px-1' : 'px-2'" class="flex-1 py-1.5 text-sm flex flex-col justify-between overflow-y-auto overflow-x-hidden">
 
             @php
             $link = fn(string $label, string $route, string $active, string $icon) => [
@@ -261,7 +445,7 @@
         {{-- Mobile header --}}
         <div class="border-b border-white/10 flex items-center justify-between px-3 py-3">
             <div class="flex items-center gap-3">
-                <div class="w-9 h-9 rounded-full bg-purple-600 flex items-center justify-center text-sm font-bold shrink-0">Q</div>
+                <div class="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold shrink-0" style="background:var(--ad-accentdk);color:#fff">Q</div>
                 <span class="font-bold text-sm">ElectricQ8<br><span class="text-gray-400 font-normal text-xs">{{ __('admin.panel_title') }}</span></span>
             </div>
             <button @click="sidebarOpen = false" class="text-gray-400 hover:text-white">
@@ -328,19 +512,28 @@
                 </p>
                 {{-- Language switcher --}}
                 @php $currentLocale = app()->getLocale(); @endphp
-                <div class="flex bg-[#0f1117] rounded-lg border border-white/10 p-0.5 gap-0.5 mr-1">
+                <div class="flex rounded-lg border border-white/10 p-0.5 gap-0.5 mr-1" style="background:var(--ad-bg)">
                     <a href="{{ route('locale.switch', 'ar') }}"
-                       class="px-3 py-1 rounded-md text-xs font-semibold transition
-                              {{ $currentLocale === 'ar' ? 'bg-purple-600 text-white' : 'text-gray-400 hover:text-white' }}">
+                       class="px-3 py-1 rounded-md text-xs font-semibold transition"
+                       style="{{ $currentLocale === 'ar' ? 'background:var(--ad-accentdk);color:#fff' : 'color:var(--ad-text3)' }}">
                         ع
                     </a>
                     <a href="{{ route('locale.switch', 'en') }}"
-                       class="px-3 py-1 rounded-md text-xs font-semibold transition
-                              {{ $currentLocale === 'en' ? 'bg-purple-600 text-white' : 'text-gray-400 hover:text-white' }}">
+                       class="px-3 py-1 rounded-md text-xs font-semibold transition"
+                       style="{{ $currentLocale === 'en' ? 'background:var(--ad-accentdk);color:#fff' : 'color:var(--ad-text3)' }}">
                         EN
                     </a>
                 </div>
             </div>
+            <div class="flex items-center gap-2">
+            <button type="button" class="ad-theme-toggle" id="adThemeToggle" aria-label="Toggle theme">
+                <svg id="adThemeSun" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="display:none">
+                    <circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                </svg>
+                <svg id="adThemeMoon" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
+                </svg>
+            </button>
             <a href="{{ config('app.url') }}" target="_blank"
                class="flex items-center gap-2 text-xs text-gray-400 hover:text-white transition shrink-0">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -348,9 +541,10 @@
                 </svg>
                 <span class="hidden sm:inline">{{ __('admin.visit_site') }}</span>
             </a>
+            </div>
         </header>
 
-        <main class="flex-1 p-4 md:p-6 bg-[#0f1117]">
+        <main class="flex-1 p-4 md:p-6">
             {{ $slot }}
         </main>
 
@@ -417,6 +611,26 @@
             });
         });
 
+    </script>
+    <script>
+    (function(){
+        var btn  = document.getElementById('adThemeToggle');
+        var sun  = document.getElementById('adThemeSun');
+        var moon = document.getElementById('adThemeMoon');
+        function applyTheme(dark) {
+            document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+            localStorage.setItem('eq8-theme', dark ? 'dark' : 'light');
+            if (sun)  sun.style.display  = dark ? '' : 'none';
+            if (moon) moon.style.display = dark ? 'none' : '';
+        }
+        var saved = localStorage.getItem('eq8-theme');
+        var isDark = saved ? saved === 'dark' : window.matchMedia('(prefers-color-scheme:dark)').matches;
+        applyTheme(isDark);
+        if (btn) btn.addEventListener('click', function(){
+            isDark = !isDark;
+            applyTheme(isDark);
+        });
+    })();
     </script>
 </body>
 </html>

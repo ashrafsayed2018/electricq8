@@ -160,13 +160,13 @@
     gap: 12px;
 }
 .cf-success-icon { font-size: 52px; line-height: 1; }
-.cf-success-title { font-size: 1.5rem; font-weight: 800; color: #111827; margin: 0; }
-.cf-success-body  { color: #6b7280; font-size: 0.95rem; margin: 0; }
+.cf-success-title { font-size: 1.5rem; font-weight: 800; color: var(--text); margin: 0; }
+.cf-success-body  { color: var(--muted); font-size: 0.95rem; margin: 0; }
 
 /* ── header ─────────────────────────────────────────────────── */
 .cf-header { margin-bottom: 28px; }
-.cf-title   { font-size: 1.6rem; font-weight: 800; color: #111827; margin: 0 0 6px; }
-.cf-subtitle{ font-size: 0.9rem; color: #6b7280; margin: 0; }
+.cf-title   { font-size: 1.6rem; font-weight: 800; color: var(--text); margin: 0 0 6px; }
+.cf-subtitle{ font-size: 0.9rem; color: var(--muted); margin: 0; }
 
 /* ── form layout ────────────────────────────────────────────── */
 .cf-form  { display: flex; flex-direction: column; gap: 18px; }
@@ -175,7 +175,7 @@
 
 /* ── field + label ──────────────────────────────────────────── */
 .cf-field   { display: flex; flex-direction: column; gap: 6px; }
-.cf-label   { font-size: 0.82rem; font-weight: 700; color: #374151; letter-spacing: 0.01em; }
+.cf-label   { font-size: 0.82rem; font-weight: 700; color: var(--text); letter-spacing: 0.01em; }
 .cf-required{ color: #ef4444; margin-inline-start: 2px; }
 
 /* ── input wrapper ──────────────────────────────────────────── */
@@ -183,22 +183,22 @@
     position: relative;
     display: flex;
     align-items: center;
-    background: #f9fafb;
-    border: 1.5px solid #e5e7eb;
+    background: var(--altBg);
+    border: 1.5px solid var(--border);
     border-radius: 12px;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 .cf-input-wrap:focus-within {
-    border-color: #d97706;
-    box-shadow: 0 0 0 3px rgba(37,99,235,0.12);
-    background: #fff;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--accentTint);
+    background: var(--cardBg);
 }
 .cf-input-wrap--error { border-color: #ef4444 !important; }
-.cf-input-wrap--error:focus-within { box-shadow: 0 0 0 3px rgba(239,68,68,0.12) !important; }
+.cf-input-wrap--error:focus-within { box-shadow: 0 0 0 3px rgba(239,68,68,0.15) !important; }
 
 .cf-input-icon {
     padding-inline-start: 14px;
-    color: #9ca3af;
+    color: var(--muted);
     display: flex;
     align-items: center;
     flex-shrink: 0;
@@ -210,14 +210,15 @@
     outline: none;
     padding: 12px 14px;
     font-size: 0.92rem;
-    color: #111827;
+    color: var(--text);
     font-family: 'Cairo', sans-serif;
     width: 100%;
 }
-.cf-input::placeholder { color: #9ca3af; }
+.cf-input::placeholder { color: var(--muted); }
 
-/* select */
-.cf-select-wrap .cf-select { appearance: none; cursor: pointer; }
+/* select — force correct colors in dark mode */
+.cf-select-wrap .cf-select { appearance: none; cursor: pointer; color: var(--text); background: var(--altBg); }
+.cf-select-wrap .cf-select option { background: var(--cardBg); color: var(--text); }
 .cf-select-wrap::after {
     content: '';
     position: absolute;
@@ -227,7 +228,7 @@
     width: 0; height: 0;
     border-left: 5px solid transparent;
     border-right: 5px solid transparent;
-    border-top: 6px solid #6b7280;
+    border-top: 6px solid var(--muted);
     pointer-events: none;
 }
 
@@ -241,7 +242,7 @@
 /* ── submit button ──────────────────────────────────────────── */
 .cf-submit-btn {
     width: 100%;
-    background: linear-gradient(135deg, #ca8a04 0%, #d97706 100%);
+    background: linear-gradient(135deg, var(--primaryDk) 0%, var(--primary) 100%);
     color: #fff;
     border: none;
     border-radius: 12px;
@@ -251,12 +252,12 @@
     font-family: 'Cairo', sans-serif;
     cursor: pointer;
     transition: opacity 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
-    box-shadow: 0 4px 14px rgba(37,99,235,0.35);
+    box-shadow: 0 4px 14px rgba(107,58,23,0.35);
 }
 .cf-submit-btn:hover:not([disabled]) {
     opacity: 0.92;
     transform: translateY(-1px);
-    box-shadow: 0 6px 20px rgba(37,99,235,0.40);
+    box-shadow: 0 6px 20px rgba(107,58,23,0.45);
 }
 .cf-submit-btn:active:not([disabled]) { transform: translateY(0); }
 .cf-submit-btn[disabled], .cf-submit-btn--loading { opacity: 0.7; cursor: not-allowed; }
@@ -269,14 +270,14 @@
     display: flex;
     align-items: center;
     gap: 12px;
-    color: #9ca3af;
+    color: var(--muted);
     font-size: 0.8rem;
 }
 .cf-divider::before, .cf-divider::after {
     content: '';
     flex: 1;
     height: 1px;
-    background: #e5e7eb;
+    background: var(--border);
 }
 
 /* ── WhatsApp button ────────────────────────────────────────── */

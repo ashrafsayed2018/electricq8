@@ -97,10 +97,6 @@
             <button type="submit" class="lc__submit">{{ __('site.auth.sign_in') }}</button>
         </form>
 
-        <p class="lc__footer">
-            {{ __('site.auth.no_account') }}
-            <a href="{{ route('register') }}">{{ __('site.auth.register_link') }}</a>
-        </p>
     </div>
 
     <script>

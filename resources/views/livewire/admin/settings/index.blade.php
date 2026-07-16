@@ -40,7 +40,7 @@
         <nav class="w-52 shrink-0 flex flex-col gap-1 sticky top-6">
 
             <button type="button" @click="tab = 'contact'"
-                :class="tab === 'contact' ? 'bg-purple-600/20 text-purple-300 border-purple-500/40' : 'text-gray-500 border-transparent hover:text-gray-300 hover:bg-white/5'"
+                :style="tab === 'contact' ? 'background:var(--ad-accentlt);color:var(--ad-accent);border-color:rgba(217,123,46,.4)' : 'border-color:transparent;color:var(--ad-text4)'"
                 class="flex items-center gap-3 px-4 py-2.5 rounded-xl border text-sm font-medium transition w-full text-start">
                 <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
@@ -49,7 +49,7 @@
             </button>
 
             <button type="button" @click="tab = 'social'"
-                :class="tab === 'social' ? 'bg-purple-600/20 text-purple-300 border-purple-500/40' : 'text-gray-500 border-transparent hover:text-gray-300 hover:bg-white/5'"
+                :style="tab === 'social' ? 'background:var(--ad-accentlt);color:var(--ad-accent);border-color:rgba(217,123,46,.4)' : 'border-color:transparent;color:var(--ad-text4)'"
                 class="flex items-center gap-3 px-4 py-2.5 rounded-xl border text-sm font-medium transition w-full text-start">
                 <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14"/>
@@ -58,7 +58,7 @@
             </button>
 
             <button type="button" @click="tab = 'seo'"
-                :class="tab === 'seo' ? 'bg-purple-600/20 text-purple-300 border-purple-500/40' : 'text-gray-500 border-transparent hover:text-gray-300 hover:bg-white/5'"
+                :style="tab === 'seo' ? 'background:var(--ad-accentlt);color:var(--ad-accent);border-color:rgba(217,123,46,.4)' : 'border-color:transparent;color:var(--ad-text4)'"
                 class="flex items-center gap-3 px-4 py-2.5 rounded-xl border text-sm font-medium transition w-full text-start">
                 <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
@@ -67,7 +67,7 @@
             </button>
 
             <button type="button" @click="tab = 'brand'"
-                :class="tab === 'brand' ? 'bg-purple-600/20 text-purple-300 border-purple-500/40' : 'text-gray-500 border-transparent hover:text-gray-300 hover:bg-white/5'"
+                :style="tab === 'brand' ? 'background:var(--ad-accentlt);color:var(--ad-accent);border-color:rgba(217,123,46,.4)' : 'border-color:transparent;color:var(--ad-text4)'"
                 class="flex items-center gap-3 px-4 py-2.5 rounded-xl border text-sm font-medium transition w-full text-start">
                 <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
