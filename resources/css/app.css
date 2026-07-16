@@ -35,6 +35,44 @@ html[dir="rtl"] body {
     margin-bottom: 0.6em;
     line-height: 1.3;
 }
+
+/* ── Dark mode overrides ─────────────────────────────────────────────── */
+@media (prefers-color-scheme: dark) {
+    .richtext                           { color: #D8C7B4; }
+    .richtext h1, .richtext h2,
+    .richtext h3, .richtext h4,
+    .richtext h5, .richtext h6          { color: #F3E9DC; }
+    .richtext strong, .richtext b       { color: #F3E9DC; }
+    .richtext blockquote                { background: rgba(202,138,4,.12); color: #F3D9BB; }
+    .richtext td                        { border-bottom-color: #4A3826; }
+    .richtext tr:nth-child(even) td     { background: #2C2013; }
+    .richtext hr                        { border-top-color: #4A3826; }
+    .richtext pre, .richtext code       { background: #2C2013; color: #F3D9BB; }
+}
+:root[data-theme="dark"] .richtext                       { color: #D8C7B4; }
+:root[data-theme="dark"] .richtext h1,
+:root[data-theme="dark"] .richtext h2,
+:root[data-theme="dark"] .richtext h3,
+:root[data-theme="dark"] .richtext h4,
+:root[data-theme="dark"] .richtext h5,
+:root[data-theme="dark"] .richtext h6                    { color: #F3E9DC; }
+:root[data-theme="dark"] .richtext strong,
+:root[data-theme="dark"] .richtext b                     { color: #F3E9DC; }
+:root[data-theme="dark"] .richtext blockquote            { background: rgba(202,138,4,.12); color: #F3D9BB; }
+:root[data-theme="dark"] .richtext td                    { border-bottom-color: #4A3826; }
+:root[data-theme="dark"] .richtext tr:nth-child(even) td { background: #2C2013; }
+:root[data-theme="dark"] .richtext hr                    { border-top-color: #4A3826; }
+:root[data-theme="dark"] .richtext pre,
+:root[data-theme="dark"] .richtext code                  { background: #2C2013; color: #F3D9BB; }
+:root[data-theme="light"] .richtext                      { color: #374151; }
+:root[data-theme="light"] .richtext h1,
+:root[data-theme="light"] .richtext h2,
+:root[data-theme="light"] .richtext h3,
+:root[data-theme="light"] .richtext h4,
+:root[data-theme="light"] .richtext h5,
+:root[data-theme="light"] .richtext h6                   { color: #111827; }
+:root[data-theme="light"] .richtext strong,
+:root[data-theme="light"] .richtext b                    { color: #111827; }
 .richtext h2 { font-size: 1.5rem; }
 .richtext h3 { font-size: 1.25rem; }
 .richtext h4 { font-size: 1.1rem; }
