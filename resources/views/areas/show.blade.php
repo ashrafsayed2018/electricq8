@@ -10,25 +10,24 @@
     $e164     = '+965' . preg_replace('/\D/', '', $phone);
     $siteName = \App\Models\SiteSetting::get('site_name_' . $locale);
 
-    // Governorate-specific context for unique content
     $govData = [
-        'capital'         => ['ar' => 'محافظة العاصمة',        'en' => 'Capital Governorate'],
-        'hawalli'         => ['ar' => 'محافظة حولي',            'en' => 'Hawalli Governorate'],
-        'farwaniya'       => ['ar' => 'محافظة الفروانية',       'en' => 'Farwaniya Governorate'],
-        'jahra'           => ['ar' => 'محافظة الجهراء',         'en' => 'Jahra Governorate'],
-        'mubarak_al_kabeer' => ['ar' => 'محافظة مبارك الكبير', 'en' => 'Mubarak Al-Kabeer Governorate'],
-        'ahmadi'          => ['ar' => 'محافظة الأحمدي',        'en' => 'Ahmadi Governorate'],
+        'capital'           => ['ar' => 'محافظة العاصمة',        'en' => 'Capital Governorate'],
+        'hawalli'           => ['ar' => 'محافظة حولي',            'en' => 'Hawalli Governorate'],
+        'farwaniya'         => ['ar' => 'محافظة الفروانية',       'en' => 'Farwaniya Governorate'],
+        'jahra'             => ['ar' => 'محافظة الجهراء',         'en' => 'Jahra Governorate'],
+        'mubarak_al_kabeer' => ['ar' => 'محافظة مبارك الكبير',   'en' => 'Mubarak Al-Kabeer Governorate'],
+        'ahmadi'            => ['ar' => 'محافظة الأحمدي',        'en' => 'Ahmadi Governorate'],
     ];
     $govName = $govData[$gov][$locale] ?? ($isAr ? 'الكويت' : 'Kuwait');
 
     $metaTitle = $location->meta_title
         ?? ($isAr
             ? "فني كهربائي في {$name} | صيانة وتركيب وتصليح شورت 24 ساعة"
-            : "AC Technician in {$name} Kuwait | Repair, Installation & Gas Refill 24/7");
+            : "Electrician in {$name} Kuwait | Repair, Installation 24/7");
     $metaDesc = $location->meta_description
         ?? ($isAr
-            ? "فني كهربائي في {$name} — تركيب وصيانة وتنظيف وتصليح شورت لجميع الماركات. خدمة طوارئ 24 ساعة مع ضمان على العمل. اتصل الآن!"
-            : "electrician in {$name} Kuwait — installation, repair, cleaning & short circuit repair for all brands. 24-hour emergency service with workmanship warranty. Call now!");
+            ? "فني كهربائي في {$name} — تركيب وصيانة وتصليح شورت لجميع الماركات. خدمة طوارئ 24 ساعة مع ضمان على العمل. اتصل الآن!"
+            : "Electrician in {$name} Kuwait — installation, repair, short circuit repair for all brands. 24-hour emergency service. Call now!");
 @endphp
 
 @section('meta_title'){{ $metaTitle }}@endsection
@@ -42,23 +41,9 @@
   "name": "{{ $siteName }}",
   "url": "{{ url()->current() }}",
   "telephone": "{{ $e164 }}",
-  "description": "{{ $metaDesc }}",
-  "address": {
-    "@@type": "PostalAddress",
-    "addressCountry": "KW",
-    "addressLocality": "{{ $name }}"
-  },
-  "areaServed": {
-    "@@type": "City",
-    "name": "{{ $name }}"
-  },
-  "openingHoursSpecification": {
-    "@@type": "OpeningHoursSpecification",
-    "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
-    "opens": "00:00",
-    "closes": "23:59"
-  },
-  "availableLanguage": ["Arabic","English"]
+  "address": { "@@type": "PostalAddress", "addressCountry": "KW", "addressLocality": "{{ $name }}" },
+  "areaServed": { "@@type": "City", "name": "{{ $name }}" },
+  "openingHoursSpecification": { "@@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"], "opens": "00:00", "closes": "23:59" }
 }
 </script>
 @endsection
@@ -66,117 +51,113 @@
 @section('content')
 <div dir="{{ $isAr ? 'rtl' : 'ltr' }}">
 
-    {{-- ── Breadcrumb ── --}}
-    <nav class="bg-gray-50 border-b border-gray-200 py-3" aria-label="{{ $isAr ? 'مسار التنقل' : 'Breadcrumb' }}">
-        <div class="container mx-auto px-4">
-            <ol class="flex items-center gap-2 text-sm text-gray-500 flex-wrap">
-                <li><a href="{{ route($isAr ? 'home' : 'en.home') }}" class="hover:text-yellow-700 transition">{{ $isAr ? 'الرئيسية' : 'Home' }}</a></li>
-                <li aria-hidden="true" class="text-gray-300">/</li>
-                <li><a href="{{ route($isAr ? 'areas.index' : 'en.areas.index') }}" class="hover:text-yellow-700 transition">{{ $isAr ? 'مناطق الخدمة' : 'Service Areas' }}</a></li>
-                <li aria-hidden="true" class="text-gray-300">/</li>
-                <li class="text-gray-800 font-semibold" aria-current="page">{{ $name }}</li>
+    {{-- Breadcrumb --}}
+    <nav class="eq8-bc" aria-label="{{ $isAr ? 'مسار التنقل' : 'Breadcrumb' }}">
+        <div class="eq8-bc__inner">
+            <ol class="eq8-bc__list">
+                <li><a href="{{ route($isAr ? 'home' : 'en.home') }}" class="eq8-bc__link">{{ $isAr ? 'الرئيسية' : 'Home' }}</a></li>
+                <li class="eq8-bc__sep">/</li>
+                <li><a href="{{ route($isAr ? 'areas.index' : 'en.areas.index') }}" class="eq8-bc__link">{{ $isAr ? 'مناطق الخدمة' : 'Service Areas' }}</a></li>
+                <li class="eq8-bc__sep">/</li>
+                <li class="eq8-bc__current" aria-current="page">{{ $name }}</li>
             </ol>
         </div>
     </nav>
 
-    {{-- ── Hero ── --}}
-    <section class="bg-yellow-700 text-white py-16">
-        <div class="container mx-auto px-4 text-center">
-            <div class="inline-block bg-red-500 text-white text-sm font-bold px-4 py-2 rounded-full mb-4">
-                {{ $isAr ? 'خدمة طوارئ 24 ساعة' : '24/7 Emergency Service' }}
-            </div>
-            <h1 class="text-3xl md:text-4xl font-extrabold mb-3">
-                {{ $isAr ? "فني كهربائي في {$name}" : "AC Technician in {$name}" }}
+    {{-- Hero --}}
+    <section class="eq8-page-hero">
+        <div class="eq8-page-hero__inner">
+            <div class="eq8-emergency-badge">{{ $isAr ? 'خدمة طوارئ 24 ساعة' : '24/7 Emergency Service' }}</div>
+            <h1 class="eq8-page-hero__title">
+                {{ $isAr ? "فني كهربائي في {$name}" : "Electrician in {$name}" }}
             </h1>
-            <p class="text-lg opacity-90 mb-6">
+            <p class="eq8-page-hero__sub">
                 {{ $isAr
-                    ? "تركيب وصيانة وتنظيف وتصليح شورت الكهرباء في {$name} — {$govName}"
-                    : "electrical installation, repair, cleaning & short circuit repair in {$name} — {$govName}" }}
+                    ? "تركيب وصيانة وتصليح شورت الكهرباء في {$name} — {$govName}"
+                    : "Electrical installation, repair & short circuit repair in {$name} — {$govName}" }}
             </p>
-            <div class="flex gap-4 justify-center flex-wrap">
-                <a href="{{ \App\Helpers\WhatsAppHelper::url() }}" target="_blank"
-                   class="bg-green-500 hover:bg-green-600 text-white font-bold px-8 py-4 rounded-xl transition">
+            <div class="eq8-page-hero__btns">
+                <a href="{{ \App\Helpers\WhatsAppHelper::url() }}" target="_blank" class="eq8-btn eq8-btn--wa">
+                    <svg class="eq8-btn__icon" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.116 1.528 5.845L0 24l6.335-1.505A11.946 11.946 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.882a9.872 9.872 0 01-5.031-1.378l-.361-.214-3.741.981.999-3.648-.235-.374A9.869 9.869 0 012.118 12C2.118 6.963 6.963 2.118 12 2.118s9.882 4.845 9.882 9.882-4.845 9.882-9.882 9.882z"/></svg>
                     {{ $isAr ? 'واتساب الآن' : 'WhatsApp Now' }}
                 </a>
-                <a href="tel:{{ $phone }}"
-                   class="bg-white text-yellow-700 font-bold px-8 py-4 rounded-xl transition hover:bg-gray-100">
+                <a href="tel:{{ $phone }}" class="eq8-btn eq8-btn--call">
+                    <svg class="eq8-btn__icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
                     {{ $isAr ? 'اتصل الآن' : 'Call Now' }}
                 </a>
             </div>
         </div>
     </section>
 
-    {{-- ── Intro paragraph (unique per area) ── --}}
-    <section class="py-12 bg-white">
-        <div class="container mx-auto px-4 max-w-3xl">
+    {{-- Intro --}}
+    <section class="eq8-area-section">
+        <div class="eq8-area-inner eq8-area-inner--narrow">
             @if($desc)
-                <p class="text-gray-700 text-lg leading-relaxed">{{ $desc }}</p>
+                <p class="eq8-area-intro">{{ $desc }}</p>
             @else
-                <p class="text-gray-700 text-lg leading-relaxed">
+                <p class="eq8-area-intro">
                     @if($isAr)
-                        تقدم إلكتريك كويت خدمات كهرباء متكاملة في <strong>{{ $name }}</strong>، من تركيب وصيانة وتنظيف دوري وتصليح شورت، وصولًا إلى خدمة الطوارئ على مدار الساعة. فنيونا المعتمدون يصلون إليك في {{ $name }} خلال ساعة واحدة، مزودين بجميع الأدوات والقطع اللازمة لإنهاء العمل في أول زيارة. نخدم جميع أحياء {{ $govName }} بما فيها {{ $name }} بأسعار شفافة وضمان رسمي على جميع الأعمال.
+                        تقدم إلكتريك كويت خدمات كهرباء متكاملة في <strong>{{ $name }}</strong>، من تركيب وصيانة وتصليح شورت، وصولًا إلى خدمة الطوارئ على مدار الساعة. فنيونا المعتمدون يصلون إليك في {{ $name }} خلال ساعة واحدة، مزودين بجميع الأدوات اللازمة لإنهاء العمل في أول زيارة.
                     @else
-                        ElectricQ8 provides comprehensive electrical services in <strong>{{ $name }}</strong>, covering installation, maintenance, routine cleaning, short circuit repair, and 24-hour emergency callouts. Our certified technicians reach you in {{ $name }} within one hour, equipped with all tools and parts needed to complete the job on the first visit. We serve all districts of {{ $govName }} including {{ $name }} with transparent pricing and an official warranty on all work.
+                        ElectricQ8 provides comprehensive electrical services in <strong>{{ $name }}</strong>, covering installation, maintenance, short circuit repair, and 24-hour emergency callouts. Our certified technicians reach you in {{ $name }} within one hour, equipped with all tools and parts needed to complete the job on the first visit.
                     @endif
                 </p>
             @endif
         </div>
     </section>
 
-    {{-- ── Services for this area ── --}}
-    <section class="py-12 bg-gray-50">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-10">
-                <h2 class="text-2xl font-extrabold text-gray-900 mb-2">
+    {{-- Services --}}
+    <section class="eq8-area-section eq8-area-section--alt">
+        <div class="eq8-area-inner">
+            <div class="eq8-section-head">
+                <h2 class="eq8-section-title">
                     {{ $isAr ? "خدمات الكهرباء في {$name}" : "Electrical Services in {$name}" }}
                 </h2>
-                <p class="text-gray-500">
-                    {{ $isAr ? 'جميع خدمات الكهرباء في موقعك' : 'All electrical services at your location' }}
-                </p>
+                <p class="eq8-section-sub">{{ $isAr ? 'جميع خدمات الكهرباء في موقعك' : 'All electrical services at your location' }}</p>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            <div class="eq8-area-svc-grid">
                 @foreach($services as $service)
                 <a href="{{ route($isAr ? 'services.show' : 'en.services.show', $service->getTranslation('slug', $locale)) }}"
-                   class="block bg-white rounded-2xl shadow hover:shadow-lg transition p-6 border border-gray-100 hover:border-yellow-300">
-                    <div class="text-3xl mb-3">{{ $service->icon() }}</div>
-                    <h3 class="text-lg font-bold mb-2 text-gray-900">{{ $service->getTranslation('title', $locale) }}</h3>
-                    <p class="text-gray-500 text-sm leading-relaxed">{{ html_entity_decode(strip_tags($service->getTranslation('intro', $locale)), ENT_QUOTES | ENT_HTML5, 'UTF-8') }}</p>
+                   class="eq8-svc-card">
+                    <div class="eq8-svc-card__icon">{{ $service->icon() }}</div>
+                    <h3 class="eq8-svc-card__title">{{ $service->getTranslation('title', $locale) }}</h3>
+                    <p class="eq8-svc-card__body">{{ html_entity_decode(strip_tags($service->getTranslation('intro', $locale)), ENT_QUOTES | ENT_HTML5, 'UTF-8') }}</p>
                 </a>
                 @endforeach
             </div>
         </div>
     </section>
 
-    {{-- ── Why choose us in this area ── --}}
-    <section class="py-12 bg-white">
-        <div class="container mx-auto px-4 max-w-4xl">
-            <h2 class="text-2xl font-extrabold text-gray-900 mb-8 text-center">
+    {{-- Why choose us --}}
+    <section class="eq8-area-section">
+        <div class="eq8-area-inner eq8-area-inner--mid">
+            <h2 class="eq8-area-h2 eq8-area-h2--center">
                 {{ $isAr ? "لماذا تختار إلكتريك كويت في {$name}؟" : "Why Choose ElectricQ8 in {$name}?" }}
             </h2>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <div class="eq8-area-adv-grid">
                 @php
                 $advantages = $isAr ? [
-                    ['icon' => '⚡', 'title' => 'وصول سريع',       'body' => "فنيونا في {$name} يصلون إليك خلال ساعة واحدة في أي وقت من اليوم أو الليل."],
-                    ['icon' => '🔧', 'title' => 'فنيون معتمدون',   'body' => 'جميع فنيينا حاصلون على شهادات معتمدة وخبرة أكثر من 5 سنوات في صيانة الكهرباء.'],
-                    ['icon' => '🛡️', 'title' => 'ضمان 3 أشهر',    'body' => 'كل خدمة مغطاة بضمان رسمي 3 أشهر. إذا عادت المشكلة نصلحها مجانًا.'],
-                    ['icon' => '💰', 'title' => 'أسعار شفافة',     'body' => 'نقدم تقديراً واضحاً للسعر قبل بدء العمل، بدون رسوم مخفية أو مفاجآت.'],
-                    ['icon' => '🏷️', 'title' => 'جميع الماركات', 'body' => 'نصلح كاريير ودايكن وسامسونج وLG وميديا وجري وجميع الماركات الأخرى.'],
-                    ['icon' => '📞', 'title' => 'دعم مستمر',       'body' => 'فريق دعم متاح على مدار الساعة للرد على استفساراتك وتتبع طلبات الخدمة.'],
+                    ['⚡', 'وصول سريع', "فنيونا في {$name} يصلون إليك خلال ساعة واحدة في أي وقت."],
+                    ['🔧', 'فنيون معتمدون', 'جميع فنيينا حاصلون على شهادات معتمدة وخبرة أكثر من 5 سنوات.'],
+                    ['🛡️', 'ضمان 3 أشهر', 'كل خدمة مغطاة بضمان رسمي 3 أشهر. إذا عادت المشكلة نصلحها مجانًا.'],
+                    ['💰', 'أسعار شفافة', 'نقدم تقديراً واضحاً للسعر قبل بدء العمل، بدون رسوم مخفية.'],
+                    ['🏷️', 'جميع الماركات', 'نصلح جميع ماركات الكهرباء المتوفرة في السوق الكويتي.'],
+                    ['📞', 'دعم مستمر', 'فريق دعم متاح على مدار الساعة للرد على استفساراتك.'],
                 ] : [
-                    ['icon' => '⚡', 'title' => 'Fast Arrival',       'body' => "Our technicians in {$name} reach you within one hour at any time of day or night."],
-                    ['icon' => '🔧', 'title' => 'Certified Technicians', 'body' => 'All our technicians hold certified qualifications and have over 5 years of AC servicing experience.'],
-                    ['icon' => '🛡️', 'title' => '3-Month Warranty',  'body' => 'Every service is covered by an official 3-month warranty. If the problem recurs we fix it free.'],
-                    ['icon' => '💰', 'title' => 'Transparent Pricing', 'body' => 'We provide a clear price estimate before starting work — no hidden fees, no surprises.'],
-                    ['icon' => '🏷️', 'title' => 'All Brands',        'body' => 'We repair Carrier, Daikin, Samsung, LG, Midea, Gree and all other AC brands.'],
-                    ['icon' => '📞', 'title' => 'Continuous Support', 'body' => 'Support team available around the clock to answer your queries and track service requests.'],
+                    ['⚡', 'Fast Arrival', "Our technicians in {$name} reach you within one hour any time."],
+                    ['🔧', 'Certified Technicians', 'All our technicians hold certified qualifications and 5+ years of experience.'],
+                    ['🛡️', '3-Month Warranty', 'Every service is covered by an official 3-month warranty.'],
+                    ['💰', 'Transparent Pricing', 'We provide a clear price estimate before starting — no hidden fees.'],
+                    ['🏷️', 'All Brands', 'We repair all AC brands available in the Kuwait market.'],
+                    ['📞', 'Continuous Support', 'Support team available around the clock to answer your queries.'],
                 ];
                 @endphp
                 @foreach($advantages as $adv)
-                <div class="flex gap-4 p-5 rounded-xl border border-gray-100 bg-gray-50">
-                    <span class="text-2xl shrink-0 mt-0.5" aria-hidden="true">{{ $adv['icon'] }}</span>
+                <div class="eq8-adv-card">
+                    <span class="eq8-adv-card__icon">{{ $adv[0] }}</span>
                     <div>
-                        <h3 class="font-bold text-gray-900 mb-1">{{ $adv['title'] }}</h3>
-                        <p class="text-gray-600 text-sm leading-relaxed">{{ $adv['body'] }}</p>
+                        <h3 class="eq8-adv-card__title">{{ $adv[1] }}</h3>
+                        <p class="eq8-adv-card__body">{{ $adv[2] }}</p>
                     </div>
                 </div>
                 @endforeach
@@ -184,11 +165,11 @@
         </div>
     </section>
 
-    {{-- ── Testimonials (if any for this area) ── --}}
+    {{-- Testimonials --}}
     @if($testimonials->count())
-    <section class="py-12 bg-gray-50">
-        <div class="container mx-auto px-4 max-w-4xl">
-            <h2 class="text-2xl font-extrabold text-gray-900 mb-8 text-center">
+    <section class="eq8-area-section eq8-area-section--alt">
+        <div class="eq8-area-inner eq8-area-inner--mid">
+            <h2 class="eq8-area-h2 eq8-area-h2--center">
                 {{ $isAr ? "آراء عملاء {$name}" : "What {$name} Customers Say" }}
             </h2>
             @include('partials.testimonials', ['testimonials' => $testimonials])
@@ -196,60 +177,33 @@
     </section>
     @endif
 
-    {{-- ── Area FAQ ── --}}
-    <section class="py-12 bg-white">
-        <div class="container mx-auto px-4 max-w-2xl">
-            <h2 class="text-2xl font-extrabold text-gray-900 mb-8 text-center">
-                {{ $isAr ? "أسئلة شائعة — فني كهربائي في {$name}" : "FAQ — AC Technician in {$name}" }}
+    {{-- Area FAQ --}}
+    <section class="eq8-area-section">
+        <div class="eq8-area-inner eq8-area-inner--narrow">
+            <h2 class="eq8-area-h2 eq8-area-h2--center">
+                {{ $isAr ? "أسئلة شائعة — فني كهربائي في {$name}" : "FAQ — Electrician in {$name}" }}
             </h2>
             @php
             $faqs = $isAr ? [
-                [
-                    'q' => "هل تخدمون منطقة {$name}؟",
-                    'a' => "نعم، نقدم جميع خدمات الكهرباء في {$name} بما فيها التركيب والصيانة والتنظيف وشحن الغاز. فنيونا يصلون إليك خلال ساعة واحدة.",
-                ],
-                [
-                    'q' => "كم وقت الانتظار لخدمة طوارئ في {$name}؟",
-                    'a' => "وقت الاستجابة المضمون في {$name} هو ساعة واحدة. نعمل 24 ساعة يومياً بما فيها الجمعة والعطل الرسمية.",
-                ],
-                [
-                    'q' => 'هل يوجد ضمان على خدمات الكهرباء؟',
-                    'a' => 'نعم، جميع خدماتنا مغطاة بضمان رسمي 3 أشهر. إذا عادت المشكلة خلال فترة الضمان نصلحها مجانًا.',
-                ],
-                [
-                    'q' => 'ما الماركات التي تدعمونها؟',
-                    'a' => 'نصلح جميع ماركات الكهرباء: سامسونج، LG، كاريير، دايكن، ميديا، جري، توشيبا، باناسونيك، شارب، هيتاشي، ميتسوبيشي، وغيرها.',
-                ],
+                ['q' => "هل تخدمون منطقة {$name}؟", 'a' => "نعم، نقدم جميع خدمات الكهرباء في {$name} بما فيها التركيب والصيانة وتصليح الشورت. فنيونا يصلون إليك خلال ساعة واحدة."],
+                ['q' => "كم وقت الانتظار لخدمة طوارئ في {$name}؟", 'a' => "وقت الاستجابة المضمون في {$name} هو ساعة واحدة. نعمل 24 ساعة يومياً بما فيها الجمعة والعطل الرسمية."],
+                ['q' => 'هل يوجد ضمان على خدمات الكهرباء؟', 'a' => 'نعم، جميع خدماتنا مغطاة بضمان رسمي 3 أشهر. إذا عادت المشكلة خلال فترة الضمان نصلحها مجانًا.'],
+                ['q' => 'ما الماركات التي تدعمونها؟', 'a' => 'نصلح جميع ماركات الكهرباء: سامسونج، LG، كاريير، دايكن، ميديا، جري، توشيبا، باناسونيك، شارب، هيتاشي، ميتسوبيشي، وغيرها.'],
             ] : [
-                [
-                    'q' => "Do you service the {$name} area?",
-                    'a' => "Yes, we provide all electrical services in {$name} including installation, maintenance, cleaning and short circuit repair. Our technicians reach you within one hour.",
-                ],
-                [
-                    'q' => "How long is the wait for emergency service in {$name}?",
-                    'a' => "Our guaranteed response time in {$name} is one hour. We operate 24 hours a day including Fridays and public holidays.",
-                ],
-                [
-                    'q' => 'Is there a warranty on electrical services?',
-                    'a' => 'Yes, all our services are covered by an official 3-month warranty. If the problem returns within the warranty period we fix it free of charge.',
-                ],
-                [
-                    'q' => 'Which AC brands do you support?',
-                    'a' => 'We repair all AC brands: Samsung, LG, Carrier, Daikin, Midea, Gree, Toshiba, Panasonic, Sharp, Hitachi, Mitsubishi and more.',
-                ],
+                ['q' => "Do you service the {$name} area?", 'a' => "Yes, we provide all electrical services in {$name} including installation, maintenance and short circuit repair. Our technicians reach you within one hour."],
+                ['q' => "How long is the wait for emergency service in {$name}?", 'a' => "Our guaranteed response time in {$name} is one hour. We operate 24 hours a day including Fridays and public holidays."],
+                ['q' => 'Is there a warranty on electrical services?', 'a' => 'Yes, all our services are covered by an official 3-month warranty. If the problem returns within the warranty period we fix it free of charge.'],
+                ['q' => 'Which brands do you support?', 'a' => 'We repair all brands: Samsung, LG, Carrier, Daikin, Midea, Gree, Toshiba, Panasonic, Sharp, Hitachi, Mitsubishi and more.'],
             ];
             @endphp
-
-            <div class="space-y-3" x-data="{ open: null }">
+            <div class="eq8-faq" x-data="{ open: null }">
                 @foreach($faqs as $i => $faq)
-                <div class="bg-gray-50 rounded-xl border border-gray-200 overflow-hidden">
-                    <button type="button"
-                        class="w-full flex items-center justify-between px-6 py-5 {{ $isAr ? 'text-right' : 'text-left' }} font-bold text-gray-900 hover:bg-gray-100 transition focus:outline-none"
+                <div class="eq8-faq__item">
+                    <button type="button" class="eq8-faq__btn {{ $isAr ? 'text-right' : 'text-left' }}"
                         @click="open === {{ $i }} ? open = null : open = {{ $i }}"
                         :aria-expanded="open === {{ $i }}">
-                        <span>{{ $faq['q'] }}</span>
-                        <svg class="w-5 h-5 text-yellow-700 shrink-0 transition-transform duration-300 {{ $isAr ? 'mr-3' : 'ml-3' }}"
-                             :class="{ 'rotate-180': open === {{ $i }} }"
+                        <span class="eq8-faq__q">{{ $faq['q'] }}</span>
+                        <svg class="eq8-faq__chevron" :class="{ 'rotate-180': open === {{ $i }} }"
                              fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
                         </svg>
@@ -258,9 +212,8 @@
                          x-transition:enter="transition ease-out duration-200"
                          x-transition:enter-start="opacity-0 -translate-y-2"
                          x-transition:enter-end="opacity-100 translate-y-0"
-                         class="px-6 pb-5 text-gray-600 text-sm leading-relaxed border-t border-gray-100"
-                         style="display:none">
-                        <p class="pt-4">{{ $faq['a'] }}</p>
+                         class="eq8-faq__answer" style="display:none">
+                        <p>{{ $faq['a'] }}</p>
                     </div>
                 </div>
                 @endforeach
@@ -268,19 +221,18 @@
         </div>
     </section>
 
-    {{-- ── Related areas (same governorate) — internal linking ── --}}
+    {{-- Related areas --}}
     @if($relatedLocations->count())
-    <section class="py-10 bg-gray-50">
-        <div class="container mx-auto px-4 max-w-3xl">
-            <h2 class="text-lg font-bold text-gray-700 mb-4">
+    <section class="eq8-area-section eq8-area-section--alt">
+        <div class="eq8-area-inner eq8-area-inner--mid">
+            <h2 class="eq8-area-h2" style="font-size:1rem">
                 {{ $isAr ? "مناطق أخرى في {$govName}" : "Other areas in {$govName}" }}
             </h2>
-            <div class="flex flex-wrap gap-3">
+            <div class="eq8-pill-row">
                 @foreach($relatedLocations as $rel)
                 @php $relName = $rel->getTranslation('name', $locale); $relSlug = $rel->getTranslation('slug', $locale); @endphp
-                <a href="{{ route($isAr ? 'areas.show' : 'en.areas.show', $relSlug) }}"
-                   class="inline-flex items-center px-4 py-2 rounded-full border border-yellow-200 bg-white text-yellow-700 font-semibold text-sm hover:bg-yellow-700 hover:text-white hover:border-yellow-700 transition">
-                    {{ $isAr ? "فني كهربائي {$relName}" : "AC Technician {$relName}" }}
+                <a href="{{ route($isAr ? 'areas.show' : 'en.areas.show', $relSlug) }}" class="eq8-pill eq8-pill--link">
+                    {{ $isAr ? "فني كهربائي {$relName}" : "Electrician {$relName}" }}
                 </a>
                 @endforeach
             </div>
@@ -288,17 +240,17 @@
     </section>
     @endif
 
-    {{-- ── All services in this area — Local SEO internal links ── --}}
+    {{-- All services in area --}}
     @if($services->count())
-    <section class="py-12 bg-yellow-50">
-        <div class="container mx-auto px-4 max-w-4xl">
-            <h2 class="text-xl font-extrabold text-gray-900 mb-2 text-center">
+    <section class="eq8-area-section">
+        <div class="eq8-area-inner eq8-area-inner--mid" style="text-align:center">
+            <h2 class="eq8-area-h2 eq8-area-h2--center">
                 {{ $isAr ? "جميع خدمات الكهرباء في {$name}" : "All Electrical Services in {$name}" }}
             </h2>
-            <p class="text-center text-gray-500 text-sm mb-6">
-                {{ $isAr ? 'اختر الخدمة التي تحتاجها للحصول على صفحة مخصصة بتفاصيل محلية' : 'Select the service you need for a dedicated page with local details' }}
+            <p style="color:var(--muted);font-size:.84rem;margin:0 0 20px;font-family:'Cairo',sans-serif">
+                {{ $isAr ? 'اختر الخدمة التي تحتاجها للحصول على صفحة مخصصة' : 'Select the service you need for a dedicated page' }}
             </p>
-            <div class="flex flex-wrap justify-center gap-2">
+            <div class="eq8-pill-row eq8-pill-row--center">
                 @foreach($services as $svc)
                 @php
                     $svcSlug = $svc->getTranslation('slug', $locale);
@@ -306,8 +258,7 @@
                     $locSlug = $location->getTranslation('slug', $locale);
                     $prefix  = $isAr ? '' : 'en.';
                 @endphp
-                <a href="{{ route($prefix . 'service-locations.show', [$svcSlug, $locSlug]) }}"
-                   class="px-4 py-2 bg-white hover:bg-yellow-700 hover:text-white text-yellow-700 text-sm font-medium rounded-full border border-yellow-200 hover:border-yellow-700 transition">
+                <a href="{{ route($prefix . 'service-locations.show', [$svcSlug, $locSlug]) }}" class="eq8-pill eq8-pill--link">
                     {{ $isAr ? "{$svcName} في {$name}" : "{$svcName} in {$name}" }}
                 </a>
                 @endforeach
@@ -316,27 +267,22 @@
     </section>
     @endif
 
-    {{-- ── Final CTA ── --}}
-    <section class="py-14 bg-yellow-700 text-white text-center">
-        <div class="container mx-auto px-4 max-w-2xl">
-            <h2 class="text-2xl font-extrabold mb-3">
-                {{ $isAr ? "احجز فني كهربائي في {$name} الآن" : "Book an AC Technician in {$name} Now" }}
+    {{-- Final CTA --}}
+    <section class="eq8-cta-band">
+        <div class="eq8-area-inner" style="text-align:center;max-width:700px">
+            <h2 style="font-size:clamp(1.3rem,3vw,1.8rem);font-weight:800;color:#fff;margin:0 0 10px;font-family:'Cairo',sans-serif">
+                {{ $isAr ? "احجز فني كهربائي في {$name} الآن" : "Book an Electrician in {$name} Now" }}
             </h2>
-            <p class="opacity-90 mb-8">
-                {{ $isAr
-                    ? 'تواصل معنا عبر واتساب أو اتصل بنا مباشرة — فنيونا جاهزون'
-                    : 'Contact us via WhatsApp or call us directly — our technicians are ready' }}
+            <p style="color:#F3D9BB;margin:0 0 28px;font-family:'Cairo',sans-serif">
+                {{ $isAr ? 'تواصل معنا عبر واتساب أو اتصل بنا مباشرة — فنيونا جاهزون' : 'Contact us via WhatsApp or call directly — our technicians are ready' }}
             </p>
-            <div class="flex gap-4 justify-center flex-wrap">
-                <a href="{{ \App\Helpers\WhatsAppHelper::url() }}" target="_blank"
-                   class="bg-green-500 hover:bg-green-600 text-white font-bold px-8 py-4 rounded-xl transition inline-flex items-center gap-2">
-                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.116 1.528 5.845L0 24l6.335-1.505A11.946 11.946 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.882a9.872 9.872 0 01-5.031-1.378l-.361-.214-3.741.981.999-3.648-.235-.374A9.869 9.869 0 012.118 12C2.118 6.963 6.963 2.118 12 2.118s9.882 4.845 9.882 9.882-4.845 9.882-9.882 9.882z"/>
-                    </svg>
+            <div class="eq8-page-hero__btns">
+                <a href="{{ \App\Helpers\WhatsAppHelper::url() }}" target="_blank" class="eq8-btn eq8-btn--wa">
+                    <svg class="eq8-btn__icon" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.116 1.528 5.845L0 24l6.335-1.505A11.946 11.946 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.882a9.872 9.872 0 01-5.031-1.378l-.361-.214-3.741.981.999-3.648-.235-.374A9.869 9.869 0 012.118 12C2.118 6.963 6.963 2.118 12 2.118s9.882 4.845 9.882 9.882-4.845 9.882-9.882 9.882z"/></svg>
                     {{ $isAr ? 'واتساب الآن' : 'WhatsApp Now' }}
                 </a>
-                <a href="tel:{{ $phone }}"
-                   class="bg-white text-yellow-700 font-bold px-8 py-4 rounded-xl transition hover:bg-gray-100">
+                <a href="tel:{{ $phone }}" class="eq8-btn eq8-btn--call">
+                    <svg class="eq8-btn__icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
                     {{ $isAr ? 'اتصل الآن' : 'Call Now' }}
                 </a>
             </div>
@@ -344,4 +290,66 @@
     </section>
 
 </div>
+
+<style>
+.eq8-bc { background:var(--altBg); border-bottom:1px solid var(--border); padding:10px 0; font-family:'Cairo',sans-serif; font-size:13px; }
+.eq8-bc__inner { max-width:1100px; margin:0 auto; padding:0 16px; }
+.eq8-bc__list { display:flex; align-items:center; gap:8px; list-style:none; margin:0; padding:0; flex-wrap:wrap; color:var(--muted); }
+.eq8-bc__link { color:var(--primary); text-decoration:none; font-weight:600; }
+.eq8-bc__link:hover { text-decoration:underline; }
+.eq8-bc__sep { color:var(--border); }
+.eq8-bc__current { color:var(--text); font-weight:600; }
+
+.eq8-page-hero { background:linear-gradient(135deg,#43230E 0%,#6B3A17 60%,#8B4D20 100%); color:#fff; padding:56px 20px; text-align:center; }
+.eq8-page-hero__inner { max-width:760px; margin:0 auto; }
+.eq8-page-hero__title { font-size:clamp(1.6rem,4vw,2.3rem); font-weight:800; margin:0 0 12px; font-family:'Cairo',system-ui,sans-serif; }
+.eq8-page-hero__sub { font-size:1rem; color:#F3D9BB; margin:0 0 28px; font-family:'Cairo',system-ui,sans-serif; }
+.eq8-page-hero__btns { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+.eq8-emergency-badge { display:inline-block; background:#dc2626; color:#fff; font-size:.78rem; font-weight:700; padding:5px 16px; border-radius:999px; margin-bottom:16px; font-family:'Cairo',sans-serif; }
+
+.eq8-area-section { padding:48px 0; background:var(--bg); }
+.eq8-area-section--alt { background:var(--altBg); }
+.eq8-area-inner { max-width:1100px; margin:0 auto; padding:0 20px; }
+.eq8-area-inner--mid { max-width:900px; margin:0 auto; padding:0 20px; }
+.eq8-area-inner--narrow { max-width:720px; margin:0 auto; padding:0 20px; }
+.eq8-area-intro { font-size:1rem; color:var(--body); line-height:1.8; margin:0; font-family:'Cairo',sans-serif; }
+.eq8-area-h2 { font-size:1.3rem; font-weight:800; color:var(--text); margin:0 0 24px; font-family:'Cairo',sans-serif; }
+.eq8-area-h2--center { text-align:center; }
+
+.eq8-area-svc-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; max-width:900px; margin:0 auto; }
+@media(max-width:760px){ .eq8-area-svc-grid { grid-template-columns:repeat(2,1fr); } }
+@media(max-width:480px){ .eq8-area-svc-grid { grid-template-columns:1fr; } }
+
+.eq8-svc-card { display:block; background:var(--cardBg); border:1px solid var(--border); border-radius:16px; padding:20px; text-decoration:none; transition:border-color .2s,box-shadow .2s; }
+.eq8-svc-card:hover { border-color:var(--accent); box-shadow:0 4px 20px rgba(107,58,23,.1); }
+.eq8-svc-card__icon { font-size:1.8rem; margin-bottom:10px; }
+.eq8-svc-card__title { font-size:.9rem; font-weight:700; color:var(--text); margin:0 0 6px; font-family:'Cairo',sans-serif; }
+.eq8-svc-card__body { font-size:.78rem; color:var(--body); line-height:1.65; margin:0; font-family:'Cairo',sans-serif; }
+
+.eq8-area-adv-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:14px; }
+@media(max-width:600px){ .eq8-area-adv-grid { grid-template-columns:1fr; } }
+
+.eq8-adv-card { display:flex; gap:12px; align-items:flex-start; background:var(--cardBg); border:1px solid var(--border); border-radius:12px; padding:16px; }
+.eq8-adv-card__icon { font-size:1.3rem; flex-shrink:0; margin-top:2px; }
+.eq8-adv-card__title { font-size:.88rem; font-weight:700; color:var(--text); margin:0 0 4px; font-family:'Cairo',sans-serif; }
+.eq8-adv-card__body { font-size:.78rem; color:var(--body); line-height:1.65; margin:0; font-family:'Cairo',sans-serif; }
+
+.eq8-faq { display:flex; flex-direction:column; gap:10px; }
+.eq8-faq__item { background:var(--cardBg); border:1px solid var(--border); border-radius:12px; overflow:hidden; }
+.eq8-faq__btn { width:100%; display:flex; align-items:center; justify-content:space-between; padding:16px 20px; font-family:'Cairo',sans-serif; font-weight:700; font-size:.88rem; color:var(--text); background:transparent; border:none; cursor:pointer; gap:12px; }
+.eq8-faq__btn:hover { background:var(--altBg); }
+.eq8-faq__q { flex:1; }
+.eq8-faq__chevron { width:18px; height:18px; color:var(--accent); flex-shrink:0; transition:transform .25s; }
+.eq8-faq__answer { padding:0 20px 16px; font-size:.84rem; color:var(--body); line-height:1.7; border-top:1px solid var(--border); font-family:'Cairo',sans-serif; }
+.eq8-faq__answer p { margin:12px 0 0; }
+.rotate-180 { transform:rotate(180deg); }
+
+.eq8-pill-row { display:flex; flex-wrap:wrap; gap:10px; }
+.eq8-pill-row--center { justify-content:center; }
+.eq8-pill { display:inline-flex; align-items:center; padding:7px 18px; border-radius:999px; border:1.5px solid var(--accentTint); background:var(--cardBg); color:var(--primary); font-size:.82rem; font-weight:600; font-family:'Cairo',sans-serif; }
+.eq8-pill--link { text-decoration:none; transition:background .18s,color .18s; }
+.eq8-pill--link:hover { background:var(--primary); color:#fff; border-color:var(--primary); }
+
+.eq8-cta-band { background:linear-gradient(135deg,#43230E 0%,#6B3A17 100%); padding:56px 20px; }
+</style>
 @endsection

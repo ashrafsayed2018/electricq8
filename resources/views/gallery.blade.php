@@ -21,7 +21,7 @@
 @section('content')
 <div dir="{{ $isAr ? 'rtl' : 'ltr' }}" class="gal-page">
 
-    {{-- ── Breadcrumb ──────────────────────────────────────────── --}}
+    {{-- Breadcrumb --}}
     <div class="gal-breadcrumb">
         <div class="gal-container">
             <a href="{{ route($prefix . 'home') }}" class="gal-bc__link">{{ $isAr ? 'الرئيسية' : 'Home' }}</a>
@@ -30,7 +30,7 @@
         </div>
     </div>
 
-    {{-- ── Header ──────────────────────────────────────────────── --}}
+    {{-- Header --}}
     <div class="gal-header">
         <div class="gal-container">
             <div class="gal-header__badge">
@@ -40,8 +40,8 @@
             <h1 class="gal-header__title">{{ $isAr ? 'معرض صور الكهرباء في الكويت' : 'Electrical Projects Gallery in Kuwait' }}</h1>
             <p class="gal-header__sub">
                 {{ $isAr
-                    ? 'نعرض لك أبرز الأعمال والتمديدات الكهربائية التي نفذناها في الكويت — مع صور واضحة وأوصاف دقيقة لكل عمل'
-                    : 'Browse our best electrical wiring and installation projects across Kuwait — with clear photos and detailed descriptions' }}
+                    ? 'نعرض لك أبرز الأعمال والتمديدات الكهربائية التي نفذناها في الكويت'
+                    : 'Browse our best electrical wiring and installation projects across Kuwait' }}
             </p>
             <div class="gal-header__count">
                 <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
@@ -50,12 +50,12 @@
         </div>
     </div>
 
-    {{-- ── Livewire: search + grid + pagination ────────────────── --}}
+    {{-- Livewire: search + grid + pagination --}}
     <livewire:gallery-search />
 
 </div>
 
-{{-- ── Lightbox Modal ───────────────────────────────────────────── --}}
+{{-- Lightbox Modal --}}
 <div id="galModal" class="gal-modal" role="dialog" aria-modal="true" aria-label="{{ $isAr ? 'عرض الصورة' : 'Image viewer' }}" style="display:none">
     <div class="gal-modal__backdrop"></div>
     <div class="gal-modal__box">
@@ -73,37 +73,37 @@
 
 <style>
 /* ── Base ──────────────────────────────────────────────────────── */
-.gal-page { background:#fffbeb; min-height:100vh; font-family:'Cairo',sans-serif; }
+.gal-page { background:var(--bg); min-height:100vh; font-family:'Cairo',sans-serif; }
 .gal-container { max-width:1200px; margin:0 auto; padding-inline:20px; }
 
 /* ── Breadcrumb ────────────────────────────────────────────────── */
-.gal-breadcrumb { background:#fff; border-bottom:1px solid #e5e7eb; padding:10px 0; font-size:13px; color:#6b7280; }
-.gal-bc__link { color:#ca8a04; text-decoration:none; font-weight:600; }
+.gal-breadcrumb { background:var(--altBg); border-bottom:1px solid var(--border); padding:10px 0; font-size:13px; color:var(--muted); }
+.gal-bc__link { color:var(--primary); text-decoration:none; font-weight:600; }
 .gal-bc__link:hover { text-decoration:underline; }
-.gal-bc__sep { margin-inline:8px; color:#d1d5db; }
-.gal-bc__current { color:#374151; font-weight:600; }
+.gal-bc__sep { margin-inline:8px; color:var(--border); }
+.gal-bc__current { color:var(--text); font-weight:600; }
 
 /* ── Header ────────────────────────────────────────────────────── */
-.gal-header { background:linear-gradient(135deg,#78350f 0%,#ca8a04 100%); padding:48px 0 40px; text-align:center; color:#fff; }
+.gal-header { background:linear-gradient(135deg,#43230E 0%,#6B3A17 60%,#8B4D20 100%); padding:48px 0 40px; text-align:center; color:#fff; }
 .gal-header__badge { display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,.15); border:1px solid rgba(255,255,255,.25); border-radius:999px; padding:5px 16px; font-size:13px; font-weight:600; margin-bottom:16px; }
 .gal-header__title { font-size:clamp(1.6rem,4vw,2.4rem); font-weight:900; margin:0 0 12px; }
-.gal-header__sub { font-size:1rem; color:#fef3c7; max-width:640px; margin:0 auto 20px; line-height:1.75; }
+.gal-header__sub { font-size:1rem; color:#F3D9BB; max-width:640px; margin:0 auto 20px; line-height:1.75; }
 .gal-header__count { display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,.15); border-radius:999px; padding:5px 16px; font-size:13px; font-weight:700; }
 
 /* ── Toolbar ────────────────────────────────────────────────────── */
-.gal-toolbar { background:#fff; border-bottom:1px solid #e5e7eb; padding:14px 0; position:sticky; top:64px; z-index:10; box-shadow:0 2px 8px rgba(0,0,0,.04); }
+.gal-toolbar { background:var(--cardBg); border-bottom:1px solid var(--border); padding:14px 0; position:sticky; top:64px; z-index:10; box-shadow:0 2px 8px rgba(0,0,0,.04); }
 .gal-toolbar__inner { display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
-.gal-search { display:flex; align-items:center; background:#f9fafb; border:1.5px solid #e5e7eb; border-radius:10px; overflow:hidden; flex:1; min-width:200px; max-width:420px; transition:border-color .2s; }
-.gal-search:focus-within { border-color:#ca8a04; }
-.gal-search__btn { background:none; border:none; padding:0 12px; color:#9ca3af; display:flex; align-items:center; }
-.gal-search__input { flex:1; border:none; background:transparent; padding:9px 4px; font-size:14px; font-family:'Cairo',sans-serif; color:#111827; outline:none; }
-.gal-search__input::placeholder { color:#9ca3af; }
-.gal-search__clear { background:none; border:none; padding:0 10px; color:#9ca3af; cursor:pointer; font-size:13px; font-weight:700; transition:color .15s; }
+.gal-search { display:flex; align-items:center; background:var(--altBg); border:1.5px solid var(--border); border-radius:10px; overflow:hidden; flex:1; min-width:200px; max-width:420px; transition:border-color .2s; }
+.gal-search:focus-within { border-color:var(--accent); }
+.gal-search__btn { background:none; border:none; padding:0 12px; color:var(--muted); display:flex; align-items:center; }
+.gal-search__input { flex:1; border:none; background:transparent; padding:9px 4px; font-size:14px; font-family:'Cairo',sans-serif; color:var(--text); outline:none; }
+.gal-search__input::placeholder { color:var(--muted); }
+.gal-search__clear { background:none; border:none; padding:0 10px; color:var(--muted); cursor:pointer; font-size:13px; font-weight:700; transition:color .15s; }
 .gal-search__clear:hover { color:#ef4444; }
-.gal-filter-info { font-size:13px; color:#6b7280; display:flex; align-items:center; gap:8px; margin-inline-start:auto; }
+.gal-filter-info { font-size:13px; color:var(--muted); display:flex; align-items:center; gap:8px; margin-inline-start:auto; }
 
 /* ── Loading ────────────────────────────────────────────────────── */
-.gal-loading { display:flex; align-items:center; justify-content:center; gap:10px; padding:20px; color:#ca8a04; font-family:'Cairo',sans-serif; font-size:14px; font-weight:600; }
+.gal-loading { display:flex; align-items:center; justify-content:center; gap:10px; padding:20px; color:var(--accent); font-family:'Cairo',sans-serif; font-size:14px; font-weight:600; }
 .gal-spin { animation:spin .8s linear infinite; }
 @keyframes spin { to { transform:rotate(360deg); } }
 .gal-grid-loading { opacity:.5; pointer-events:none; transition:opacity .2s; }
@@ -117,49 +117,49 @@
 @media (max-width:560px)  { .gal-grid { grid-template-columns:1fr; } }
 
 /* ── Card ───────────────────────────────────────────────────────── */
-.gal-card { background:#fff; border-radius:16px; box-shadow:0 1px 4px rgba(0,0,0,.07),0 4px 16px rgba(0,0,0,.05); overflow:hidden; transition:box-shadow .25s ease,transform .25s ease; display:flex; flex-direction:column; }
-.gal-card:hover { box-shadow:0 8px 32px rgba(202,138,4,.18); transform:translateY(-4px); }
+.gal-card { background:var(--cardBg); border:1px solid var(--border); border-radius:16px; overflow:hidden; transition:box-shadow .25s ease,transform .25s ease,border-color .25s; display:flex; flex-direction:column; }
+.gal-card:hover { box-shadow:0 8px 32px rgba(107,58,23,.15); transform:translateY(-4px); border-color:var(--accent); }
 
 /* ── Card image ─────────────────────────────────────────────────── */
-.gal-card__img-wrap { position:relative; width:100%; aspect-ratio:16/10; overflow:hidden; background:#fef9c3; }
+.gal-card__img-wrap { position:relative; width:100%; aspect-ratio:16/10; overflow:hidden; background:var(--altBg); }
 .gal-card__img { width:100%; height:100%; object-fit:cover; transition:transform .4s ease; }
 .gal-card:hover .gal-card__img { transform:scale(1.06); }
 .gal-card__overlay { position:absolute; inset:0; background:rgba(0,0,0,.35); display:flex; align-items:center; justify-content:center; opacity:0; transition:opacity .3s ease; }
 .gal-card:hover .gal-card__overlay { opacity:1; }
-.gal-card__view-btn { display:inline-flex; align-items:center; gap:6px; background:#fff; color:#ca8a04; border:none; border-radius:8px; padding:8px 18px; font-size:13px; font-weight:700; cursor:pointer; font-family:'Cairo',sans-serif; transition:background .2s; }
-.gal-card__view-btn:hover { background:#fefce8; }
+.gal-card__view-btn { display:inline-flex; align-items:center; gap:6px; background:#fff; color:var(--primary); border:none; border-radius:8px; padding:8px 18px; font-size:13px; font-weight:700; cursor:pointer; font-family:'Cairo',sans-serif; transition:background .2s; }
+.gal-card__view-btn:hover { background:var(--accentTint); }
 
 /* ── Card body ──────────────────────────────────────────────────── */
 .gal-card__body { padding:14px 16px 10px; flex:1; }
-.gal-card__title { font-size:14px; font-weight:700; color:#111827; margin:0 0 6px; line-height:1.5; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
-.gal-card__desc { font-size:12px; color:#6b7280; margin:0 0 10px; line-height:1.6; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+.gal-card__title { font-size:14px; font-weight:700; color:var(--text); margin:0 0 6px; line-height:1.5; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+.gal-card__desc { font-size:12px; color:var(--muted); margin:0 0 10px; line-height:1.6; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
 .gal-card__meta { display:flex; align-items:center; gap:6px; flex-wrap:wrap; }
-.gal-card__dims,.gal-card__size { font-size:11px; font-weight:600; padding:2px 8px; border-radius:6px; background:#fefce8; color:#a16207; border:1px solid #fde047; }
+.gal-card__dims,.gal-card__size { font-size:11px; font-weight:600; padding:2px 8px; border-radius:6px; background:var(--accentTint); color:var(--primary); border:1px solid var(--border); }
 
 /* ── Card actions ───────────────────────────────────────────────── */
-.gal-card__actions { display:flex; gap:8px; padding:10px 16px 14px; border-top:1px solid #f3f4f6; }
+.gal-card__actions { display:flex; gap:8px; padding:10px 16px 14px; border-top:1px solid var(--border); }
 .gal-btn { display:inline-flex; align-items:center; gap:5px; border-radius:8px; padding:6px 14px; font-size:12px; font-weight:700; font-family:'Cairo',sans-serif; cursor:pointer; text-decoration:none; transition:background .2s,color .2s,transform .15s; border:none; white-space:nowrap; }
 .gal-btn:active { transform:scale(0.96); }
-.gal-btn--copy { background:#fefce8; color:#a16207; border:1.5px solid #fde047; }
-.gal-btn--copy:hover { background:#ca8a04; color:#fff; border-color:#ca8a04; }
-.gal-btn--copy.copied { background:#fef9c3; color:#a16207; }
-.gal-btn--view { background:#ca8a04; color:#fff; border:1.5px solid #ca8a04; flex:1; justify-content:center; }
-.gal-btn--view:hover { background:#a16207; border-color:#a16207; }
+.gal-btn--copy { background:var(--accentTint); color:var(--primary); border:1.5px solid var(--border); }
+.gal-btn--copy:hover { background:var(--accent); color:#fff; border-color:var(--accent); }
+.gal-btn--copy.copied { background:var(--altBg); color:var(--primary); }
+.gal-btn--view { background:var(--primary); color:#fff; border:1.5px solid var(--primary); flex:1; justify-content:center; }
+.gal-btn--view:hover { background:var(--primaryDk); border-color:var(--primaryDk); }
 
 /* ── Pagination ─────────────────────────────────────────────────── */
 .gal-pagination { display:flex; align-items:center; justify-content:center; gap:6px; margin-top:40px; flex-wrap:wrap; }
-.gal-page-btn { display:inline-flex; align-items:center; justify-content:center; min-width:36px; height:36px; padding:0 12px; border-radius:8px; font-size:13px; font-weight:600; font-family:'Cairo',sans-serif; text-decoration:none; background:#fff; color:#374151; border:1.5px solid #e5e7eb; cursor:pointer; transition:background .18s,color .18s,border-color .18s; }
-.gal-page-btn:hover { background:#fefce8; border-color:#fde047; color:#ca8a04; }
-.gal-page-btn--active { background:#ca8a04; color:#fff; border-color:#ca8a04; pointer-events:none; }
-.gal-page-btn--disabled { color:#d1d5db; pointer-events:none; cursor:default; border:none; background:transparent; }
+.gal-page-btn { display:inline-flex; align-items:center; justify-content:center; min-width:36px; height:36px; padding:0 12px; border-radius:8px; font-size:13px; font-weight:600; font-family:'Cairo',sans-serif; text-decoration:none; background:var(--cardBg); color:var(--text); border:1.5px solid var(--border); cursor:pointer; transition:background .18s,color .18s,border-color .18s; }
+.gal-page-btn:hover { background:var(--accentTint); border-color:var(--accent); color:var(--primary); }
+.gal-page-btn--active { background:var(--primary); color:#fff; border-color:var(--primary); pointer-events:none; }
+.gal-page-btn--disabled { color:var(--border); pointer-events:none; cursor:default; border:none; background:transparent; }
 
 /* ── Empty ──────────────────────────────────────────────────────── */
-.gal-empty { display:flex; flex-direction:column; align-items:center; gap:16px; padding:80px 24px; color:#9ca3af; font-size:1rem; }
+.gal-empty { display:flex; flex-direction:column; align-items:center; gap:16px; padding:80px 24px; color:var(--muted); font-size:1rem; }
 
 /* ── Modal ──────────────────────────────────────────────────────── */
 .gal-modal { position:fixed; inset:0; z-index:9999; display:flex; align-items:center; justify-content:center; padding:16px; font-family:'Cairo',sans-serif; }
 .gal-modal__backdrop { position:absolute; inset:0; background:rgba(0,0,0,.88); cursor:pointer; }
-.gal-modal__box { position:relative; background:#ca8a04; border-radius:16px; overflow:hidden; max-width:min(520px,92vw); display:flex; flex-direction:column; box-shadow:0 24px 80px rgba(0,0,0,.7); animation:galModalIn .25s ease; }
+.gal-modal__box { position:relative; background:#43230E; border-radius:16px; overflow:hidden; max-width:min(520px,92vw); display:flex; flex-direction:column; box-shadow:0 24px 80px rgba(0,0,0,.7); animation:galModalIn .25s ease; }
 @keyframes galModalIn { from{opacity:0;transform:scale(.93)} to{opacity:1;transform:scale(1)} }
 .gal-modal__header { display:flex; align-items:center; justify-content:space-between; padding:12px 14px; background:rgba(0,0,0,.6); flex-shrink:0; gap:10px; }
 .gal-modal__title { font-size:14px; font-weight:700; color:#f9fafb; min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; direction:rtl; text-align:right; flex:1; }
@@ -170,23 +170,13 @@
 </style>
 
 <script>
-/* ── Reveal cards ─────────────────────────────────────────────── */
 function galReveal() {
-    document.querySelectorAll('[data-reveal]').forEach(function(c) {
-        c.classList.add('revealed');
-    });
+    document.querySelectorAll('[data-reveal]').forEach(function(c) { c.classList.add('revealed'); });
 }
 galReveal();
-
-/* Re-run after every Livewire network round-trip */
-document.addEventListener('livewire:request', function() {
-    /* nothing — wait for response */
-});
 document.addEventListener('livewire:commit', galReveal);
-/* Fallback for older Livewire 3 builds */
 window.addEventListener('livewire:update', galReveal);
 
-/* ── Copy URL ─────────────────────────────────────────────────── */
 document.addEventListener('click', function(e) {
     var btn = e.target.closest('[data-copy-url]');
     if (!btn) return;
@@ -223,7 +213,6 @@ function fallbackCopy(text) {
     document.body.removeChild(ta);
 }
 
-/* ── Lightbox Modal ────────────────────────────────────────────── */
 (function(){
     var modal      = document.getElementById('galModal');
     var modalImg   = document.getElementById('galModalImg');

@@ -15,15 +15,15 @@
 @endsection
 
 @section('content')
-<div class="bg-gray-50 min-h-screen" dir="{{ $isAr ? 'rtl' : 'ltr' }}">
+<div dir="{{ $isAr ? 'rtl' : 'ltr' }}">
 
     {{-- Hero --}}
-    <section class="bg-yellow-700 text-white py-12 text-center">
-        <div class="container mx-auto px-4 max-w-2xl">
-            <h1 class="text-3xl md:text-4xl font-extrabold mb-3">
+    <section class="eq8-page-hero">
+        <div class="eq8-page-hero__inner">
+            <h1 class="eq8-page-hero__title">
                 {{ $isAr ? 'مدونة الكهرباء في الكويت' : 'Electrical Blog in Kuwait' }}
             </h1>
-            <p class="text-lg opacity-90">
+            <p class="eq8-page-hero__sub">
                 {{ $isAr
                     ? 'نصائح عملية وإرشادات متخصصة من فنيي إلكتريك كويت'
                     : 'Practical tips and expert guidance from ElectricQ8 technicians' }}
@@ -31,83 +31,97 @@
         </div>
     </section>
 
-    <div class="container mx-auto px-4 py-12">
+    <div style="background:var(--bg);min-height:60vh;padding:48px 0">
+        <div class="container mx-auto px-4">
 
-        @if($posts->isEmpty())
-            <p class="text-center text-gray-400 py-20">{{ $isAr ? 'لا توجد مقالات بعد.' : 'No posts yet.' }}</p>
-        @else
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                @foreach($posts as $post)
-                @php
-                    $postLocale  = app()->getLocale();
-                    $postTitle   = $post->getTranslation('title', $postLocale);
-                    $postExcerpt = Str::limit(strip_tags($post->getTranslation('excerpt', $postLocale)), 140);
-                    $postSlug    = $post->getTranslation('slug', $postLocale);
-                    $postRoute   = $isAr ? route('posts.show', $postSlug) : route('en.posts.show', $postSlug);
-                    $wordCount   = str_word_count(strip_tags($post->getTranslation('content', $postLocale) ?? ''));
-                    $readMinutes = max(1, (int) ceil($wordCount / 200));
-                @endphp
-                <a href="{{ $postRoute }}"
-                   class="bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all overflow-hidden flex flex-col group">
+            @if($posts->isEmpty())
+                <p style="text-align:center;color:var(--muted);padding:80px 0;font-family:'Cairo',sans-serif">
+                    {{ $isAr ? 'لا توجد مقالات بعد.' : 'No posts yet.' }}
+                </p>
+            @else
+                <div class="eq8-blog-grid">
+                    @foreach($posts as $post)
+                    @php
+                        $postLocale  = app()->getLocale();
+                        $postTitle   = $post->getTranslation('title', $postLocale);
+                        $postExcerpt = Str::limit(strip_tags($post->getTranslation('excerpt', $postLocale)), 140);
+                        $postSlug    = $post->getTranslation('slug', $postLocale);
+                        $postRoute   = $isAr ? route('posts.show', $postSlug) : route('en.posts.show', $postSlug);
+                        $wordCount   = str_word_count(strip_tags($post->getTranslation('content', $postLocale) ?? ''));
+                        $readMinutes = max(1, (int) ceil($wordCount / 200));
+                    @endphp
+                    <a href="{{ $postRoute }}" class="eq8-post-card">
 
-                    {{-- Thumbnail --}}
-                    @if($post->featured_image)
-                        <div class="overflow-hidden">
-                            <img src="{{ asset('storage/' . $post->featured_image) }}"
-                                 alt="{{ $postTitle }}"
-                                 loading="lazy"
-                                 class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-300">
-                        </div>
-                    @else
-                        <div class="w-full h-44 bg-yellow-50 flex items-center justify-center">
-                            <svg class="w-12 h-12 text-yellow-200" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 01-2.25 2.25M16.5 7.5V18a2.25 2.25 0 002.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 002.25 2.25h13.5M6 7.5h3v3H6v-3z"/>
-                            </svg>
-                        </div>
-                    @endif
-
-                    <div class="p-5 flex flex-col flex-1">
-
-                        {{-- Meta row: date + reading time --}}
-                        <div class="flex items-center gap-3 text-xs text-gray-400 mb-3">
-                            @if($post->published_at)
-                                <span class="flex items-center gap-1">
-                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                                    <span dir="ltr">{{ $post->published_at->format('d M Y') }}</span>
-                                </span>
-                            @endif
-                            <span class="flex items-center gap-1">
-                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                                {{ $isAr ? $readMinutes . ' د قراءة' : $readMinutes . ' min read' }}
-                            </span>
-                        </div>
-
-                        {{-- Title --}}
-                        <h2 class="font-bold text-gray-900 text-base mb-2 leading-snug">
-                            {{ $postTitle }}
-                        </h2>
-
-                        {{-- Excerpt --}}
-                        @if($postExcerpt)
-                            <p class="text-gray-500 text-sm leading-relaxed flex-1">
-                                {{ $postExcerpt }}
-                            </p>
+                        {{-- Thumbnail --}}
+                        @if($post->featured_image)
+                            <div class="eq8-post-card__img-wrap">
+                                <img src="{{ asset('storage/' . $post->featured_image) }}"
+                                     alt="{{ $postTitle }}" loading="lazy" class="eq8-post-card__img">
+                            </div>
+                        @else
+                            <div class="eq8-post-card__placeholder">
+                                <svg class="eq8-post-card__placeholder-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 01-2.25 2.25M16.5 7.5V18a2.25 2.25 0 002.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 002.25 2.25h13.5M6 7.5h3v3H6v-3z"/>
+                                </svg>
+                            </div>
                         @endif
 
-                        {{-- CTA --}}
-                        <span class="mt-4 text-yellow-600 text-sm font-semibold group-hover:underline">
-                            {{ $isAr ? 'اقرأ المزيد ←' : 'Read more →' }}
-                        </span>
-                    </div>
-                </a>
-                @endforeach
-            </div>
+                        <div class="eq8-post-card__body">
+                            <div class="eq8-post-card__meta">
+                                @if($post->published_at)
+                                    <span class="eq8-post-meta-item">
+                                        <svg class="eq8-post-meta-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                                        <span dir="ltr">{{ $post->published_at->format('d M Y') }}</span>
+                                    </span>
+                                @endif
+                                <span class="eq8-post-meta-item">
+                                    <svg class="eq8-post-meta-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                    {{ $isAr ? $readMinutes . ' د قراءة' : $readMinutes . ' min read' }}
+                                </span>
+                            </div>
+                            <h2 class="eq8-post-card__title">{{ $postTitle }}</h2>
+                            @if($postExcerpt)
+                                <p class="eq8-post-card__excerpt">{{ $postExcerpt }}</p>
+                            @endif
+                            <span class="eq8-post-card__cta">{{ $isAr ? 'اقرأ المزيد ←' : 'Read more →' }}</span>
+                        </div>
+                    </a>
+                    @endforeach
+                </div>
 
-            <div class="mt-10">
-                {{ $posts->links() }}
-            </div>
-        @endif
+                <div class="mt-10">{{ $posts->links() }}</div>
+            @endif
 
+        </div>
     </div>
 </div>
+
+<style>
+.eq8-page-hero { background:linear-gradient(135deg,#43230E 0%,#6B3A17 60%,#8B4D20 100%); color:#fff; padding:56px 20px; text-align:center; }
+.eq8-page-hero__inner { max-width:700px; margin:0 auto; }
+.eq8-page-hero__title { font-size:clamp(1.6rem,4vw,2.4rem); font-weight:800; margin:0 0 12px; font-family:'Cairo',system-ui,sans-serif; }
+.eq8-page-hero__sub { font-size:1rem; color:#F3D9BB; margin:0; font-family:'Cairo',system-ui,sans-serif; }
+
+.eq8-blog-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+@media(max-width:900px){ .eq8-blog-grid { grid-template-columns:repeat(2,1fr); } }
+@media(max-width:560px){ .eq8-blog-grid { grid-template-columns:1fr; } }
+
+.eq8-post-card { display:flex; flex-direction:column; background:var(--cardBg); border:1px solid var(--border); border-radius:16px; overflow:hidden; text-decoration:none; transition:box-shadow .25s,transform .25s,border-color .25s; }
+.eq8-post-card:hover { box-shadow:0 8px 32px rgba(107,58,23,.12); transform:translateY(-4px); border-color:var(--accent); }
+
+.eq8-post-card__img-wrap { overflow:hidden; }
+.eq8-post-card__img { width:100%; height:176px; object-fit:cover; transition:transform .35s; }
+.eq8-post-card:hover .eq8-post-card__img { transform:scale(1.05); }
+
+.eq8-post-card__placeholder { width:100%; height:176px; background:var(--altBg); display:flex; align-items:center; justify-content:center; }
+.eq8-post-card__placeholder-icon { width:48px; height:48px; color:var(--border); }
+
+.eq8-post-card__body { padding:18px; display:flex; flex-direction:column; flex:1; }
+.eq8-post-card__meta { display:flex; align-items:center; gap:12px; margin-bottom:10px; }
+.eq8-post-meta-item { display:flex; align-items:center; gap:4px; font-size:.74rem; color:var(--muted); font-family:'Cairo',sans-serif; }
+.eq8-post-meta-icon { width:13px; height:13px; }
+.eq8-post-card__title { font-size:.9rem; font-weight:700; color:var(--text); margin:0 0 8px; line-height:1.45; font-family:'Cairo',sans-serif; }
+.eq8-post-card__excerpt { font-size:.8rem; color:var(--body); line-height:1.65; flex:1; margin:0 0 12px; font-family:'Cairo',sans-serif; }
+.eq8-post-card__cta { font-size:.82rem; font-weight:600; color:var(--accent); margin-top:auto; font-family:'Cairo',sans-serif; }
+</style>
 @endsection
