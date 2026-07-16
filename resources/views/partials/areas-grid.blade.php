@@ -1,83 +1,19 @@
 @php
 $isAr = app()->getLocale() === 'ar';
-
-$governorates = [
-    [
-        'key'     => 'capital',
-        'ar'      => 'محافظة العاصمة',
-        'en'      => 'Capital Governorate',
-        'aria_ar' => 'صيانة كهرباءات محافظة العاصمة الكويت',
-        'aria_en' => 'Electrical Repair Capital Governorate Kuwait',
-        'areas'   => [
-            'ar' => ['مدينة الكويت','دسمان','الشرق','الصوابر','خيطان','قرطبة','غرناطة','شمال غرب الصليبيخات','المرقاب','القبلة','الصالحية','الوطية','السرة','بنيد القار','كيفان','الدوحة','الدسمة','الدعية','اليرموك','الصليبيخات','الروضة','النزهة','الفيحاء','الشامية','الشويخ','النهضة','ضاحية عبدالله السالم','العديلية','الخالدية','القادسية','الري','القيروان','مدينة جابر الأحمد'],
-            'en' => ['Kuwait City','Dasman','Sharq','Sawaber','Khaitan','Qurtuba','Granada','North West Sulaibikhat','Mirqab','Qibla','Salhiya','Watiya','Surra','Bneid Al-Qar','Kaifan','Doha','Dasma','Daiya','Yarmouk','Sulaibikhat','Rawda','Nuzha','Faiha','Shamiya','Shuwaikh','Nahda','Abdullah Al-Salem','Adailiya','Khalidiya','Qadsiya','Rai','Qairawan','Jaber Al-Ahmad City'],
-        ],
-    ],
-    [
-        'key'     => 'hawalli',
-        'ar'      => 'محافظة حولي',
-        'en'      => 'Hawalli Governorate',
-        'aria_ar' => 'صيانة كهرباءات محافظة حولي الكويت',
-        'aria_en' => 'Electrical Repair Hawalli Governorate Kuwait',
-        'areas'   => [
-            'ar' => ['حولي','مشرف','سلوى','ضاحية مبارك العبدالله الجابر','الشعب','بيان','جنوب السرة','السالمية','البدع','حطين','السلام','الجابرية','الرميثية','النقرة','الزهراء','ميدان حولي','الصديق','الشهداء'],
-            'en' => ['Hawalli','Mishrif','Salwa','Mubarak Al-Abdullah Al-Jaber','Shaab','Bayan','South Surra','Salmiya','Bidaa','Hittin','Salam','Jabriya','Rumaithiya','Nuqra','Zahraa','Hawalli Maidan','Siddiq','Shuhada'],
-        ],
-    ],
-    [
-        'key'     => 'farwaniya',
-        'ar'      => 'محافظة الفروانية',
-        'en'      => 'Farwaniya Governorate',
-        'aria_ar' => 'صيانة كهرباءات محافظة الفروانية الكويت',
-        'aria_en' => 'Electrical Repair Farwaniya Governorate Kuwait',
-        'areas'   => [
-            'ar' => ['أبرق خيطان','خيطان الجديدة','العباسية','الرابية','ضاحية عبدالله المبارك','الأندلس','العمرية','الفردوس','الرحاب','أشبيلية','العارضية','الفروانية','الرقعي','غرب عبدالله المبارك','خيطان','العارضية مخازن','الشدادية','ضاحية صباح الناصر','الصبيح','جليب الشيوخ','العارضية الصناعية','الحساوي','الري الصناعية'],
-            'en' => ['Abraq Khaitan','New Khaitan','Abbasiya','Rabiya','Abdullah Al-Mubarak','Andalus','Omariya','Firdous','Rehab','Ishbiliya','Ardiya','Farwaniya','Rigai','West Abdullah Al-Mubarak','Khaitan Farwaniya','Ardiya Stores','Shadadiya','Sabah Al-Naser','Subaiha','Jleeb Al-Shuyoukh','Ardiya Industrial','Hassawi','Rai Industrial'],
-        ],
-    ],
-    [
-        'key'     => 'jahra',
-        'ar'      => 'محافظة الجهراء',
-        'en'      => 'Jahra Governorate',
-        'aria_ar' => 'صيانة كهرباءات محافظة الجهراء الكويت',
-        'aria_en' => 'Electrical Repair Jahra Governorate Kuwait',
-        'areas'   => [
-            'ar' => ['الصليبية','تيماء','الجهراء القديمة','كبد','أمغرة','النسيم','الجهراء الجديدة','الروضتين','الصليبية الصناعية','النعيم','العيون','مدينة سعد العبدالله','الصبية','القصر','القصرية','السالمي','جنوب الجهراء','الصليبية الزراعية','الواحة','العبدلي','المطلاع','الجهراء الصناعية'],
-            'en' => ['Sulaibiya','Tayma','Old Jahra','Kabd','Amghara','Naseem','New Jahra','Raudhatain','Sulaibiya Industrial','Naeem','Uyoun','Saad Al-Abdullah City','Subbiya','Qasr','Qasriya','Salmi','South Jahra','Sulaibiya Agricultural','Waha','Abdali','Mutlaa','Jahra Industrial'],
-        ],
-    ],
-    [
-        'key'     => 'mubarak_al_kabeer',
-        'ar'      => 'محافظة مبارك الكبير',
-        'en'      => 'Mubarak Al-Kabeer Governorate',
-        'aria_ar' => 'صيانة كهرباءات محافظة مبارك الكبير الكويت',
-        'aria_en' => 'Electrical Repair Mubarak Al-Kabeer Governorate Kuwait',
-        'areas'   => [
-            'ar' => ['العدان','أبو فطيرة','القصور','صبحان','القرين','الفنيطيس','ضاحية صباح السالم','المسيلة','ضاحية مبارك الكبير','أبو الحصاني'],
-            'en' => ['Adan','Abu Ftaira','Qusour','Sabhan','Qurain','Funaitees','Sabah Al-Salem','Masayel','Mubarak Al-Kabeer','Abu Al-Hasaniya'],
-        ],
-    ],
-    [
-        'key'     => 'ahmadi',
-        'ar'      => 'محافظة الأحمدي',
-        'en'      => 'Ahmadi Governorate',
-        'aria_ar' => 'صيانة كهرباءات محافظة الأحمدي الكويت',
-        'aria_en' => 'Electrical Repair Ahmadi Governorate Kuwait',
-        'areas'   => [
-            'ar' => ['الفنطاس','الرقة','المهبولة','ضاحية جابر العلي','ميناء عبدالله','العقيلة','هدية','الأحمدي','الوفرة الزراعية','ضاحية فهد الأحمد','شرق الأحمدي','الفحيحيل','المنقف','الخيران','الصناعية','مدينة صباح الأحمد','مدينة الخيران','الظهر','أبو حليفة','الوفرة','بنيدر','الشعيبة','وارة','ميناء الأحمدي','الزور','الجليعة','ضاحية علي صباح السالم - أم الهيمان','النويصيب','مدينة صباح الأحمد البحرية'],
-            'en' => ['Fintas','Ruqa','Mahboula','Jaber Al-Ali','Abdullah Port','Aqaila','Hadiya','Ahmadi','Wafra Agricultural','Fahad Al-Ahmad','East Ahmadi','Fahaheel','Mangaf','Khairan','Industrial Ahmadi','Sabah Al-Ahmad City','Khairan City','Dhaher','Abu Halifa','Wafra','Bnaider','Shuaiba','Wara','Ahmadi Port','Zour','Julaiaa','Ali Sabah Al-Salem - Um Al-Hayman','Nuwaiseeb','Sabah Al-Ahmad Marine City'],
-        ],
-    ],
-];
-
 $lang = $isAr ? 'ar' : 'en';
 
-$dbLookup = [];
-foreach ($locations as $loc) {
-    $arName = $loc->getTranslation('name', 'ar');
-    $slug   = $loc->getTranslation('slug', $lang);
-    $dbLookup[$loc->governorate][$arName] = $slug;
-}
+$govMeta = [
+    'capital'           => ['ar' => 'محافظة العاصمة',        'en' => 'Capital Governorate'],
+    'hawalli'           => ['ar' => 'محافظة حولي',            'en' => 'Hawalli Governorate'],
+    'farwaniya'         => ['ar' => 'محافظة الفروانية',       'en' => 'Farwaniya Governorate'],
+    'jahra'             => ['ar' => 'محافظة الجهراء',         'en' => 'Jahra Governorate'],
+    'mubarak_al_kabeer' => ['ar' => 'محافظة مبارك الكبير',   'en' => 'Mubarak Al-Kabeer Governorate'],
+    'ahmadi'            => ['ar' => 'محافظة الأحمدي',        'en' => 'Ahmadi Governorate'],
+];
+
+// Group active locations by governorate — driven purely from DB
+$byGov = $locations->groupBy('governorate');
+$govOrder = ['capital', 'hawalli', 'farwaniya', 'jahra', 'mubarak_al_kabeer', 'ahmadi'];
 @endphp
 
 <section class="eq8-areas" dir="{{ $isAr ? 'rtl' : 'ltr' }}"
@@ -92,30 +28,28 @@ foreach ($locations as $loc) {
         </div>
 
         <div class="eq8-areas__grid">
-            @foreach($governorates as $idx => $gov)
+            @foreach($govOrder as $idx => $govKey)
             @php
-                $govName = $gov[$lang] ?? $gov['ar'];
-                $slugMap = $dbLookup[$gov['key']] ?? [];
+                $govAreas = $byGov[$govKey] ?? collect();
+                if ($govAreas->isEmpty()) continue;
+                $govName = $govMeta[$govKey][$lang] ?? $govKey;
                 $delay   = $idx * 70;
             @endphp
-            <div class="eq8-gov-card" data-gov-reveal style="transition-delay: {{ $delay }}ms"
-                 aria-label="{{ $gov[$isAr ? 'aria_ar' : 'aria_en'] }}">
+            <div class="eq8-gov-card" data-gov-reveal style="transition-delay: {{ $delay }}ms">
                 <div class="eq8-gov-card__head">
                     <span class="eq8-gov-card__pin" aria-hidden="true">📍</span>
                     <h3 class="eq8-gov-card__name">{{ $govName }}</h3>
+                    <span class="eq8-gov-card__count">{{ $govAreas->count() }}</span>
                 </div>
                 <div class="eq8-gov-card__divider"></div>
                 <div class="eq8-gov-card__pills">
-                    @foreach($gov['areas']['ar'] as $arIdx => $arName)
+                    @foreach($govAreas->sortBy('sort_order') as $loc)
                     @php
-                        $displayName = $isAr ? $arName : ($gov['areas']['en'][$arIdx] ?? $arName);
-                        $slug        = $slugMap[$arName] ?? null;
+                        $areaName = $loc->getTranslation('name', $lang);
+                        $areaSlug = $loc->getTranslation('slug', $lang);
                     @endphp
-                    @if($slug)
-                        <a href="{{ route($isAr ? 'areas.show' : 'en.areas.show', $slug) }}" class="eq8-pill eq8-pill--link">{{ $displayName }}</a>
-                    @else
-                        <span class="eq8-pill">{{ $displayName }}</span>
-                    @endif
+                    <a href="{{ route($isAr ? 'areas.show' : 'en.areas.show', $areaSlug) }}"
+                       class="eq8-pill eq8-pill--link">{{ $areaName }}</a>
                     @endforeach
                 </div>
             </div>
@@ -166,7 +100,6 @@ foreach ($locations as $loc) {
 .eq8-gov-card:hover {
     border-color: var(--accent);
     box-shadow: 0 8px 28px rgba(107,58,23,.12);
-    transform: translateY(-3px);
 }
 .eq8-gov-card.revealed:hover { transform: translateY(-3px); }
 
@@ -182,6 +115,17 @@ foreach ($locations as $loc) {
     font-weight: 700;
     color: var(--primary);
     margin: 0;
+    flex: 1;
+}
+.eq8-gov-card__count {
+    font-size: .72rem;
+    font-weight: 700;
+    color: var(--accent);
+    background: var(--accentTint);
+    border-radius: 999px;
+    padding: 2px 8px;
+    flex-shrink: 0;
+    font-family: 'Cairo', system-ui, sans-serif;
 }
 .eq8-gov-card__divider {
     height: 1px;
