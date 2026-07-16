@@ -270,7 +270,21 @@
 </section>
 
 <style>
-/* ── Shared ─────────────────────────────────────────────────── */
+/* ── Shared buttons ──────────────────────────────────────────── */
+.eq8-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-weight: 700; font-size: .95rem; padding: 12px 24px;
+    border-radius: 12px; text-decoration: none;
+    font-family: 'Cairo', system-ui, sans-serif;
+    transition: transform .2s ease, box-shadow .2s ease, background .18s ease;
+}
+.eq8-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.2); }
+.eq8-btn__icon { width: 20px; height: 20px; flex-shrink: 0; }
+.eq8-btn--wa   { background: #25D366; color: #fff; }
+.eq8-btn--wa:hover { background: #1fba5a; }
+.eq8-btn--call { background: rgba(255,255,255,.12); color: #fff; border: 1.5px solid rgba(255,255,255,.35); }
+.eq8-btn--call:hover { background: rgba(255,255,255,.22); }
+
 .eq8-section-cta { text-align: center; margin-top: 40px; }
 
 /* ── Deep content ────────────────────────────────────────────── */
