@@ -72,8 +72,6 @@ $governorates = [
 
 $lang = $isAr ? 'ar' : 'en';
 
-// Build a lookup: governorate → [ arabic-name => route-slug ]
-// so we can make pills clickable when a DB record exists.
 $dbLookup = [];
 foreach ($locations as $loc) {
     $arName = $loc->getTranslation('name', 'ar');
@@ -82,222 +80,41 @@ foreach ($locations as $loc) {
 }
 @endphp
 
-{{-- ─────────────────────────────────────────────────────────────
-     مناطق الخدمة — Service Areas section
-───────────────────────────────────────────────────────────────── --}}
-<style>
-/* ── section wrapper ───────────────────────────────────────── */
-.areas-section {
-    padding: 64px 0;
-    background: #f8fafc;
-    direction: rtl;
-}
-.areas-section.ltr {
-    direction: ltr;
-}
+<section class="eq8-areas" dir="{{ $isAr ? 'rtl' : 'ltr' }}"
+         aria-label="{{ $isAr ? 'مناطق الخدمة في الكويت' : 'Service Areas in Kuwait' }}">
+    <div class="eq8-section-inner">
 
-/* ── heading ────────────────────────────────────────────────── */
-.areas-heading {
-    text-align: center;
-    margin-bottom: 48px;
-}
-.areas-heading h2 {
-    font-size: 2rem;
-    font-weight: 800;
-    color: #111827;
-    margin: 0 0 10px;
-    font-family: 'Cairo', sans-serif;
-}
-.areas-heading p {
-    font-size: 1rem;
-    color: #6b7280;
-    margin: 0;
-    font-family: 'Cairo', sans-serif;
-}
-
-/* ── grid ───────────────────────────────────────────────────── */
-.areas-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-    grid-auto-rows: auto;       /* NEVER fixed row height */
-    align-items: start;         /* cards don't stretch to match tallest */
-}
-@media (max-width: 768px) {
-    .areas-grid { grid-template-columns: repeat(2, 1fr); }
-}
-@media (max-width: 480px) {
-    .areas-grid { grid-template-columns: 1fr; }
-}
-
-/* ── card ───────────────────────────────────────────────────── */
-.gov-card {
-    background: #ffffff;
-    border-radius: 16px;
-    border-right: 4px solid #1a3ae0;  /* RTL: right = visual start */
-    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-    height: auto;
-    min-height: unset;
-    overflow: visible;              /* NEVER hidden */
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.45s ease, transform 0.45s ease,
-                box-shadow 0.25s ease;
-    font-family: 'Cairo', sans-serif;
-}
-.gov-card.ltr {
-    border-right: none;
-    border-left: 4px solid #1a3ae0;
-}
-.gov-card.revealed {
-    opacity: 1;
-    transform: translateY(0);
-}
-.gov-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 28px rgba(26,58,224,0.15);
-}
-.gov-card.revealed:hover {
-    transform: translateY(-4px);
-}
-
-/* ── card header ────────────────────────────────────────────── */
-.gov-card-header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 18px 20px 14px;
-}
-.gov-card-header h3 {
-    font-size: 18px;
-    font-weight: 700;
-    color: #1a3ae0;
-    margin: 0;
-}
-.gov-divider {
-    height: 1px;
-    background: #e5e7eb;
-    margin: 0 20px 4px;
-}
-
-/* ── pills container ────────────────────────────────────────── */
-.areas-pills {
-    display: flex;
-    flex-wrap: wrap;            /* REQUIRED — pills wrap to new lines */
-    gap: 8px;
-    padding: 12px 20px 20px;
-}
-
-/* ── individual pill ────────────────────────────────────────── */
-.area-pill {
-    display: inline-flex;
-    align-items: center;
-    background: #eff3ff;
-    color: #1a3ae0;
-    border: 1px solid #c7d2fe;
-    border-radius: 999px;
-    padding: 4px 14px;
-    font-size: 13px;
-    font-weight: 600;
-    white-space: nowrap;
-    flex-shrink: 0;
-    text-decoration: none;
-    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
-    font-family: 'Cairo', sans-serif;
-}
-.area-pill:hover {
-    background: #1a3ae0;
-    color: #ffffff;
-    border-color: #1a3ae0;
-}
-
-/* ── bottom banner ──────────────────────────────────────────── */
-.areas-banner {
-    background: #1a3ae0;
-    border-radius: 16px;
-    margin-top: 40px;
-    padding: 36px 24px;
-    text-align: center;
-    color: #ffffff;
-    font-family: 'Cairo', sans-serif;
-}
-.areas-banner p {
-    font-size: 1.1rem;
-    font-weight: 700;
-    margin: 0 0 20px;
-}
-.areas-banner-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: #ffffff;
-    color: #1a3ae0;
-    border: none;
-    border-radius: 12px;
-    padding: 12px 28px;
-    font-size: 15px;
-    font-weight: 700;
-    text-decoration: none;
-    transition: background 0.2s ease, color 0.2s ease;
-    font-family: 'Cairo', sans-serif;
-}
-.areas-banner-btn:hover {
-    background: #25d366;
-    color: #ffffff;
-}
-</style>
-
-<section
-    class="areas-section{{ $isAr ? '' : ' ltr' }}"
-    aria-label="{{ $isAr ? 'مناطق الخدمة في الكويت' : 'Service Areas in Kuwait' }}"
->
-    <div class="container mx-auto px-4">
-
-        {{-- Section heading --}}
-        <div class="areas-heading">
-            <h2>{{ $isAr ? 'مناطق الخدمة في الكويت' : 'Service Areas in Kuwait' }}</h2>
-            <p>{{ $isAr
+        <div class="eq8-section-head">
+            <h2 class="eq8-section-title">{{ $isAr ? 'مناطق الخدمة في الكويت' : 'Service Areas in Kuwait' }}</h2>
+            <p class="eq8-section-sub">{{ $isAr
                 ? 'نغطي جميع محافظات ومناطق الكويت — خدمة سريعة في موقعك'
                 : 'We cover all governorates and areas of Kuwait — fast service at your location' }}</p>
         </div>
 
-        {{-- 6 governorate cards --}}
-        <div class="areas-grid">
+        <div class="eq8-areas__grid">
             @foreach($governorates as $idx => $gov)
             @php
-                $govName    = $gov[$lang] ?? $gov['ar'];
-                $ariaText   = $gov[$isAr ? 'aria_ar' : 'aria_en'];
-                $slugMap    = $dbLookup[$gov['key']] ?? [];  // arName => slug
-                $delay      = $idx * 70;
+                $govName = $gov[$lang] ?? $gov['ar'];
+                $slugMap = $dbLookup[$gov['key']] ?? [];
+                $delay   = $idx * 70;
             @endphp
-
-            <div
-                class="gov-card{{ $isAr ? '' : ' ltr' }}"
-                data-gov-reveal
-                style="transition-delay: {{ $delay }}ms"
-                aria-label="{{ $ariaText }}"
-                title="{{ $ariaText }}"
-            >
-                {{-- Header --}}
-                <div class="gov-card-header">
-                    <span aria-hidden="true" style="font-size:20px;line-height:1">📍</span>
-                    <h3>{{ $govName }}</h3>
+            <div class="eq8-gov-card" data-gov-reveal style="transition-delay: {{ $delay }}ms"
+                 aria-label="{{ $gov[$isAr ? 'aria_ar' : 'aria_en'] }}">
+                <div class="eq8-gov-card__head">
+                    <span class="eq8-gov-card__pin" aria-hidden="true">📍</span>
+                    <h3 class="eq8-gov-card__name">{{ $govName }}</h3>
                 </div>
-
-                <div class="gov-divider"></div>
-
-                {{-- Pills — always render the FULL static list.
-                     If a DB record exists for that Arabic name, make it a link. --}}
-                <div class="areas-pills">
+                <div class="eq8-gov-card__divider"></div>
+                <div class="eq8-gov-card__pills">
                     @foreach($gov['areas']['ar'] as $arIdx => $arName)
                     @php
                         $displayName = $isAr ? $arName : ($gov['areas']['en'][$arIdx] ?? $arName);
                         $slug        = $slugMap[$arName] ?? null;
                     @endphp
                     @if($slug)
-                        <a href="{{ route($isAr ? 'areas.show' : 'en.areas.show', $slug) }}" class="area-pill">{{ $displayName }}</a>
+                        <a href="{{ route($isAr ? 'areas.show' : 'en.areas.show', $slug) }}" class="eq8-pill eq8-pill--link">{{ $displayName }}</a>
                     @else
-                        <span class="area-pill">{{ $displayName }}</span>
+                        <span class="eq8-pill">{{ $displayName }}</span>
                     @endif
                     @endforeach
                 </div>
@@ -305,19 +122,13 @@ foreach ($locations as $loc) {
             @endforeach
         </div>
 
-        {{-- Bottom banner --}}
-        <div class="areas-banner" data-gov-reveal style="transition-delay: 490ms">
-            <p>{{ $isAr
+        <div class="eq8-areas__banner" data-gov-reveal style="transition-delay: 490ms">
+            <p class="eq8-areas__banner-text">{{ $isAr
                 ? 'لا تجد منطقتك؟ تواصل معنا وسنصلك أينما كنت في الكويت'
                 : "Can't find your area? Contact us and we'll reach you anywhere in Kuwait" }}</p>
-            <a
-                href="{{ \App\Helpers\WhatsAppHelper::url() }}"
-                target="_blank"
-                rel="noopener"
-                class="areas-banner-btn"
-            >
+            <a href="{{ \App\Helpers\WhatsAppHelper::url() }}" target="_blank" rel="noopener" class="eq8-areas__banner-btn">
                 <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.116 1.528 5.845L0 24l6.335-1.505A11.946 11.946 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.882a9.872 9.882 0 01-5.031-1.378l-.361-.214-3.741.981.999-3.648-.235-.374A9.869 9.869 0 012.118 12C2.118 6.963 6.963 2.118 12 2.118s9.882 4.845 9.882 9.882-4.845 9.882-9.882 9.882z"/>
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.116 1.528 5.845L0 24l6.335-1.505A11.946 11.946 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.882a9.872 9.872 0 01-5.031-1.378l-.361-.214-3.741.981.999-3.648-.235-.374A9.869 9.869 0 012.118 12C2.118 6.963 6.963 2.118 12 2.118s9.882 4.845 9.882 9.882-4.845 9.882-9.882 9.882z"/>
                 </svg>
                 {{ $isAr ? 'تواصل عبر واتساب 📲' : 'Contact via WhatsApp 📲' }}
             </a>
@@ -325,6 +136,125 @@ foreach ($locations as $loc) {
 
     </div>
 </section>
+
+<style>
+.eq8-areas {
+    padding: 64px 0;
+    background: var(--altBg);
+    transition: background .3s ease;
+}
+.eq8-areas__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    align-items: start;
+}
+@media (max-width: 900px) { .eq8-areas__grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 540px) { .eq8-areas__grid { grid-template-columns: 1fr; } }
+
+.eq8-gov-card {
+    background: var(--cardBg);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: visible;
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity .45s ease, transform .45s ease, border-color .2s ease, box-shadow .2s ease;
+    font-family: 'Cairo', system-ui, sans-serif;
+}
+.eq8-gov-card.revealed { opacity: 1; transform: translateY(0); }
+.eq8-gov-card:hover {
+    border-color: var(--accent);
+    box-shadow: 0 8px 28px rgba(107,58,23,.12);
+    transform: translateY(-3px);
+}
+.eq8-gov-card.revealed:hover { transform: translateY(-3px); }
+
+.eq8-gov-card__head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 16px 18px 12px;
+}
+.eq8-gov-card__pin { font-size: 18px; line-height: 1; flex-shrink: 0; }
+.eq8-gov-card__name {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin: 0;
+}
+.eq8-gov-card__divider {
+    height: 1px;
+    background: var(--border);
+    margin: 0 18px 2px;
+}
+.eq8-gov-card__pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 10px 18px 18px;
+}
+.eq8-pill {
+    display: inline-flex;
+    align-items: center;
+    background: var(--altBg);
+    color: var(--body);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 3px 12px;
+    font-size: .78rem;
+    font-weight: 600;
+    white-space: nowrap;
+    font-family: 'Cairo', system-ui, sans-serif;
+    transition: background .18s ease, color .18s ease, border-color .18s ease;
+}
+.eq8-pill--link {
+    text-decoration: none;
+    color: var(--primary);
+    background: var(--accentTint);
+    border-color: var(--accentTint);
+}
+.eq8-pill--link:hover {
+    background: var(--primary);
+    color: #fff;
+    border-color: var(--primary);
+}
+
+.eq8-areas__banner {
+    background: linear-gradient(135deg, #43230E 0%, #6B3A17 100%);
+    border-radius: 14px;
+    margin-top: 32px;
+    padding: 36px 24px;
+    text-align: center;
+    color: #fff;
+    font-family: 'Cairo', system-ui, sans-serif;
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity .45s ease, transform .45s ease;
+}
+.eq8-areas__banner.revealed { opacity: 1; transform: translateY(0); }
+.eq8-areas__banner-text {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin: 0 0 20px;
+    color: #F3D9BB;
+}
+.eq8-areas__banner-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #25D366;
+    color: #fff;
+    border-radius: 12px;
+    padding: 12px 28px;
+    font-size: .95rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background .2s ease, transform .2s ease;
+    font-family: 'Cairo', system-ui, sans-serif;
+}
+.eq8-areas__banner-btn:hover { background: #20ba58; transform: translateY(-2px); }
+</style>
 
 <script>
 (function () {
@@ -336,10 +266,7 @@ foreach ($locations as $loc) {
     }
     var io = new IntersectionObserver(function (entries) {
         entries.forEach(function (e) {
-            if (e.isIntersecting) {
-                e.target.classList.add('revealed');
-                io.unobserve(e.target);
-            }
+            if (e.isIntersecting) { e.target.classList.add('revealed'); io.unobserve(e.target); }
         });
     }, { threshold: 0.06 });
     cards.forEach(function (c) { io.observe(c); });

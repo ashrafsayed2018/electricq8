@@ -2,8 +2,6 @@
 $isAr    = app()->getLocale() === 'ar';
 $prefix  = $isAr ? '' : 'en.';
 $current = request()->route()?->getName() ?? '';
-
-// Strip the "en." prefix for comparison so active detection works for both locales
 $currentBase = str_replace('en.', '', $current);
 
 $links = [
@@ -17,54 +15,34 @@ $links = [
 ];
 @endphp
 
-{{-- ── Navbar ──────────────────────────────────────────────────────── --}}
-<nav
-    class="site-nav"
-    dir="{{ $isAr ? 'rtl' : 'ltr' }}"
-    x-data="{ open: false }"
-    @keydown.escape.window="open = false; $nextTick(() => $el.querySelector('.site-nav__hamburger')?.focus())"
->
+<nav class="eq8-nav" dir="{{ $isAr ? 'rtl' : 'ltr' }}" x-data="{ open: false }"
+     @keydown.escape.window="open = false; $nextTick(() => $el.querySelector('.eq8-nav__burger')?.focus())">
 
-    <div class="site-nav__inner">
+    <div class="eq8-nav__inner">
 
-        {{-- Logo --}}
-        <a href="{{ route($prefix . 'home') }}" class="site-nav__logo" aria-label="ElectricQ8 — {{ $isAr ? 'الرئيسية' : 'Home' }}">
-            <span class="site-nav__logo-icon">⚡</span>
+        <a href="{{ route($prefix . 'home') }}" class="eq8-nav__logo" aria-label="ElectricQ8">
+            <span class="eq8-nav__bolt" aria-hidden="true">⚡</span>
             ElectricQ8
         </a>
 
-        {{-- Desktop links (hidden on mobile) --}}
-        <ul class="site-nav__links" role="list">
+        <ul class="eq8-nav__links" role="list">
             @foreach($links as $link)
-            @php
-                $href    = route($link['route']);
-                $isActive = $currentBase === $link['base'];
-            @endphp
+            @php $isActive = $currentBase === $link['base']; @endphp
             <li>
-                <a
-                    href="{{ $href }}"
-                    class="site-nav__link {{ $isActive ? 'nav-link--active' : '' }}"
-                    @if($isActive) aria-current="page" @endif
-                >
+                <a href="{{ route($link['route']) }}"
+                   class="eq8-nav__link{{ $isActive ? ' eq8-nav__link--active' : '' }}"
+                   @if($isActive) aria-current="page" @endif>
                     {{ $link['label'] }}
                 </a>
             </li>
             @endforeach
         </ul>
 
-        {{-- Right cluster: language toggle + hamburger --}}
-        <div class="site-nav__actions">
-
-            {{-- Language toggle --}}
+        <div class="eq8-nav__actions">
             <livewire:language-switcher />
-
-            {{-- Hamburger — mobile only --}}
-            <button
-                class="site-nav__hamburger"
-                aria-label="{{ $isAr ? 'فتح القائمة' : 'Open menu' }}"
-                :aria-expanded="open"
-                @click="open = true"
-            >
+            <button class="eq8-nav__burger"
+                    aria-label="{{ $isAr ? 'فتح القائمة' : 'Open menu' }}"
+                    :aria-expanded="open" @click="open = true">
                 <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2"
                      stroke-linecap="round" viewBox="0 0 24 24" aria-hidden="true">
                     <path d="M4 6h16M4 12h16M4 18h16"/>
@@ -74,28 +52,20 @@ $links = [
 
     </div>
 
-    {{-- ── Mobile drawer overlay ───────────────────────────────────── --}}
-    {{-- Fixed overlay — does NOT push page content down --}}
-    <div
-        class="nav-drawer"
-        data-dir="{{ $isAr ? 'rtl' : 'ltr' }}"
-        :class="open ? 'nav-drawer--open' : ''"
-        @click.self="document.activeElement?.blur(); open = false; $nextTick(() => $el.closest('nav').querySelector('.site-nav__hamburger')?.focus())"
-        aria-hidden="true"
-        x-bind:aria-hidden="!open"
-    >
-        {{-- Panel --}}
-        <div class="nav-drawer__panel" role="dialog" aria-modal="true"
+    {{-- Mobile drawer --}}
+    <div class="eq8-drawer" data-dir="{{ $isAr ? 'rtl' : 'ltr' }}"
+         :class="open ? 'eq8-drawer--open' : ''"
+         @click.self="open = false; $nextTick(() => $el.closest('nav').querySelector('.eq8-nav__burger')?.focus())"
+         x-bind:aria-hidden="!open">
+
+        <div class="eq8-drawer__panel" role="dialog" aria-modal="true"
              :aria-label="'{{ $isAr ? 'القائمة الرئيسية' : 'Main menu' }}'">
 
-            {{-- Drawer header --}}
-            <div class="nav-drawer__header">
-                <span class="site-nav__logo" style="font-size:1.1rem">⚡ ElectricQ8</span>
-                <button
-                    class="nav-drawer__close"
-                    aria-label="{{ $isAr ? 'إغلاق القائمة' : 'Close menu' }}"
-                    @click="$el.blur(); open = false; $nextTick(() => $el.closest('nav').querySelector('.site-nav__hamburger')?.focus())"
-                >
+            <div class="eq8-drawer__head">
+                <span class="eq8-nav__logo" style="font-size:1.05rem">⚡ ElectricQ8</span>
+                <button class="eq8-drawer__close"
+                        aria-label="{{ $isAr ? 'إغلاق القائمة' : 'Close menu' }}"
+                        @click="open = false; $nextTick(() => $el.closest('nav').querySelector('.eq8-nav__burger')?.focus())">
                     <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5"
                          stroke-linecap="round" viewBox="0 0 24 24" aria-hidden="true">
                         <path d="M6 18L18 6M6 6l12 12"/>
@@ -103,69 +73,43 @@ $links = [
                 </button>
             </div>
 
-            {{-- Drawer links --}}
-            <ul class="nav-drawer__links" role="list">
+            <ul class="eq8-drawer__links" role="list">
                 @foreach($links as $link)
-                @php
-                    $href     = route($link['route']);
-                    $isActive = $currentBase === $link['base'];
-                @endphp
+                @php $isActive = $currentBase === $link['base']; @endphp
                 <li>
-                    <a
-                        href="{{ $href }}"
-                        class="nav-drawer__link {{ $isActive ? 'nav-link--active' : '' }}"
-                        @if($isActive) aria-current="page" @endif
-                        @click="open = false"
-                    >
+                    <a href="{{ route($link['route']) }}"
+                       class="eq8-drawer__link{{ $isActive ? ' eq8-nav__link--active' : '' }}"
+                       @if($isActive) aria-current="page" @endif
+                       @click="open = false">
                         {{ $link['label'] }}
-                        @if($isActive)
-                        <span class="nav-drawer__dot" aria-hidden="true"></span>
-                        @endif
+                        @if($isActive)<span class="eq8-drawer__dot" aria-hidden="true"></span>@endif
                     </a>
                 </li>
                 @endforeach
             </ul>
 
-            {{-- Drawer footer: language toggle --}}
-            <div class="nav-drawer__footer">
+            <div class="eq8-drawer__foot">
                 <livewire:language-switcher />
             </div>
-
         </div>
     </div>
 
 </nav>
 
 <style>
-/* ── Reset / tokens ────────────────────────────────────────────── */
-:root {
-    --nav-h:        64px;
-    --nav-bg:       #ffffff;
-    --nav-shadow:   0 1px 0 #e5e7eb, 0 2px 8px rgba(0,0,0,0.04);
-    --nav-blue:     #ca8a04;
-    --nav-active-bg:#fefce8;
-    --nav-active-c: #ca8a04;
-    --nav-text:     #374151;
-    --nav-hover-c:  #ca8a04;
-    --drawer-w:     280px;
-    --drawer-bg:    #ffffff;
-    --drawer-overlay: rgba(15,23,42,0.45);
-    --radius:       10px;
-    --font:         'Cairo', system-ui, sans-serif;
-}
-
-/* ── Navbar shell ──────────────────────────────────────────────── */
-.site-nav {
+/* ── Nav shell ───────────────────────────────────────────────── */
+.eq8-nav {
     position: sticky;
     top: 0;
     z-index: 900;
-    background: var(--nav-bg);
-    box-shadow: var(--nav-shadow);
-    height: var(--nav-h);
-    font-family: var(--font);
+    background: var(--headerBg);
+    border-bottom: 1px solid var(--border);
+    box-shadow: 0 1px 12px rgba(67,35,14,.06);
+    height: 64px;
+    font-family: 'Cairo', system-ui, sans-serif;
+    transition: background .3s ease, border-color .3s ease;
 }
-
-.site-nav__inner {
+.eq8-nav__inner {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
@@ -176,26 +120,25 @@ $links = [
     gap: 24px;
 }
 
-/* ── Logo ──────────────────────────────────────────────────────── */
-.site-nav__logo {
-    font-size: 1.25rem;
+/* ── Logo ────────────────────────────────────────────────────── */
+.eq8-nav__logo {
+    font-size: 1.2rem;
     font-weight: 800;
-    color: var(--nav-blue);
+    color: var(--primary);
     text-decoration: none;
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    letter-spacing: -0.3px;
     flex-shrink: 0;
+    letter-spacing: -.3px;
 }
-.site-nav__logo-icon {
+.eq8-nav__bolt {
+    color: var(--accent);
     font-style: normal;
-    font-size: 1.1em;
-    color: #38bdf8;
 }
 
-/* ── Desktop link list ─────────────────────────────────────────── */
-.site-nav__links {
+/* ── Desktop links ───────────────────────────────────────────── */
+.eq8-nav__links {
     display: flex;
     align-items: center;
     gap: 2px;
@@ -205,224 +148,162 @@ $links = [
     flex: 1;
     justify-content: center;
 }
-@media (max-width: 767px) {
-    .site-nav__links { display: none; }
-}
+@media (max-width: 767px) { .eq8-nav__links { display: none; } }
 
-.site-nav__link {
+.eq8-nav__link {
     display: inline-flex;
     align-items: center;
-    padding: 7px 14px;
-    border-radius: var(--radius);
-    font-size: 0.875rem;
+    padding: 7px 13px;
+    border-radius: 8px;
+    font-size: .875rem;
     font-weight: 600;
-    color: var(--nav-text);
+    color: var(--muted);
     text-decoration: none;
-    transition: background 0.18s ease, color 0.18s ease;
-    position: relative;
     white-space: nowrap;
+    transition: background .18s ease, color .18s ease;
 }
-.site-nav__link:hover {
-    background: #f1f5f9;
-    color: var(--nav-hover-c);
+.eq8-nav__link:hover {
+    background: var(--altBg);
+    color: var(--primary);
 }
-
-/* Active desktop link */
-.site-nav__link.nav-link--active,
-.site-nav__link[aria-current="page"] {
-    background: var(--nav-active-bg);
-    color: var(--nav-active-c);
+.eq8-nav__link--active {
+    background: var(--accentTint);
+    color: var(--primary);
     font-weight: 700;
 }
-.site-nav__link.nav-link--active::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 14px;
-    right: 14px;
-    height: 2px;
-    border-radius: 2px;
-    background: var(--nav-blue);
-}
 
-/* ── Right actions cluster ─────────────────────────────────────── */
-.site-nav__actions {
+/* ── Actions cluster ─────────────────────────────────────────── */
+.eq8-nav__actions {
     display: flex;
     align-items: center;
     gap: 10px;
     flex-shrink: 0;
 }
 
-/* ── Hamburger button ──────────────────────────────────────────── */
-.site-nav__hamburger {
+/* ── Hamburger ───────────────────────────────────────────────── */
+.eq8-nav__burger {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 40px;
     height: 40px;
     border: none;
-    background: #f1f5f9;
+    background: var(--altBg);
     border-radius: 10px;
-    color: #374151;
+    color: var(--muted);
     cursor: pointer;
-    transition: background 0.18s ease, color 0.18s ease;
+    transition: background .18s ease, color .18s ease;
 }
-.site-nav__hamburger:hover {
-    background: #e0e7ff;
-    color: var(--nav-blue);
-}
-@media (min-width: 768px) {
-    .site-nav__hamburger { display: none; }
-}
+.eq8-nav__burger:hover { background: var(--accentTint); color: var(--primary); }
+@media (min-width: 768px) { .eq8-nav__burger { display: none; } }
 
-/* ── Drawer overlay ────────────────────────────────────────────── */
-.nav-drawer {
+/* ── Drawer overlay ──────────────────────────────────────────── */
+.eq8-drawer {
     position: fixed;
-    inset: 0;                       /* covers full viewport */
+    inset: 0;
     z-index: 950;
-    background: var(--drawer-overlay);
+    background: rgba(43,33,26,.5);
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.28s ease, visibility 0.28s ease;
-    /* does NOT affect document flow — page content never moves */
+    transition: opacity .28s ease, visibility .28s ease;
 }
-.nav-drawer--open {
-    opacity: 1;
-    visibility: visible;
-}
+.eq8-drawer--open { opacity: 1; visibility: visible; }
 
-/* ── Drawer panel ──────────────────────────────────────────────── */
-.nav-drawer__panel {
+/* ── Drawer panel ────────────────────────────────────────────── */
+.eq8-drawer__panel {
     position: absolute;
-    top: 0;
-    bottom: 0;
-    width: var(--drawer-w);
-    background: var(--drawer-bg);
-    box-shadow: 0 0 40px rgba(0,0,0,0.15);
+    top: 0; bottom: 0;
+    width: 280px;
+    background: var(--headerBg);
+    box-shadow: 0 0 40px rgba(0,0,0,.2);
     display: flex;
     flex-direction: column;
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     overflow-y: auto;
-    font-family: var(--font);
+    font-family: 'Cairo', system-ui, sans-serif;
+    transition: transform .3s cubic-bezier(.4,0,.2,1);
 }
+[data-dir="rtl"] .eq8-drawer__panel {
+    right: 0; left: auto;
+    transform: translateX(100%);
+}
+[data-dir="rtl"].eq8-drawer--open .eq8-drawer__panel { transform: translateX(0); }
+[data-dir="ltr"] .eq8-drawer__panel {
+    left: 0; right: auto;
+    transform: translateX(-100%);
+}
+[data-dir="ltr"].eq8-drawer--open .eq8-drawer__panel { transform: translateX(0); }
 
-/* RTL: panel slides from the right (inline-end = right in RTL) */
-[data-dir="rtl"] .nav-drawer__panel {
-    right: 0;
-    left: auto;
-    transform: translateX(100%);   /* hidden off-screen to the right */
-}
-[data-dir="rtl"].nav-drawer--open .nav-drawer__panel {
-    transform: translateX(0);      /* slides in from right */
-}
-
-/* LTR: panel slides from the left */
-[data-dir="ltr"] .nav-drawer__panel {
-    left: 0;
-    right: auto;
-    transform: translateX(-100%);  /* hidden off-screen to the left */
-}
-[data-dir="ltr"].nav-drawer--open .nav-drawer__panel {
-    transform: translateX(0);      /* slides in from left */
-}
-
-/* ── Drawer header ─────────────────────────────────────────────── */
-.nav-drawer__header {
+/* ── Drawer sections ─────────────────────────────────────────── */
+.eq8-drawer__head {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 18px 20px;
-    border-bottom: 1px solid #e5e7eb;
+    border-bottom: 1px solid var(--border);
     flex-shrink: 0;
 }
-.nav-drawer__close {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 36px;
-    height: 36px;
+.eq8-drawer__close {
+    width: 36px; height: 36px;
     border: none;
-    background: #f1f5f9;
+    background: var(--altBg);
     border-radius: 8px;
-    color: #6b7280;
+    color: var(--muted);
     cursor: pointer;
-    transition: background 0.18s, color 0.18s;
+    display: flex; align-items: center; justify-content: center;
+    transition: background .18s, color .18s;
 }
-.nav-drawer__close:hover {
-    background: #fee2e2;
-    color: #ef4444;
-}
+.eq8-drawer__close:hover { background: #fee2e2; color: #ef4444; }
 
-/* ── Drawer link list ──────────────────────────────────────────── */
-.nav-drawer__links {
+.eq8-drawer__links {
     list-style: none;
     margin: 0;
     padding: 12px 12px 0;
     flex: 1;
 }
-.nav-drawer__link {
+.eq8-drawer__link {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 12px 14px;
-    border-radius: var(--radius);
-    font-size: 0.95rem;
+    border-radius: 8px;
+    font-size: .95rem;
     font-weight: 600;
-    color: var(--nav-text);
+    color: var(--muted);
     text-decoration: none;
-    transition: background 0.18s ease, color 0.18s ease;
     margin-bottom: 2px;
+    transition: background .18s ease, color .18s ease;
 }
-.nav-drawer__link:hover {
-    background: #f1f5f9;
-    color: var(--nav-hover-c);
-}
-.nav-drawer__link.nav-link--active,
-.nav-drawer__link[aria-current="page"] {
-    background: var(--nav-active-bg);
-    color: var(--nav-active-c);
-    font-weight: 700;
-}
-.nav-drawer__dot {
-    width: 7px;
-    height: 7px;
+.eq8-drawer__link:hover { background: var(--altBg); color: var(--primary); }
+.eq8-drawer__link.eq8-nav__link--active { background: var(--accentTint); color: var(--primary); font-weight: 700; }
+.eq8-drawer__dot {
+    width: 7px; height: 7px;
     border-radius: 50%;
-    background: var(--nav-blue);
+    background: var(--accent);
     flex-shrink: 0;
 }
-
-/* ── Drawer footer ─────────────────────────────────────────────── */
-.nav-drawer__footer {
+.eq8-drawer__foot {
     padding: 16px 20px 24px;
-    border-top: 1px solid #e5e7eb;
+    border-top: 1px solid var(--border);
     flex-shrink: 0;
 }
 
-/* ── Language toggle (global) ──────────────────────────────────── */
+/* ── Language toggle (global) ────────────────────────────────── */
 .lang-toggle {
     display: inline-flex;
     align-items: center;
     gap: 6px;
     padding: 6px 14px;
     border-radius: 999px;
-    font-size: 0.8rem;
+    font-size: .8rem;
     font-weight: 700;
-    font-family: var(--font);
-    background: #fefce8;
-    color: var(--nav-blue);
-    border: 1.5px solid #fde047;
+    font-family: 'Cairo', system-ui, sans-serif;
+    background: var(--accentTint);
+    color: var(--primary);
+    border: 1.5px solid var(--border);
     cursor: pointer;
-    transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+    transition: background .18s ease, color .18s ease, border-color .18s ease;
     white-space: nowrap;
-    letter-spacing: 0.02em;
 }
-.lang-toggle:hover {
-    background: var(--nav-blue);
-    color: #fff;
-    border-color: var(--nav-blue);
-}
-.lang-toggle__globe {
-    font-style: normal;
-    font-size: 1em;
-}
+.lang-toggle:hover { background: var(--primary); color: #fff; border-color: var(--primary); }
+.lang-toggle__globe { font-style: normal; }
 </style>

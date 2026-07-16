@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="robots" content="@yield('robots', 'index, follow')">
-    <meta name="theme-color" content="#ca8a04">
+    <meta name="theme-color" content="#6B3A17">
 
     <title>@yield('meta_title', __('site.default_meta_title'))</title>
     <meta name="description" content="@yield('meta_description', __('site.default_meta_desc'))">
@@ -46,7 +46,63 @@
     @livewireStyles
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="bg-white text-gray-900 antialiased">
+<body class="eq8-body antialiased">
+<style>
+:root {
+    --bg:        #FAF6F1;
+    --headerBg:  #FFFFFF;
+    --border:    #E7DCCC;
+    --cardBg:    #FFFFFF;
+    --altBg:     #F2E9DE;
+    --text:      #2B211A;
+    --muted:     #7A6A5C;
+    --body:      #5A4C40;
+    --primary:   #6B3A17;
+    --primaryDk: #43230E;
+    --accent:    #D97B2E;
+    --accentTint:#F3D9BB;
+    --wa:        #25D366;
+    --footerBg:  #241A12;
+}
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg:       #1C140D;
+        --headerBg: #241A11;
+        --border:   #4A3826;
+        --cardBg:   #2C2013;
+        --altBg:    #221808;
+        --text:     #F3E9DC;
+        --muted:    #C4AD95;
+        --body:     #D8C7B4;
+    }
+}
+:root[data-theme="light"] {
+    --bg:        #FAF6F1;
+    --headerBg:  #FFFFFF;
+    --border:    #E7DCCC;
+    --cardBg:    #FFFFFF;
+    --altBg:     #F2E9DE;
+    --text:      #2B211A;
+    --muted:     #7A6A5C;
+    --body:      #5A4C40;
+}
+:root[data-theme="dark"] {
+    --bg:       #1C140D;
+    --headerBg: #241A11;
+    --border:   #4A3826;
+    --cardBg:   #2C2013;
+    --altBg:    #221808;
+    --text:     #F3E9DC;
+    --muted:    #C4AD95;
+    --body:     #D8C7B4;
+}
+.eq8-body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Cairo', 'Inter', system-ui, sans-serif;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+</style>
 
     @include('partials.nav')
 
@@ -60,7 +116,7 @@
     <a href="https://wa.me/{{ \App\Models\SiteSetting::get('whatsapp_number') }}?text={{ urlencode(app()->getLocale() === 'ar' ? 'مرحباً، أريد الاستفسار عن خدمات الكهرباء' : 'Hello, I would like to inquire about electrical services') }}"
        target="_blank"
        aria-label="WhatsApp"
-       class="fixed bottom-6 {{ app()->getLocale() === 'ar' ? 'left-6' : 'right-6' }} z-50 bg-green-500 hover:bg-green-600 text-white rounded-full p-4 shadow-xl transition hover:scale-110">
+       class="fixed bottom-6 {{ app()->getLocale() === 'ar' ? 'left-6' : 'right-6' }} z-50 text-white rounded-full p-4 shadow-xl transition hover:scale-110" style="background:#25D366" onmouseover="this.style.background='#20ba58'" onmouseout="this.style.background='#25D366'">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" viewBox="0 0 24 24" fill="currentColor">
             <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
             <path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.116 1.528 5.845L0 24l6.335-1.505A11.946 11.946 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.882a9.872 9.872 0 01-5.031-1.378l-.361-.214-3.741.981.999-3.648-.235-.374A9.869 9.869 0 012.118 12C2.118 6.963 6.963 2.118 12 2.118s9.882 4.845 9.882 9.882-4.845 9.882-9.882 9.882z"/>
