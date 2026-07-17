@@ -2,14 +2,40 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cluster;
 use App\Models\Location;
+use App\Models\Pillar;
 use App\Models\Post;
 use App\Models\Service;
 use App\Models\ServiceLocationPage;
 use Illuminate\Http\Response;
+use Illuminate\View\View;
 
 class SitemapController extends Controller
 {
+    public function page(): View
+    {
+        $pillars = Pillar::with(['clusters' => function ($q) {
+                $q->where('status', 'active')->orderBy('sort_order');
+            }])
+            ->where('status', 'active')
+            ->orderBy('sort_order')
+            ->get();
+
+        $clusters = Cluster::where('status', 'active')
+            ->with(['services' => fn ($q) => $q->active(), 'posts' => fn ($q) => $q->published()])
+            ->orderBy('sort_order')
+            ->get();
+
+        $services = Service::active()->get();
+
+        $locations = Location::where('is_active', true)->orderBy('sort_order')->get();
+
+        $posts = Post::published()->get();
+
+        return view('sitemap', compact('pillars', 'clusters', 'services', 'locations', 'posts'));
+    }
+
     public function index(): Response
     {
         $base = rtrim((string) config('app.url'), '/');

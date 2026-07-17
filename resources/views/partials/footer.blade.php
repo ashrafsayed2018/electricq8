@@ -97,7 +97,7 @@
                 <ul class="eq8-footer__list" style="margin-bottom:20px">
                     <li><a href="{{ route('privacy') }}" class="eq8-footer__link">{{ $footerIsAr ? 'سياسة الخصوصية' : 'Privacy Policy' }}</a></li>
                     <li><a href="{{ route('privacy') }}" class="eq8-footer__link">{{ $footerIsAr ? 'الشروط والأحكام' : 'Terms of Service' }}</a></li>
-                    <li><a href="/sitemap.xml" class="eq8-footer__link">Sitemap</a></li>
+                    <li><a href="{{ route($footerPrefix . 'sitemap.page') }}" class="eq8-footer__link">{{ $footerIsAr ? 'خريطة الموقع' : 'Sitemap' }}</a></li>
                 </ul>
                 <div class="eq8-footer__hours">
                     <p class="eq8-footer__hours-title">{{ $footerIsAr ? 'ساعات العمل' : 'Working Hours' }}</p>

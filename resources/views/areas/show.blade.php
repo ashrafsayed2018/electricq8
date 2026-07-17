@@ -277,7 +277,7 @@
 .eq8-bc { background:var(--altBg); border-bottom:1px solid var(--border); padding:10px 0; font-family:'Cairo',sans-serif; font-size:13px; }
 .eq8-bc__inner { max-width:1100px; margin:0 auto; padding:0 16px; }
 .eq8-bc__list { display:flex; align-items:center; gap:8px; list-style:none; margin:0; padding:0; flex-wrap:wrap; color:var(--muted); }
-.eq8-bc__link { color:var(--primary); text-decoration:none; font-weight:600; }
+.eq8-bc__link { color:var(--primaryText); text-decoration:none; font-weight:600; }
 .eq8-bc__link:hover { text-decoration:underline; }
 .eq8-bc__sep { color:var(--border); }
 .eq8-bc__current { color:var(--text); font-weight:600; }

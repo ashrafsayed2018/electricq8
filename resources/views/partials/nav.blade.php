@@ -169,7 +169,7 @@ $links = [
 .eq8-nav__logo {
     font-size: 1.2rem;
     font-weight: 800;
-    color: var(--primary);
+    color: var(--primaryText);
     text-decoration: none;
     display: inline-flex;
     align-items: center;
@@ -209,7 +209,7 @@ $links = [
 }
 .eq8-nav__link:hover {
     background: var(--altBg);
-    color: var(--primary);
+    color: var(--primaryText);
 }
 .eq8-nav__link--active {
     background: var(--accentTint);
@@ -318,7 +318,7 @@ $links = [
     margin-bottom: 2px;
     transition: background .18s ease, color .18s ease;
 }
-.eq8-drawer__link:hover { background: var(--altBg); color: var(--primary); }
+.eq8-drawer__link:hover { background: var(--altBg); color: var(--primaryText); }
 .eq8-drawer__link.eq8-nav__link--active { background: var(--accentTint); color: var(--primary); font-weight: 700; }
 .eq8-drawer__dot {
     width: 7px; height: 7px;

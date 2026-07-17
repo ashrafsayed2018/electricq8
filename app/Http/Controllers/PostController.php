@@ -24,6 +24,12 @@ class PostController extends Controller
             return redirect()->route($route, $correctSlug, 302);
         }
 
-        return view('posts.show', ['post' => $post]);
+        $relatedPosts = Post::published()
+            ->where('id', '!=', $post->id)
+            ->when($post->cluster_id, fn ($q) => $q->orderByRaw('cluster_id = ? desc', [$post->cluster_id]))
+            ->limit(8)
+            ->get();
+
+        return view('posts.show', ['post' => $post, 'relatedPosts' => $relatedPosts]);
     }
 }

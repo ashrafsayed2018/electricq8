@@ -38,6 +38,7 @@ Route::middleware('locale')->group(function () {
     Route::get('/blog/{post}',            [PostController::class, 'show'])->name('posts.show');
     Route::get('/clusters/{cluster}',     [ClusterController::class, 'show'])->name('clusters.show');
     Route::get('/pillars/{pillar}',       [PillarController::class,  'show'])->name('pillars.show');
+    Route::get('/sitemap',                [SitemapController::class, 'page'])->name('sitemap.page');
 
     // English — /en/ prefix
     Route::prefix('en')->name('en.')->group(function () {
@@ -54,6 +55,7 @@ Route::middleware('locale')->group(function () {
         Route::get('/blog/{post}',            [PostController::class, 'show'])->name('posts.show');
         Route::get('/clusters/{cluster}',     [ClusterController::class, 'show'])->name('clusters.show');
         Route::get('/pillars/{pillar}',       [PillarController::class,  'show'])->name('pillars.show');
+        Route::get('/sitemap',                [SitemapController::class, 'page'])->name('sitemap.page');
     });
 });
 
@@ -95,8 +97,8 @@ Route::get('/locale/{locale}', function (string $locale) {
 Route::middleware(['locale', 'guest'])->group(function () {
     Route::get('/login',     [LoginController::class,    'showLoginForm'])->name('login');
     Route::post('/login',    [LoginController::class,    'login']);
-    Route::get('/register',  [RegisterController::class, 'showRegistrationForm'])->name('register');
-    Route::post('/register', [RegisterController::class, 'register']);
+    // Route::get('/register',  [RegisterController::class, 'showRegistrationForm'])->name('register');
+    // Route::post('/register', [RegisterController::class, 'register']);
 });
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout')->middleware(['locale', 'auth']);
 

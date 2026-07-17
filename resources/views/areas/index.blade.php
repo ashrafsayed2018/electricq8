@@ -64,11 +64,29 @@
     {{-- Coverage strip --}}
     <section class="eq8-coverage-strip">
         <div class="eq8-coverage-strip__inner">
-            <p class="eq8-coverage-strip__text">
-                {{ $isAr
-                    ? 'تخدم إلكتريك كويت جميع المناطق السكنية والتجارية في الكويت، من مدينة الكويت والسالمية شمالاً حتى الأحمدي والخيران جنوبًا. سواء كنت في شقة أو فيلا أو مبنى تجاري، فنيونا يصلون إليك خلال ساعة واحدة، مزودين بالأدوات والقطع اللازمة لإنهاء الخدمة في نفس الزيارة.'
-                    : 'ElectricQ8 serves all residential and commercial areas in Kuwait, from Kuwait City and Salmiya in the north to Ahmadi and Khiran in the south. Whether you are in an apartment, villa or commercial building, our technicians reach you within one hour, equipped with all tools and parts to complete the service in a single visit.' }}
-            </p>
+            <div class="eq8-coverage-card">
+                <span class="eq8-coverage-card__icon" aria-hidden="true">🇰🇼</span>
+                <span class="eq8-coverage-card__eyebrow">{{ $isAr ? 'تغطية شاملة' : 'Nationwide Coverage' }}</span>
+                <p class="eq8-coverage-card__text">
+                    {{ $isAr
+                        ? 'تخدم إلكتريك كويت جميع المناطق السكنية والتجارية في الكويت، من مدينة الكويت والسالمية شمالاً حتى الأحمدي والخيران جنوبًا. سواء كنت في شقة أو فيلا أو مبنى تجاري، فنيونا يصلون إليك خلال ساعة واحدة، مزودين بالأدوات والقطع اللازمة لإنهاء الخدمة في نفس الزيارة.'
+                        : 'ElectricQ8 serves all residential and commercial areas in Kuwait, from Kuwait City and Salmiya in the north to Ahmadi and Khiran in the south. Whether you are in an apartment, villa or commercial building, our technicians reach you within one hour, equipped with all tools and parts to complete the service in a single visit.' }}
+                </p>
+                <div class="eq8-coverage-card__stats">
+                    <div class="eq8-coverage-stat">
+                        <span class="eq8-coverage-stat__value">6/6</span>
+                        <span class="eq8-coverage-stat__label">{{ $isAr ? 'محافظات' : 'Governorates' }}</span>
+                    </div>
+                    <div class="eq8-coverage-stat">
+                        <span class="eq8-coverage-stat__value">1{{ $isAr ? 'س' : 'hr' }}</span>
+                        <span class="eq8-coverage-stat__label">{{ $isAr ? 'وقت الاستجابة' : 'Response Time' }}</span>
+                    </div>
+                    <div class="eq8-coverage-stat">
+                        <span class="eq8-coverage-stat__value">1</span>
+                        <span class="eq8-coverage-stat__label">{{ $isAr ? 'زيارة واحدة' : 'Single Visit' }}</span>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -77,9 +95,9 @@
 <style>
 /* Breadcrumb */
 .eq8-bc { background:var(--altBg); border-bottom:1px solid var(--border); padding:10px 0; font-family:'Cairo',system-ui,sans-serif; font-size:13px; }
-.eq8-bc__inner { max-width:1200px; margin:0 auto; padding:0 24px; }
+.eq8-bc__inner { max-width:1200px; margin:0 auto; padding:0 20px; }
 .eq8-bc__list { display:flex; align-items:center; gap:8px; list-style:none; margin:0; padding:0; flex-wrap:wrap; color:var(--muted); }
-.eq8-bc__link { color:var(--primary); text-decoration:none; font-weight:600; }
+.eq8-bc__link { color:var(--primaryText); text-decoration:none; font-weight:600; }
 .eq8-bc__link:hover { text-decoration:underline; }
 .eq8-bc__sep { color:var(--border); }
 .eq8-bc__current { color:var(--text); font-weight:600; }
@@ -88,7 +106,7 @@
 .eq8-page-hero {
     background: linear-gradient(135deg,#43230E 0%,#6B3A17 60%,#8B4D20 100%);
     color: #fff;
-    padding: 64px 24px 72px;
+    padding: 64px 0 72px;
     text-align: center;
     position: relative;
     overflow: hidden;
@@ -103,6 +121,7 @@
     position: relative;
     max-width: 800px;
     margin: 0 auto;
+    padding: 0 20px;
 }
 .eq8-areas-badge {
     display: inline-flex;
@@ -159,21 +178,89 @@
 
 /* Coverage text strip */
 .eq8-coverage-strip {
-    padding: 48px 24px;
+    padding: 64px 0;
     background: var(--bg);
     border-top: 1px solid var(--border);
 }
 .eq8-coverage-strip__inner {
-    max-width: 760px;
+    max-width: 860px;
     margin: 0 auto;
-    text-align: center;
+    padding: 0 20px;
 }
-.eq8-coverage-strip__text {
+.eq8-coverage-card {
+    position: relative;
+    background: var(--cardBg);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 40px 32px;
+    text-align: center;
+    overflow: hidden;
+}
+.eq8-coverage-card::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 4px;
+    background: linear-gradient(90deg, #6B3A17 0%, #D97B2E 50%, #6B3A17 100%);
+}
+.eq8-coverage-card__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: var(--accentTint);
+    font-size: 24px;
+    margin-bottom: 16px;
+}
+.eq8-coverage-card__eyebrow {
+    display: block;
+    color: var(--accent);
+    font-weight: 800;
+    font-size: .78rem;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    font-family: 'Cairo',system-ui,sans-serif;
+    margin-bottom: 14px;
+}
+.eq8-coverage-card__text {
     color: var(--body);
     line-height: 1.85;
     font-family: 'Cairo',system-ui,sans-serif;
-    font-size: .9rem;
-    margin: 0;
+    font-size: .95rem;
+    max-width: 680px;
+    margin: 0 auto;
+}
+.eq8-coverage-card__stats {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 28px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+}
+.eq8-coverage-stat {
+    min-width: 120px;
+    padding: 10px 18px;
+    background: var(--altBg);
+    border-radius: 12px;
+}
+.eq8-coverage-stat__value {
+    display: block;
+    color: var(--primary);
+    font-weight: 800;
+    font-size: 1.35rem;
+    font-family: 'Cairo',system-ui,sans-serif;
+}
+.eq8-coverage-stat__label {
+    display: block;
+    color: var(--muted);
+    font-weight: 600;
+    font-size: .74rem;
+    font-family: 'Cairo',system-ui,sans-serif;
+    margin-top: 2px;
 }
 </style>
 @endsection

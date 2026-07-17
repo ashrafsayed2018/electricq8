@@ -336,7 +336,7 @@
 
 /* ── Vision card ─────────────────────────────────────────────── */
 .eq8-vision-card { background:var(--altBg); border:1px solid var(--border); border-radius:16px; padding:28px; }
-.eq8-vision-card__title { font-size:1rem; font-weight:700; color:var(--primary); margin:0 0 20px; font-family:'Cairo',system-ui,sans-serif; }
+.eq8-vision-card__title { font-size:1rem; font-weight:700; color:var(--primaryText); margin:0 0 20px; font-family:'Cairo',system-ui,sans-serif; }
 .eq8-vision-list { display:flex; flex-direction:column; gap:18px; }
 .eq8-vision-item { display:flex; gap:12px; align-items:flex-start; }
 .eq8-vision-item__icon { font-size:1.4rem; flex-shrink:0; margin-top:2px; }
@@ -368,14 +368,14 @@
 
 /* ── Gov pill ────────────────────────────────────────────────── */
 .eq8-gov-pill { display:flex; align-items:center; gap:10px; background:var(--altBg); border:1px solid var(--border); border-radius:12px; padding:14px 18px; }
-.eq8-gov-pill__label { font-size:.85rem; font-weight:600; color:var(--primary); font-family:'Cairo',system-ui,sans-serif; }
+.eq8-gov-pill__label { font-size:.85rem; font-weight:600; color:var(--primaryText); font-family:'Cairo',system-ui,sans-serif; }
 
 /* ── Contact card ────────────────────────────────────────────── */
 .eq8-contact-card { display:flex; align-items:center; gap:14px; background:var(--cardBg); border:1px solid var(--border); border-radius:14px; padding:18px; text-decoration:none; transition:border-color .2s,box-shadow .2s; }
 .eq8-contact-card:hover { border-color:var(--accent); box-shadow:0 4px 16px rgba(107,58,23,.1); }
 .eq8-contact-card__icon-wrap { width:44px;height:44px;border-radius:10px;background:var(--accentTint);display:flex;align-items:center;justify-content:center;flex-shrink:0; }
 .eq8-contact-card__icon-wrap--wa { background:#dcfce7; }
-.eq8-contact-card__svg { width:20px;height:20px;color:var(--primary); }
+.eq8-contact-card__svg { width:20px;height:20px;color:var(--primaryText); }
 .eq8-contact-card--wa .eq8-contact-card__svg { color:#16a34a; }
 .eq8-contact-card__label { font-size:.75rem; color:var(--muted); display:block; margin-bottom:2px; font-family:'Cairo',system-ui,sans-serif; }
 .eq8-contact-card__value { font-size:.9rem; font-weight:700; color:var(--text); display:block; font-family:'Cairo',system-ui,sans-serif; }

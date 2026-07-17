@@ -8,13 +8,13 @@
     <style>
         :root {
             --bg:#FAF6F1;--cardBg:#FFFFFF;--border:#E7DCCC;--text:#2B211A;
-            --muted:#7A6A5C;--primary:#6B3A17;--accent:#D97B2E;--accentTint:#F3D9BB;
+            --muted:#7A6A5C;--primary:#6B3A17;--primaryText:#6B3A17;--accent:#D97B2E;--accentTint:#F3D9BB;
         }
         @media(prefers-color-scheme:dark){
-            :root{--bg:#1C140D;--cardBg:#2C2013;--border:#4A3826;--text:#F3E9DC;--muted:#C4AD95;}
+            :root{--bg:#1C140D;--cardBg:#2C2013;--border:#4A3826;--text:#F3E9DC;--muted:#C4AD95;--primaryText:#E3A15E;}
         }
-        :root[data-theme="light"]{--bg:#FAF6F1;--cardBg:#FFFFFF;--border:#E7DCCC;--text:#2B211A;--muted:#7A6A5C;}
-        :root[data-theme="dark"]{--bg:#1C140D;--cardBg:#2C2013;--border:#4A3826;--text:#F3E9DC;--muted:#C4AD95;}
+        :root[data-theme="light"]{--bg:#FAF6F1;--cardBg:#FFFFFF;--border:#E7DCCC;--text:#2B211A;--muted:#7A6A5C;--primaryText:#6B3A17;}
+        :root[data-theme="dark"]{--bg:#1C140D;--cardBg:#2C2013;--border:#4A3826;--text:#F3E9DC;--muted:#C4AD95;--primaryText:#E3A15E;}
 
         *,*::before,*::after{box-sizing:border-box}
         body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
@@ -23,7 +23,7 @@
         .lc{background:var(--cardBg);border:1px solid var(--border);border-radius:20px;
             padding:36px 32px;width:100%;max-width:420px;box-shadow:0 4px 24px rgba(43,33,26,.08)}
         .lc__brand{text-align:center;margin-bottom:28px}
-        .lc__logo{font-size:1.5rem;font-weight:900;color:var(--primary);letter-spacing:-.5px;display:block;margin-bottom:4px}
+        .lc__logo{font-size:1.5rem;font-weight:900;color:var(--primaryText);letter-spacing:-.5px;display:block;margin-bottom:4px}
         .lc__sub{font-size:.8rem;color:var(--muted)}
         .lc__error{background:#FEF2F2;border:1px solid #FECACA;color:#B91C1C;border-radius:10px;
                    padding:10px 14px;margin-bottom:20px;font-size:.83rem}
@@ -47,7 +47,7 @@
                     font-family:inherit}
         .lc__submit:hover{opacity:.88}
         .lc__footer{text-align:center;font-size:.8rem;color:var(--muted);margin-top:20px}
-        .lc__footer a{color:var(--primary);font-weight:700;text-decoration:none}
+        .lc__footer a{color:var(--primaryText);font-weight:700;text-decoration:none}
         .lc__footer a:hover{text-decoration:underline}
     </style>
 </head>

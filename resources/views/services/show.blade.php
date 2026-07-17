@@ -311,7 +311,7 @@
 .eq8-bc { background:var(--altBg); border-bottom:1px solid var(--border); padding:10px 0; font-family:'Cairo',sans-serif; font-size:13px; }
 .eq8-bc__inner { max-width:1000px; margin:0 auto; padding:0 16px; }
 .eq8-bc__list { display:flex; align-items:center; gap:8px; list-style:none; margin:0; padding:0; flex-wrap:wrap; color:var(--muted); }
-.eq8-bc__link { color:var(--primary); text-decoration:none; font-weight:600; }
+.eq8-bc__link { color:var(--primaryText); text-decoration:none; font-weight:600; }
 .eq8-bc__link:hover { text-decoration:underline; }
 .eq8-bc__sep { color:var(--border); }
 .eq8-bc__current { color:var(--text); font-weight:600; }
@@ -332,9 +332,9 @@
 .eq8-sv-sub { text-align:center; color:var(--muted); font-size:.88rem; margin:0 0 20px; font-family:'Cairo',sans-serif; }
 
 .eq8-pill-row { display:flex; flex-wrap:wrap; justify-content:center; gap:10px; }
-.eq8-pill { display:inline-flex; align-items:center; padding:7px 18px; border-radius:999px; border:1.5px solid var(--accentTint); background:var(--cardBg); color:var(--primary); font-size:.82rem; font-weight:600; font-family:'Cairo',sans-serif; }
+.eq8-pill { display:inline-flex; align-items:center; padding:7px 18px; border-radius:999px; border:1.5px solid var(--accentTint); background:var(--cardBg); color:var(--primaryText); font-size:.82rem; font-weight:600; font-family:'Cairo',sans-serif; }
 .eq8-pill--muted { border-color:var(--border); color:var(--text); }
-.eq8-pill--muted:hover { border-color:var(--accent); color:var(--primary); }
+.eq8-pill--muted:hover { border-color:var(--accent); color:var(--primaryText); }
 .eq8-pill--link { text-decoration:none; transition:background .18s,color .18s; }
 .eq8-pill--link:hover { background:var(--primary); color:#fff; border-color:var(--primary); }
 .eq8-pill-row--center { justify-content:center; }
