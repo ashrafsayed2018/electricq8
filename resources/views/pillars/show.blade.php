@@ -35,12 +35,18 @@
     {{-- Hero --}}
     <section class="eq8-page-hero">
         <div class="eq8-page-hero__inner">
-            @if($pillar->image_url)
-                <img src="{{ $pillar->image_url }}" alt="{{ $title }}" style="width:96px;height:96px;border-radius:16px;object-fit:cover;margin:0 auto 20px;display:block;box-shadow:0 4px 20px rgba(0,0,0,.3)">
-            @endif
             <h1 class="eq8-page-hero__title">{{ $h1 }}</h1>
         </div>
     </section>
+
+    {{-- Pillar image --}}
+    @if($pillar->image_url)
+    <section style="padding:48px 0 {{ $content ? '0' : '48px' }};background:var(--bg)">
+        <div class="container mx-auto px-4" style="max-width:960px">
+            <img src="{{ $pillar->image_url }}" alt="{{ $title }}" class="eq8-pillar-image">
+        </div>
+    </section>
+    @endif
 
     {{-- Rich content --}}
     @if($content)
@@ -106,6 +112,8 @@
 .eq8-page-hero { background:linear-gradient(135deg,#43230E 0%,#6B3A17 60%,#8B4D20 100%); color:#fff; padding:56px 20px; text-align:center; }
 .eq8-page-hero__inner { max-width:760px; margin:0 auto; }
 .eq8-page-hero__title { font-size:clamp(1.6rem,4vw,2.4rem); font-weight:800; margin:0; font-family:'Cairo',system-ui,sans-serif; }
+
+.eq8-pillar-image { width:100%; max-height:420px; object-fit:cover; border-radius:18px; border:1px solid var(--border); display:block; }
 
 .eq8-pillar-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; max-width:1000px; margin:0 auto; }
 @media(max-width:760px){ .eq8-pillar-grid { grid-template-columns:repeat(2,1fr); } }
