@@ -334,7 +334,7 @@
 .eq8-sv-section { padding:48px 0; background:var(--bg); }
 .eq8-sv-section--alt { background:var(--altBg); }
 .eq8-sv-section--image { padding-bottom:0; }
-.eq8-sv-image { width:100%; max-height:420px; object-fit:cover; border-radius:18px; border:1px solid var(--border); display:block; }
+.eq8-sv-image { width:100%; max-height:520px; object-fit:contain; background:var(--altBg); border-radius:18px; border:1px solid var(--border); display:block; }
 .eq8-sv-inner { max-width:1100px; margin:0 auto; padding:0 20px; }
 .eq8-sv-inner--mid { max-width:900px; margin:0 auto; padding:0 20px; }
 .eq8-sv-inner--narrow { max-width:720px; margin:0 auto; padding:0 20px; }

@@ -113,7 +113,7 @@
 .eq8-page-hero__inner { max-width:760px; margin:0 auto; }
 .eq8-page-hero__title { font-size:clamp(1.6rem,4vw,2.4rem); font-weight:800; margin:0; font-family:'Cairo',system-ui,sans-serif; }
 
-.eq8-pillar-image { width:100%; max-height:420px; object-fit:cover; border-radius:18px; border:1px solid var(--border); display:block; }
+.eq8-pillar-image { width:100%; max-height:520px; object-fit:contain; background:var(--altBg); border-radius:18px; border:1px solid var(--border); display:block; }
 
 .eq8-pillar-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; max-width:1000px; margin:0 auto; }
 @media(max-width:760px){ .eq8-pillar-grid { grid-template-columns:repeat(2,1fr); } }
