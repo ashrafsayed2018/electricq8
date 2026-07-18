@@ -130,10 +130,6 @@
 
 {{-- Hero --}}
 <section class="eq8-page-hero">
-    @if($service->image_url)
-    <div class="eq8-page-hero__bg" style="background-image:url('{{ $service->image_url }}')"></div>
-    <div class="eq8-page-hero__scrim"></div>
-    @endif
     <div class="eq8-page-hero__inner">
         <div class="eq8-emergency-badge">
             {{ $isAr ? 'خدمة طوارئ 24 ساعة' : '24/7 Emergency Service' }}
@@ -143,6 +139,15 @@
         @include('partials.hero-btns', ['waUrl' => \App\Helpers\WhatsAppHelper::url($isAr ? 'أريد الاستفسار عن: ' . $title : 'I need: ' . $title)])
     </div>
 </section>
+
+{{-- Service image --}}
+@if($service->image_url)
+<section class="eq8-sv-section eq8-sv-section--image">
+    <div class="eq8-sv-inner eq8-sv-inner--narrow">
+        <img src="{{ $service->image_url }}" alt="{{ $title }}" class="eq8-sv-image">
+    </div>
+</section>
+@endif
 
 {{-- Main content --}}
 @if($content)
@@ -320,16 +325,16 @@
 .eq8-bc__sep { color:var(--border); }
 .eq8-bc__current { color:var(--text); font-weight:600; }
 
-.eq8-page-hero { position:relative; background:linear-gradient(135deg,#43230E 0%,#6B3A17 60%,#8B4D20 100%); color:#fff; padding:56px 20px; text-align:center; overflow:hidden; }
-.eq8-page-hero__bg { position:absolute; inset:0; background-size:cover; background-position:center; opacity:.28; filter:saturate(1.1); }
-.eq8-page-hero__scrim { position:absolute; inset:0; background:linear-gradient(135deg, rgba(67,35,14,.88) 0%, rgba(107,58,23,.88) 60%, rgba(139,77,32,.85) 100%); }
-.eq8-page-hero__inner { position:relative; max-width:760px; margin:0 auto; }
+.eq8-page-hero { background:linear-gradient(135deg,#43230E 0%,#6B3A17 60%,#8B4D20 100%); color:#fff; padding:56px 20px; text-align:center; }
+.eq8-page-hero__inner { max-width:760px; margin:0 auto; }
 .eq8-page-hero__title { font-size:clamp(1.6rem,4vw,2.4rem); font-weight:800; margin:0 0 12px; font-family:'Cairo',system-ui,sans-serif; }
 .eq8-page-hero__intro { font-size:1rem; color:#F3D9BB; margin:0 0 24px; opacity:.9; font-family:'Cairo',sans-serif; }
 .eq8-emergency-badge { display:inline-block; background:#dc2626; color:#fff; font-size:.78rem; font-weight:700; padding:5px 16px; border-radius:999px; margin-bottom:16px; font-family:'Cairo',sans-serif; }
 
 .eq8-sv-section { padding:48px 0; background:var(--bg); }
 .eq8-sv-section--alt { background:var(--altBg); }
+.eq8-sv-section--image { padding-bottom:0; }
+.eq8-sv-image { width:100%; max-height:420px; object-fit:cover; border-radius:18px; border:1px solid var(--border); display:block; }
 .eq8-sv-inner { max-width:1100px; margin:0 auto; padding:0 20px; }
 .eq8-sv-inner--mid { max-width:900px; margin:0 auto; padding:0 20px; }
 .eq8-sv-inner--narrow { max-width:720px; margin:0 auto; padding:0 20px; }
