@@ -12,6 +12,7 @@
             <thead class="border-b border-white/10 text-gray-500 text-xs uppercase">
                 <tr>
                     <th class="px-4 py-3 text-right">{{ __('admin.common.hash') }}</th>
+                    <th class="px-4 py-3 text-right">{{ __('admin.common.image') }}</th>
                     <th class="px-4 py-3 text-right">{{ __('admin.common.title_ar') }}</th>
                     <th class="px-4 py-3 text-right">{{ __('admin.common.title_en') }}</th>
                     <th class="px-4 py-3 text-right">{{ __('admin.common.status') }}</th>
@@ -20,8 +21,27 @@
             </thead>
             <tbody class="divide-y divide-white/5">
                 @foreach($services as $service)
+                    @php
+                        $svcPublicUrl = route('services.show', $service->getTranslation('slug', 'ar'));
+                    @endphp
                     <tr class="hover:bg-white/5 transition">
                         <td class="px-4 py-3 text-gray-500">{{ $service->sort_order }}</td>
+                        <td class="px-4 py-3">
+                            @if($service->image_url)
+                                <a href="{{ $svcPublicUrl }}" target="_blank" title="{{ __('admin.visit_site') }}">
+                                    <img src="{{ $service->image_url }}" alt="{{ $service->getTranslation('title', 'ar') }}"
+                                         class="w-12 h-12 rounded-lg object-cover border border-white/10 hover:border-purple-500 transition">
+                                </a>
+                            @else
+                                <a href="{{ $svcPublicUrl }}" target="_blank"
+                                   class="w-12 h-12 rounded-lg bg-white/5 border border-white/10 hover:border-purple-500 flex items-center justify-center transition"
+                                   title="{{ __('admin.visit_site') }}">
+                                    <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14M4 6h16M4 6a2 2 0 00-2 2v10a2 2 0 002 2h16a2 2 0 002-2V8a2 2 0 00-2-2M4 6a2 2 0 012-2h12a2 2 0 012 2"/>
+                                    </svg>
+                                </a>
+                            @endif
+                        </td>
                         <td class="px-4 py-3 text-white font-medium">
                             <a href="{{ route('services.show', $service->getTranslation('slug', 'ar')) }}"
                                target="_blank" class="hover:text-purple-400 transition">
