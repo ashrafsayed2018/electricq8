@@ -143,7 +143,7 @@
 {{-- Service image --}}
 @if($service->image_url)
 <section class="eq8-sv-section eq8-sv-section--image">
-    <div class="eq8-sv-inner eq8-sv-inner--narrow">
+    <div class="eq8-sv-inner eq8-sv-inner--mid">
         <img src="{{ $service->image_url }}" alt="{{ $title }}" class="eq8-sv-image">
     </div>
 </section>
