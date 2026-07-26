@@ -221,8 +221,9 @@
     </style>
 
     @include('partials.services-grid', ['services' => $services])
-    @include('partials.areas-grid', ['locations' => $locations])
     @include('partials.testimonials', ['testimonials' => $testimonials])
 
     @include('partials.home-sections')
+
+    @include('partials.areas-grid', ['locations' => $locations])
 @endsection
