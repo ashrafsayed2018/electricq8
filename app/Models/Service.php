@@ -48,6 +48,23 @@ class Service extends Model
         };
     }
 
+    public function cardExcerpt(?string $locale = null, int $length = 140): string
+    {
+        $locale = $locale ?: app()->getLocale();
+
+        $intro = trim(strip_tags($this->getTranslation('intro', $locale) ?? ''));
+        if ($intro !== '') {
+            return $intro;
+        }
+
+        $content = trim(strip_tags($this->getTranslation('content', $locale) ?? ''));
+        if ($content === '') {
+            return '';
+        }
+
+        return \Illuminate\Support\Str::limit($content, $length);
+    }
+
     public function locations(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(Location::class, 'service_location_pages')

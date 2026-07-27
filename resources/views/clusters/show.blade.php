@@ -70,7 +70,7 @@
                    class="eq8-svc-card">
                     <div class="eq8-svc-card__icon">{{ $service->icon() }}</div>
                     <h3 class="eq8-svc-card__title">{{ $service->getTranslation('title', $locale) }}</h3>
-                    <p class="eq8-svc-card__body">{{ html_entity_decode(strip_tags($service->getTranslation('intro', $locale)), ENT_QUOTES | ENT_HTML5, 'UTF-8') }}</p>
+                    <p class="eq8-svc-card__body">{{ html_entity_decode($service->cardExcerpt($locale), ENT_QUOTES | ENT_HTML5, 'UTF-8') }}</p>
                 </a>
                 @endforeach
             </div>
