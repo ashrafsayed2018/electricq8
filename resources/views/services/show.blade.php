@@ -135,6 +135,16 @@
             {{ $isAr ? 'خدمة طوارئ 24 ساعة' : '24/7 Emergency Service' }}
         </div>
         <h1 class="eq8-page-hero__title">{{ $h1 }}</h1>
+        <div class="eq8-post-meta-bar" style="justify-content:center;margin:14px 0 0">
+            <span class="eq8-post-meta-bar__item">
+                <svg class="eq8-post-meta-bar__icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                {{ number_format($service->views) }} {{ $isAr ? 'مشاهدة' : 'views' }}
+            </span>
+            <span class="eq8-post-meta-bar__item">
+                <svg class="eq8-post-meta-bar__icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                <span dir="ltr">{{ $service->updated_at->format('d M Y') }}</span>
+            </span>
+        </div>
         <div class="eq8-page-hero__intro">{!! \App\Helpers\RichText::clean($intro) !!}</div>
         @include('partials.hero-btns', ['waUrl' => \App\Helpers\WhatsAppHelper::url($isAr ? 'أريد الاستفسار عن: ' . $title : 'I need: ' . $title)])
     </div>
@@ -329,6 +339,9 @@
 .eq8-page-hero__inner { max-width:760px; margin:0 auto; }
 .eq8-page-hero__title { font-size:clamp(1.6rem,4vw,2.4rem); font-weight:800; margin:0 0 12px; font-family:'Cairo',system-ui,sans-serif; }
 .eq8-page-hero__intro { font-size:1rem; color:#F3D9BB; margin:0 0 24px; opacity:.9; font-family:'Cairo',sans-serif; }
+.eq8-post-meta-bar { display:flex; align-items:center; flex-wrap:wrap; gap:16px; font-size:.85rem; color:#F3D9BB; font-family:'Cairo',sans-serif; }
+.eq8-post-meta-bar__item { display:flex; align-items:center; gap:5px; }
+.eq8-post-meta-bar__icon { width:15px; height:15px; }
 .eq8-emergency-badge { display:inline-block; background:#dc2626; color:#fff; font-size:.78rem; font-weight:700; padding:5px 16px; border-radius:999px; margin-bottom:16px; font-family:'Cairo',sans-serif; }
 
 .eq8-sv-section { padding:48px 0; background:var(--bg); }

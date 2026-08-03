@@ -25,6 +25,8 @@ class ServiceController extends Controller
             return redirect()->route($route, $correctSlug, 302);
         }
 
+        Service::withoutTimestamps(fn () => $service->increment('views'));
+
         return view('services.show', [
             'service'       => $service,
             'otherServices' => Service::active()->where('id', '!=', $service->id)->get(),

@@ -17,6 +17,8 @@ class ClusterController extends Controller
             return redirect()->route($route, $correctSlug, 302);
         }
 
+        Cluster::withoutTimestamps(fn () => $cluster->increment('views'));
+
         return view('clusters.show', [
             'cluster'  => $cluster->load('pillar', 'services'),
         ]);

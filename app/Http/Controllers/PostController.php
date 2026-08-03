@@ -24,6 +24,8 @@ class PostController extends Controller
             return redirect()->route($route, $correctSlug, 302);
         }
 
+        Post::withoutTimestamps(fn () => $post->increment('views'));
+
         $relatedPosts = Post::published()
             ->where('id', '!=', $post->id)
             ->when($post->cluster_id, fn ($q) => $q->orderByRaw('cluster_id = ? desc', [$post->cluster_id]))

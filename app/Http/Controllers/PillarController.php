@@ -17,6 +17,8 @@ class PillarController extends Controller
             return redirect()->route($route, $correctSlug, 302);
         }
 
+        Pillar::withoutTimestamps(fn () => $pillar->increment('views'));
+
         return view('pillars.show', [
             'pillar' => $pillar->load(['clusters.services']),
         ]);
