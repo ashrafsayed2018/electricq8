@@ -10,6 +10,7 @@
     <style>
         /* ── Admin design tokens ──────────────────────────────────── */
         :root {
+            color-scheme: light;
             /* Light mode admin */
             --ad-bg:      #F5EFE8;
             --ad-surface: #FFFFFF;
@@ -30,7 +31,8 @@
             --ad-tooltip: #43230E;
         }
         @media (prefers-color-scheme: dark) {
-            :root {
+            :root:not([data-theme]) {
+                color-scheme: dark;
                 --ad-bg:      #0f1117;
                 --ad-surface: #1a1d27;
                 --ad-input:   #0f1117;
@@ -51,6 +53,7 @@
             }
         }
         :root[data-theme="dark"] {
+            color-scheme: dark;
             --ad-bg:      #0f1117;
             --ad-surface: #1a1d27;
             --ad-input:   #0f1117;
@@ -66,6 +69,7 @@
             --ad-tooltip: #43230E;
         }
         :root[data-theme="light"] {
+            color-scheme: light;
             --ad-bg:      #F5EFE8;
             --ad-surface: #FFFFFF;
             --ad-input:   #FAF6F1;
