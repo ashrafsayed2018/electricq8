@@ -104,7 +104,7 @@
             {{-- Cluster --}}
             <div>
                 <label class="block text-xs text-gray-500 mb-2">{{ __('admin.posts.cluster') }} {{ __('admin.common.required_mark') }}</label>
-                <select wire:model="cluster_id"
+                <select wire:model.live="cluster_id"
                     class="w-full bg-[#0f1117] border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-purple-500 transition">
                     <option value="">— {{ __('admin.posts.no_cluster') }} —</option>
                     @foreach($allClusters as $cluster)
@@ -156,7 +156,9 @@
                             @endif
                         </label>
                         @empty
-                        <div class="px-4 py-6 text-center text-xs text-gray-600">{{ __('admin.posts.no_tags') }}</div>
+                        <div class="px-4 py-6 text-center text-xs text-gray-600">
+                            {{ $cluster_id ? __('admin.posts.no_tags') : __('admin.posts.select_cluster_first') }}
+                        </div>
                         @endforelse
                     </div>
 

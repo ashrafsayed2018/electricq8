@@ -52,6 +52,15 @@ class Form extends Component
         $this->slug_en = \Illuminate\Support\Str::slug($value);
     }
 
+    public function updatedClusterId(): void
+    {
+        $clusterTagIds = $this->cluster_id
+            ? Cluster::find($this->cluster_id)?->tags->pluck('id')->map(fn ($id) => (string) $id)->toArray() ?? []
+            : [];
+
+        $this->selected_tags = $clusterTagIds;
+    }
+
     private function toArSlug(string $text): string
     {
         $text = preg_replace('/[^\p{Arabic}\p{N}\s-]/u', '', $text);
@@ -60,6 +69,9 @@ class Form extends Component
 
     public function mount(?Post $post = null): void
     {
+        $today = now()->format('Y-m-d');
+        $this->published_at = $today;
+
         if ($post && $post->exists) {
             $this->post           = $post;
             $this->title_ar       = $post->getTranslation('title', 'ar');
@@ -76,7 +88,7 @@ class Form extends Component
             $this->meta_desc_en   = $post->getTranslation('meta_description', 'en') ?? '';
             $this->featured_image = $post->featured_image ?? '';
             $this->status         = $post->status->value;
-            $this->published_at   = $post->published_at?->format('Y-m-d') ?? '';
+            $this->published_at   = $post->published_at?->format('Y-m-d') ?? $today;
             $this->sort_order     = (int) $post->sort_order;
             $this->cluster_id     = $post->cluster_id;
             $this->selected_tags  = $post->tags->pluck('id')->map(fn($id) => (string) $id)->toArray();
@@ -130,10 +142,21 @@ class Form extends Component
 
     public function render()
     {
-        $allTags = Tag::when($this->tag_search, fn($q) =>
-                $q->where('name->ar', 'like', "%{$this->tag_search}%")
-                  ->orWhere('name->en', 'like', "%{$this->tag_search}%")
-            )->orderBy('id')->get();
+        if ($this->cluster_id) {
+            $allTags = Tag::query()
+                ->where(function ($q) {
+                    $q->whereHas('clusters', fn ($q) => $q->where('clusters.id', $this->cluster_id));
+                    if (! empty($this->selected_tags)) {
+                        $q->orWhereIn('id', $this->selected_tags);
+                    }
+                })
+                ->when($this->tag_search, fn($q) =>
+                    $q->where('name->ar', 'like', "%{$this->tag_search}%")
+                      ->orWhere('name->en', 'like', "%{$this->tag_search}%")
+                )->orderBy('id')->get();
+        } else {
+            $allTags = collect();
+        }
 
         return view('livewire.admin.posts.form', [
             'allTags'      => $allTags,
