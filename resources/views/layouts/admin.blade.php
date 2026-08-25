@@ -106,6 +106,17 @@
         /* Purple → brown accent */
         .bg-purple-600              { background-color: var(--ad-accentdk) !important; }
         .hover\:bg-purple-600:hover { background-color: var(--ad-accentdk) !important; }
+        /* Buttons on solid brand/status backgrounds always need literal white text —
+           these backgrounds don't follow the light/dark toggle, so .text-white must not
+           be remapped to the theme-following --ad-text token here. */
+        .bg-purple-600.text-white,
+        .bg-red-600.text-white,
+        .bg-red-500.text-white,
+        .bg-green-600.text-white,
+        .bg-green-500.text-white,
+        .bg-blue-600.text-white {
+            color: #fff !important;
+        }
         .bg-purple-600\/10          { background-color: var(--ad-accentlt) !important; }
         .bg-purple-500\/20          { background-color: var(--ad-accentlt) !important; }
         .bg-purple-500\/15          { background-color: var(--ad-accentlt) !important; }
