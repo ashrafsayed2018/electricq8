@@ -59,6 +59,7 @@
 <body class="eq8-body antialiased">
 <style>
 :root {
+    color-scheme: light;
     --bg:        #FAF6F1;
     --headerBg:  #FFFFFF;
     --border:    #E7DCCC;
@@ -76,7 +77,8 @@
     --footerBg:    #241A12;
 }
 @media (prefers-color-scheme: dark) {
-    :root {
+    :root:not([data-theme]) {
+        color-scheme: dark;
         --bg:       #1C140D;
         --headerBg: #241A11;
         --border:   #4A3826;
@@ -89,6 +91,7 @@
     }
 }
 :root[data-theme="light"] {
+    color-scheme: light;
     --bg:        #FAF6F1;
     --headerBg:  #FFFFFF;
     --border:    #E7DCCC;
@@ -97,8 +100,10 @@
     --text:      #2B211A;
     --muted:     #7A6A5C;
     --body:      #5A4C40;
+    --primaryText: #6B3A17;
 }
 :root[data-theme="dark"] {
+    color-scheme: dark;
     --bg:       #1C140D;
     --headerBg: #241A11;
     --border:   #4A3826;
@@ -109,7 +114,6 @@
     --body:     #D8C7B4;
     --primaryText: #E3A15E;
 }
-:root[data-theme="light"] { --primaryText: #6B3A17; }
 .eq8-body {
     background: var(--bg);
     color: var(--text);

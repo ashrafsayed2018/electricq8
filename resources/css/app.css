@@ -20,6 +20,13 @@ html[dir="rtl"] body {
     font-family: 'Cairo', ui-sans-serif, system-ui, sans-serif;
 }
 
+:root { color-scheme: light; }
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme]) { color-scheme: dark; }
+}
+:root[data-theme="light"] { color-scheme: light; }
+:root[data-theme="dark"]  { color-scheme: dark; }
+
 /* ── Rich text / TinyMCE output styling ──────────────────────────────── */
 .richtext {
     color: #374151;
