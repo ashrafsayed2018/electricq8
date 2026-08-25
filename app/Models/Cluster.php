@@ -37,6 +37,11 @@ class Cluster extends Model
         return $this->hasMany(Post::class);
     }
 
+    public function tags(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Tag::class);
+    }
+
     public function resolveRouteBinding($value, $field = null): ?static
     {
         // Admin routes bind by id (the route key field is explicitly 'id')

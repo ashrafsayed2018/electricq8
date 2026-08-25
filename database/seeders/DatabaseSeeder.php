@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
             ServicesSeeder::class,
             AreasSeeder::class,
             FakeDataSeeder::class,
+            TagsAndClustersSeeder::class,
         ]);
     }
 }
