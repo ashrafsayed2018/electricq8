@@ -70,7 +70,7 @@ return [
 
         'repair' => [
             'title' => 'Electrical Maintenance & Repair in Kuwait',
-            'body'  => 'Electrical faults cannot wait, especially in Kuwait\'s summer heat. We offer fast repair and maintenance for all common faults: sudden power cuts, low voltage, tripped or faulty breakers, burnt wiring, and short circuits. Our certified technicians reach you within two hours, diagnose the fault immediately with precision testing equipment, and provide a transparent quote before starting work.',
+            'body'  => 'Electrical faults cannot wait, especially in Kuwait\'s summer heat. We offer fast repair and maintenance for all common faults: sudden power cuts, low voltage, tripped or faulty breakers, burnt wiring, and short circuits. Our certified technicians reach you within one hour, diagnose the fault immediately with precision testing equipment, and provide a transparent quote before starting work.',
             'signs' => 'Signs you need an electrician',
             'signs_points' => [
                 'Recurring power loss to part of the property',

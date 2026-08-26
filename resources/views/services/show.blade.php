@@ -28,16 +28,16 @@
         $type = $service->service_type ?? '';
         $faqs = match(true) {
             $isAr && str_contains($type, 'install') || $isAr && str_contains($title, 'تركيب') => [
-                ['q' => 'كم يستغرق تركيب الكهرباء؟', 'a' => 'يستغرق تركيب الوحدة الواحدة من 1 إلى 3 ساعات حسب نوع الكهرباء والموضع. نتولى كل شيء من تمديد البايبات حتى الاختبار النهائي.'],
-                ['q' => 'هل تركبون جميع ماركات الكهرباء؟', 'a' => 'نعم، نركب جميع الماركات: سامسونج، LG، كاريير، دايكن، ميديا، جري، توشيبا، باناسونيك، يورك وغيرها.'],
+                ['q' => 'كم يستغرق تركيب أو تمديد الكهرباء؟', 'a' => 'تختلف المدة حسب حجم العمل، لكن معظم أعمال التركيب تستغرق من 1 إلى 3 ساعات. نتولى كل شيء من التمديد حتى الاختبار النهائي والتأكد من السلامة.'],
+                ['q' => 'هل تلتزمون بمعايير السلامة الكويتية عند التركيب؟', 'a' => 'نعم، جميع أعمال التركيب تتم وفق معايير السلامة الكهربائية المعتمدة في الكويت، بما يشمل التأريض واختبار الأحمال.'],
                 ['q' => 'هل يوجد ضمان على التركيب؟', 'a' => 'نعم، نقدم ضمان 3 أشهر على جميع أعمال التركيب. إذا ظهرت أي مشكلة في العمل نعالجها مجانًا.'],
-                ['q' => 'كيف أحدد حجم الكهرباء المناسب لغرفتي؟', 'a' => 'يعتمد الحجم على مساحة الغرفة والارتفاع وعدد النوافذ. فنيونا يزورون الموقع ويحددون السعة المناسبة مجانًا قبل التركيب.'],
+                ['q' => 'هل تقدمون زيارة تقييمية قبل بدء العمل؟', 'a' => 'نعم، فنيونا يزورون الموقع لتحديد المسار والمواد المناسبة وتقديم عرض سعر واضح قبل البدء بالتركيب.'],
             ],
             !$isAr && (str_contains($type, 'install') || str_contains($title, 'Install')) => [
-                ['q' => 'How long does electrical installation take?', 'a' => 'Installing a single unit takes 1–3 hours depending on the type and position. We handle everything from pipe routing to the final test.'],
-                ['q' => 'Do you install all AC brands?', 'a' => 'Yes, we install all brands: Samsung, LG, Carrier, Daikin, Midea, Gree, Toshiba, Panasonic, York and more.'],
+                ['q' => 'How long does electrical installation take?', 'a' => 'It depends on the size of the job, but most installations take between 1 and 3 hours. We handle everything from wiring to the final safety test.'],
+                ['q' => 'Do you follow Kuwaiti electrical safety standards?', 'a' => 'Yes, all installation work follows approved Kuwaiti electrical safety standards, including earthing and load testing.'],
                 ['q' => 'Is there a warranty on installation?', 'a' => 'Yes, we provide a 3-month warranty on all installation work. If any issue arises from our work we resolve it free of charge.'],
-                ['q' => 'How do I choose the right AC size for my room?', 'a' => 'The size depends on room area, ceiling height and the number of windows. Our technicians visit the site and determine the right capacity free of charge before installation.'],
+                ['q' => 'Do you provide a site visit before starting work?', 'a' => 'Yes, our technicians visit the site to determine the right routing and materials and provide a clear quote before starting installation.'],
             ],
             $isAr => [
                 ['q' => "كم وقت تستغرق خدمة {$title}؟", 'a' => "تتراوح مدة خدمة {$title} عادةً بين 30 دقيقة وساعتين حسب حالة الجهاز. فنيونا يصلون إليك خلال ساعة من تأكيد الطلب."],
@@ -54,16 +54,9 @@
         };
     }
 
-    $brands = [
-        ['ar' => 'سامسونج', 'en' => 'Samsung'],['ar' => 'إل جي','en' => 'LG'],['ar' => 'كاريير','en' => 'Carrier'],
-        ['ar' => 'دايكن','en' => 'Daikin'],['ar' => 'ميديا','en' => 'Midea'],['ar' => 'جري','en' => 'Gree'],
-        ['ar' => 'توشيبا','en' => 'Toshiba'],['ar' => 'باناسونيك','en'=> 'Panasonic'],['ar' => 'يورك','en' => 'York'],
-        ['ar' => 'هيتاشي','en' => 'Hitachi'],['ar' => 'شارب','en' => 'Sharp'],['ar' => 'ميتسوبيشي','en'=> 'Mitsubishi'],
-    ];
-
-    $acTypes = $isAr
-        ? ['سبليت', 'مركزي', 'شباك', 'مخفي (كاسيت)', 'محمول']
-        : ['Split', 'Central', 'Window', 'Concealed / Cassette', 'Portable'];
+    $faultTypes = $isAr
+        ? ['انقطاع التيار المفاجئ', 'ضعف الجهد الكهربائي', 'أعطال القواطع', 'الأسلاك المحترقة', 'التماس الكهربائي']
+        : ['Sudden Power Cuts', 'Low Voltage', 'Breaker Faults', 'Burnt Wiring', 'Short Circuits'];
 @endphp
 
 @section('meta_title'){{ $metaTitle }}@endsection
@@ -168,12 +161,12 @@
 </section>
 @endif
 
-{{-- AC types --}}
+{{-- Fault types --}}
 <section class="eq8-sv-section eq8-sv-section--alt">
     <div class="eq8-sv-inner eq8-sv-inner--mid">
-        <h2 class="eq8-sv-h2 eq8-sv-h2--center">{{ $isAr ? 'أنواع الكهرباء التي نخدمها' : 'AC Types We Service' }}</h2>
+        <h2 class="eq8-sv-h2 eq8-sv-h2--center">{{ $isAr ? 'أنواع الأعطال التي نخدمها' : 'Fault Types We Handle' }}</h2>
         <div class="eq8-pill-row">
-            @foreach($acTypes as $t)
+            @foreach($faultTypes as $t)
             <span class="eq8-pill">{{ $t }}</span>
             @endforeach
         </div>
@@ -193,14 +186,14 @@
                 ['🔧','فنيون معتمدون', 'خبرة أكثر من 5 سنوات وشهادات معتمدة في صيانة وتركيب الكهرباء.'],
                 ['🛡️','ضمان رسمي 3 أشهر', 'إذا عادت المشكلة نصلحها مجانًا خلال فترة الضمان.'],
                 ['💰','أسعار شفافة', 'تقدير واضح قبل بدء العمل — لا رسوم مخفية.'],
-                ['🏷️','جميع الماركات', 'نصلح ونركب جميع ماركات الكهرباء المتوفرة في السوق الكويتي.'],
+                ['🏷️','جميع الأعمال الكهربائية', 'نصلح ونركب جميع أنواع الأعطال والتمديدات الكهربائية في المنازل والمكاتب.'],
                 ['📞','دعم 24 ساعة', 'متاحون دائمًا للطوارئ وأيام العطل والجمعة.'],
             ] : [
                 ['⚡','One-Hour Arrival', 'Our technicians reach you fast in any area across Kuwait.'],
                 ['🔧','Certified Technicians', 'Over 5 years of experience and certified qualifications.'],
                 ['🛡️','Official 3-Month Warranty', 'If the problem returns we fix it free within the warranty period.'],
                 ['💰','Transparent Pricing', 'Clear estimate before starting — no hidden fees.'],
-                ['🏷️','All Brands', 'We service and install all AC brands in the Kuwait market.'],
+                ['🏷️','All Electrical Work', 'We repair and install all types of electrical faults and wiring for homes and offices.'],
                 ['📞','24-Hour Support', 'Always available for emergencies, weekends and public holidays.'],
             ];
             @endphp
@@ -212,18 +205,6 @@
                     <p class="eq8-why-card__body">{{ $body }}</p>
                 </div>
             </div>
-            @endforeach
-        </div>
-    </div>
-</section>
-
-{{-- Brands --}}
-<section class="eq8-sv-section eq8-sv-section--alt">
-    <div class="eq8-sv-inner eq8-sv-inner--narrow">
-        <h2 class="eq8-sv-h2 eq8-sv-h2--center">{{ $isAr ? 'الماركات التي نخدمها' : 'Brands We Service' }}</h2>
-        <div class="eq8-pill-row">
-            @foreach($brands as $b)
-            <span class="eq8-pill eq8-pill--muted">{{ $b[$locale] ?? $b['en'] }}</span>
             @endforeach
         </div>
     </div>

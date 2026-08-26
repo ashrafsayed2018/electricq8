@@ -102,7 +102,7 @@
             $whyCards = [
                 ['icon' => '🏅', 'title_ar' => 'فنيون معتمدون',               'title_en' => 'Certified Technicians',       'body_ar' => 'جميع فنيينا حاصلون على شهادات معتمدة وخبرة تزيد عن 5 سنوات في مجال الكهرباء',                                      'body_en' => 'All our technicians hold certified qualifications and have over 5 years of electrical experience'],
                 ['icon' => '🛡️', 'title_ar' => 'ضمان على الخدمة',              'title_en' => 'Service Warranty',            'body_ar' => 'نضمن جميع أعمالنا بضمان رسمي لمدة 3 أشهر. إذا عادت المشكلة نعالجها مجاناً',                                         'body_en' => 'We back all work with a 3-month official warranty. If the problem recurs, we fix it free'],
-                ['icon' => '⚡', 'title_ar' => 'استجابة سريعة',               'title_en' => 'Fast Response',               'body_ar' => 'نصل إليك خلال ساعتين من تأكيد الطلب في أغلب مناطق الكويت، بما فيها أوقات الطوارئ',                                   'body_en' => 'We reach you within 2 hours of booking confirmation across most areas of Kuwait'],
+                ['icon' => '⚡', 'title_ar' => 'استجابة سريعة',               'title_en' => 'Fast Response',               'body_ar' => 'نصل إليك خلال ساعة من تأكيد الطلب في أغلب مناطق الكويت، بما فيها أوقات الطوارئ',                                   'body_en' => 'We reach you within 1 hour of booking confirmation across most areas of Kuwait'],
                 ['icon' => '🕐', 'title_ar' => 'خدمة طوارئ على مدار الساعة', 'title_en' => 'Around-the-Clock Emergency',  'body_ar' => 'فني متاح فورًا طوال اليوم وكل أيام الأسبوع بما فيها الجمعة والعطل الرسمية',                                           'body_en' => 'A technician is instantly available all day, every day including Fridays and public holidays'],
             ];
             @endphp
@@ -186,17 +186,15 @@
         <div class="eq8-faq__list" x-data="{ open: null }">
             @php
             $faqs = $isAr ? [
-                ['q' => 'ما هي مناطق الخدمة التي تغطونها؟',   'a' => 'نغطي جميع محافظات الكويت الست: العاصمة، الفروانية، الجهراء، الأحمدي، مبارك الكبير، والكويت الوسطى. نصل إلى جميع الأحياء السكنية والتجارية خلال ساعتين من تأكيد الحجز.'],
+                ['q' => 'ما هي مناطق الخدمة التي تغطونها؟',   'a' => 'نغطي جميع محافظات الكويت الست: العاصمة، الفروانية، الجهراء، الأحمدي، مبارك الكبير، والكويت الوسطى. نصل إلى جميع الأحياء السكنية والتجارية خلال ساعة من تأكيد الحجز.'],
                 ['q' => 'كم يستغرق إصلاح الكهرباء؟',           'a' => 'تستغرق معظم عمليات الإصلاح من 30 دقيقة إلى ساعتين حسب نوع المشكلة. في حال احتجنا إلى قطع غيار خاصة، نبلغك مسبقاً ونحدد موعد الإكمال.'],
                 ['q' => 'هل تعملون في أيام العطل والجمعة؟',    'a' => 'نعم، نعمل على مدار الساعة 24/7 طوال أيام الأسبوع بما فيها الجمعة والإجازات الرسمية. نؤمن بأن أعطال الكهرباء لا تنتظر.'],
-                ['q' => 'ما الماركات التي تدعمونها؟',           'a' => 'نصلح جميع ماركات الكهرباء الشائعة في الكويت مثل: سامسونج، LG، كاريير، دايكن، ميديا، جري، توشيبا، باناسونيك، شارب، ميتسوبيشي، هيتاشي، وغيرها.'],
                 ['q' => 'هل يوجد ضمان على الخدمة؟',             'a' => 'نعم، نقدم ضماناً لمدة 3 أشهر على جميع أعمال الإصلاح والصيانة. إذا عادت نفس المشكلة خلال فترة الضمان، نعالجها مجاناً.'],
                 ['q' => 'كيف يمكنني الحجز؟',                   'a' => 'يمكنك الحجز عبر واتساب مباشرة، أو الاتصال برقم هاتفنا، أو ملء نموذج التواصل في الموقع. نرد عليك فوراً.'],
             ] : [
-                ['q' => 'Which areas do you cover?',             'a' => 'We cover all six governorates of Kuwait: Capital, Farwaniya, Jahra, Ahmadi, Mubarak Al-Kabeer, and Central Kuwait. We reach all residential and commercial areas within 2 hours of booking confirmation.'],
+                ['q' => 'Which areas do you cover?',             'a' => 'We cover all six governorates of Kuwait: Capital, Farwaniya, Jahra, Ahmadi, Mubarak Al-Kabeer, and Central Kuwait. We reach all residential and commercial areas within 1 hour of booking confirmation.'],
                 ['q' => 'How long does an electrical repair take?','a' => 'Most repairs take between 30 minutes and 2 hours depending on the issue. If special spare parts are needed, we will inform you in advance and schedule a follow-up.'],
                 ['q' => 'Do you work on weekends and public holidays?','a' => 'Yes, we operate 24/7 every day of the week including Fridays and official public holidays. Electrical breakdowns cannot wait.'],
-                ['q' => 'Which brands do you support?',           'a' => 'We repair all popular electrical brands in Kuwait including Samsung, LG, Carrier, Daikin, Midea, Gree, Toshiba, Panasonic, Sharp, Mitsubishi, Hitachi, and many more.'],
                 ['q' => 'Is there a warranty on the service?',    'a' => 'Yes, we provide a 3-month warranty on all repair and maintenance work. If the same problem returns within the warranty period, we fix it free of charge.'],
                 ['q' => 'How do I book?',                         'a' => 'You can book directly via WhatsApp, by calling our phone number, or by filling in the contact form on the website. We respond immediately.'],
             ];
