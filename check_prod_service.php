@@ -6,8 +6,18 @@ $kernel->bootstrap();
 
 use App\Models\Service;
 
-echo "Git commit currently deployed: ";
-echo trim(shell_exec('git rev-parse HEAD') ?? 'unknown') . "\n\n";
+$headFile = __DIR__ . '/.git/HEAD';
+$commit = 'unknown';
+if (is_file($headFile)) {
+    $head = trim(file_get_contents($headFile));
+    if (str_starts_with($head, 'ref: ')) {
+        $refFile = __DIR__ . '/.git/' . substr($head, 5);
+        $commit = is_file($refFile) ? trim(file_get_contents($refFile)) : 'unknown';
+    } else {
+        $commit = $head;
+    }
+}
+echo "Git commit currently deployed: {$commit}\n\n";
 
 $needle = 'كهربائي 24 ساعة طوارئ';
 $service = Service::query()
