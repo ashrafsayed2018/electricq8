@@ -22,7 +22,7 @@ class AreaController extends Controller
 
         if ($requestedSlug !== $correctSlug) {
             $route = $locale === 'ar' ? 'areas.show' : 'en.areas.show';
-            return redirect()->route($route, $correctSlug, 302);
+            return redirect()->route($route, $correctSlug, 301);
         }
 
         $relatedLocations = Location::where('is_active', true)
