@@ -110,6 +110,15 @@
                 </div>
             </div>
 
+            {{-- Tags --}}
+            @if($post->tags->isNotEmpty())
+            <div class="eq8-post-tags">
+                @foreach($post->tags as $tag)
+                <span class="eq8-post-tags__item">{{ $tag->getTranslation('name', $locale) }}</span>
+                @endforeach
+            </div>
+            @endif
+
             {{-- Back link --}}
             <div class="eq8-post-back">
                 <a href="{{ $blogRoute }}" class="eq8-post-back__link">
@@ -243,6 +252,9 @@
     padding: 32px 28px;
 }
 @media (max-width: 560px) { .eq8-post-card-body { padding: 24px 18px; border-radius: 14px; } }
+
+.eq8-post-tags { display:flex; flex-wrap:wrap; gap:8px; margin-top:24px; }
+.eq8-post-tags__item { background:var(--altBg); color:var(--body); border:1px solid var(--border); border-radius:999px; padding:5px 14px; font-size:.78rem; font-weight:600; font-family:'Cairo',sans-serif; }
 
 .eq8-post-back { margin-top:32px; padding-top:24px; }
 .eq8-post-back__link { display:inline-flex; align-items:center; gap:7px; color:var(--accent); font-size:.85rem; font-weight:600; text-decoration:none; font-family:'Cairo',sans-serif; }

@@ -26,7 +26,7 @@ class PostController extends Controller
 
         Post::withoutTimestamps(fn () => $post->increment('views'));
 
-        $post->loadMissing('cluster');
+        $post->loadMissing('cluster', 'tags');
 
         $relatedPosts = Post::published()
             ->where('id', '!=', $post->id)
