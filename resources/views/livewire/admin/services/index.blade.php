@@ -22,7 +22,8 @@
             <tbody class="divide-y divide-white/5">
                 @foreach($services as $service)
                     @php
-                        $svcPublicUrl = route('services.show', $service->getTranslation('slug', 'ar'));
+                        $adminLocale  = app()->getLocale();
+                        $svcPublicUrl = route(($adminLocale === 'en' ? 'en.' : '') . 'services.show', $service->getTranslation('slug', $adminLocale));
                     @endphp
                     <tr class="hover:bg-white/5 transition">
                         <td class="px-4 py-3 text-gray-500">{{ $service->sort_order }}</td>

@@ -111,11 +111,15 @@
             </thead>
             <tbody class="divide-y divide-white/5">
                 @forelse($posts as $post)
+                    @php
+                        $adminLocale = app()->getLocale();
+                        $postPublicUrl = route(($adminLocale === 'en' ? 'en.' : '') . 'posts.show', $post->getTranslation('slug', $adminLocale));
+                    @endphp
                     <tr class="hover:bg-white/3 transition">
 
                         {{-- Thumbnail --}}
                         <td class="px-4 py-3">
-                            <a href="{{ route('posts.show', $post->getTranslation('slug', 'ar')) }}" target="_blank" title="{{ __('admin.visit_site') }}"
+                            <a href="{{ $postPublicUrl }}" target="_blank" title="{{ __('admin.visit_site') }}"
                                class="block w-10 h-10 rounded-lg overflow-hidden bg-[#0f1117] border border-white/10 hover:border-purple-500 transition shrink-0">
                                 @if($post->featured_image)
                                     <img src="{{ $post->featured_image }}" class="w-full h-full object-cover">

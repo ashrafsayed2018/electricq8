@@ -24,8 +24,8 @@
                 @forelse($pillars as $pillar)
                 @php
                     $title     = $pillar->getTranslation('title', $locale);
-                    $slugAr    = $pillar->getTranslation('slug', 'ar');
-                    $publicUrl = $slugAr ? route('pillars.show', $slugAr) : null;
+                    $slug      = $pillar->getTranslation('slug', $locale);
+                    $publicUrl = $slug ? route(($locale === 'en' ? 'en.' : '') . 'pillars.show', $slug) : null;
                 @endphp
                     <tr class="hover:bg-white/5 transition">
 

@@ -67,8 +67,10 @@
                     @foreach($services as $service)
                     @php
                         $page = $pages->get($service->id . '_' . $location->id);
-                        $sSlug = $service->getTranslation('slug', 'ar');
-                        $lSlug = $location->getTranslation('slug', 'ar');
+                        $adminLocale = app()->getLocale();
+                        $sSlug = $service->getTranslation('slug', $adminLocale);
+                        $lSlug = $location->getTranslation('slug', $adminLocale);
+                        $slPublicRoute = ($adminLocale === 'en' ? 'en.' : '') . 'service-locations.show';
                     @endphp
                     <td class="px-3 py-3 text-center">
                         @if($page)
@@ -76,7 +78,7 @@
                                 {{-- Status dot --}}
                                 <span class="w-2 h-2 rounded-full {{ $page->status === 'active' ? 'bg-green-500' : 'bg-gray-600' }}"></span>
                                 {{-- View --}}
-                                <a href="{{ route('service-locations.show', [$sSlug, $lSlug]) }}"
+                                <a href="{{ route($slPublicRoute, [$sSlug, $lSlug]) }}"
                                    target="_blank"
                                    title="عرض"
                                    class="text-gray-500 hover:text-yellow-400 transition">

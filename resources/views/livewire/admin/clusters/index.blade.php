@@ -25,8 +25,8 @@
                 @forelse($clusters as $cluster)
                 @php
                     $title     = $cluster->getTranslation('title', $locale);
-                    $slugAr    = $cluster->getTranslation('slug', 'ar');
-                    $publicUrl = $slugAr ? route('clusters.show', $slugAr) : null;
+                    $slug      = $cluster->getTranslation('slug', $locale);
+                    $publicUrl = $slug ? route(($locale === 'en' ? 'en.' : '') . 'clusters.show', $slug) : null;
                     $pillarTitle = $cluster->pillar?->getTranslation('title', $locale) ?? '—';
                 @endphp
                     <tr class="hover:bg-white/5 transition">
