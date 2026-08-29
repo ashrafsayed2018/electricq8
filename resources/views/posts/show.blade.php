@@ -66,10 +66,6 @@
 
     {{-- Post hero --}}
     <header class="eq8-post-hero">
-        @if($imageUrl)
-        <div class="eq8-post-hero__bg" style="background-image:url('{{ $imageUrl }}')"></div>
-        <div class="eq8-post-hero__scrim"></div>
-        @endif
         <div class="eq8-post-hero__inner">
             <h1 class="eq8-post-h1">{{ $postTitle }}</h1>
             <div class="eq8-post-meta-bar">
@@ -94,6 +90,11 @@
 
     <article style="padding:40px 0 8px;background:var(--bg)">
         <div class="container mx-auto px-4" style="max-width:760px">
+
+            {{-- Featured image --}}
+            @if($imageUrl)
+            <img src="{{ $imageUrl }}" alt="{{ $postTitle }}" class="eq8-post-featured-img">
+            @endif
 
             {{-- Article body --}}
             <div class="eq8-post-card-body">
@@ -208,25 +209,14 @@
     padding: 56px 20px 40px;
     overflow: hidden;
 }
-.eq8-post-hero__bg {
-    position: absolute;
-    inset: 0;
-    background-size: cover;
-    background-position: center;
-    opacity: .28;
-    filter: saturate(1.1);
-}
-.eq8-post-hero__scrim {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(67,35,14,.88) 0%, rgba(107,58,23,.88) 60%, rgba(139,77,32,.85) 100%);
-}
 .eq8-post-hero__inner { position: relative; max-width: 780px; margin: 0 auto; }
 .eq8-post-h1 { font-size:clamp(1.6rem,3.8vw,2.3rem); font-weight:800; color:#fff; margin:0 0 18px; line-height:1.35; font-family:'Cairo',system-ui,sans-serif; }
 
 .eq8-post-meta-bar { display:flex; align-items:center; flex-wrap:wrap; gap:16px; font-size:.85rem; color:#F3D9BB; font-family:'Cairo',sans-serif; }
 .eq8-post-meta-bar__item { display:flex; align-items:center; gap:5px; }
 .eq8-post-meta-bar__icon { width:15px; height:15px; }
+
+.eq8-post-featured-img { width:100%; max-height:420px; object-fit:cover; border-radius:16px; margin-bottom:28px; display:block; }
 
 /* Article content card */
 .eq8-post-card-body {
