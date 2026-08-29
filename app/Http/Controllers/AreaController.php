@@ -16,6 +16,15 @@ class AreaController extends Controller
 
     public function show(Location $location)
     {
+        $locale        = app()->getLocale();
+        $correctSlug   = $location->getTranslation('slug', $locale);
+        $requestedSlug = last(request()->segments());
+
+        if ($requestedSlug !== $correctSlug) {
+            $route = $locale === 'ar' ? 'areas.show' : 'en.areas.show';
+            return redirect()->route($route, $correctSlug, 302);
+        }
+
         $relatedLocations = Location::where('is_active', true)
             ->where('governorate', $location->governorate)
             ->where('id', '!=', $location->id)
