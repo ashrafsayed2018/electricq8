@@ -115,7 +115,8 @@
 
                         {{-- Thumbnail --}}
                         <td class="px-4 py-3">
-                            <div class="w-10 h-10 rounded-lg overflow-hidden bg-[#0f1117] border border-white/10 shrink-0">
+                            <a href="{{ route('posts.show', $post->getTranslation('slug', 'ar')) }}" target="_blank" title="{{ __('admin.visit_site') }}"
+                               class="block w-10 h-10 rounded-lg overflow-hidden bg-[#0f1117] border border-white/10 hover:border-purple-500 transition shrink-0">
                                 @if($post->featured_image)
                                     <img src="{{ $post->featured_image }}" class="w-full h-full object-cover">
                                 @else
@@ -125,7 +126,7 @@
                                         </svg>
                                     </div>
                                 @endif
-                            </div>
+                            </a>
                         </td>
 
                         {{-- Title --}}
