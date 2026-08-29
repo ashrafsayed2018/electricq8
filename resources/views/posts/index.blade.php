@@ -55,7 +55,7 @@
                         {{-- Thumbnail --}}
                         @if($post->featured_image)
                             <div class="eq8-post-card__img-wrap">
-                                <img src="{{ asset('storage/' . $post->featured_image) }}"
+                                <img src="{{ $post->featured_image }}"
                                      alt="{{ $postTitle }}" loading="lazy" class="eq8-post-card__img">
                             </div>
                         @else

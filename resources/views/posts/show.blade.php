@@ -11,7 +11,7 @@
     $siteName    = \App\Models\SiteSetting::get('site_name_' . $locale) ?: 'ElectricQ8';
     $siteUrl     = config('app.url');
     $postUrl     = url()->current();
-    $imageUrl    = $post->featured_image ? asset('storage/' . $post->featured_image) : null;
+    $imageUrl    = $post->featured_image ?: null;
 @endphp
 
 @section('meta_title'){{ $post->getTranslation('meta_title', $locale) ?: $postTitle }}@endsection
@@ -137,7 +137,7 @@
                         <a href="{{ $rpRoute }}" class="eq8-post-card">
                             @if($rp->featured_image)
                                 <div class="eq8-post-card__img-wrap">
-                                    <img src="{{ asset('storage/' . $rp->featured_image) }}"
+                                    <img src="{{ $rp->featured_image }}"
                                          alt="{{ $rpTitle }}" loading="lazy" class="eq8-post-card__img">
                                 </div>
                             @else
