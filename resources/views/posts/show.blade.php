@@ -67,10 +67,6 @@
     {{-- Post hero --}}
     <header class="eq8-post-hero">
         <div class="eq8-post-hero__inner">
-            @if($post->cluster)
-            <a href="{{ $isAr ? route('clusters.show', $post->cluster->getTranslation('slug', 'ar')) : route('en.clusters.show', $post->cluster->getTranslation('slug', 'en')) }}"
-               class="eq8-post-category">{{ $post->cluster->getTranslation('title', $locale) }}</a>
-            @endif
             <h1 class="eq8-post-h1">{{ $postTitle }}</h1>
             <div class="eq8-post-meta-bar">
                 @if($post->published_at)
@@ -87,6 +83,13 @@
                     <svg class="eq8-post-meta-bar__icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
                     {{ number_format($post->views) }} {{ $isAr ? 'مشاهدة' : 'views' }}
                 </span>
+                @if($post->cluster)
+                <a href="{{ $isAr ? route('clusters.show', $post->cluster->getTranslation('slug', 'ar')) : route('en.clusters.show', $post->cluster->getTranslation('slug', 'en')) }}"
+                   class="eq8-post-meta-bar__item eq8-post-meta-bar__item--category">
+                    <svg class="eq8-post-meta-bar__icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg>
+                    {{ $post->cluster->getTranslation('title', $locale) }}
+                </a>
+                @endif
                 <span class="eq8-post-meta-bar__item">{{ $siteName }}</span>
             </div>
         </div>
@@ -214,26 +217,21 @@
     overflow: hidden;
 }
 .eq8-post-hero__inner { position: relative; max-width: 780px; margin: 0 auto; }
-.eq8-post-category {
-    display: inline-block;
-    background: rgba(217,123,46,.25);
-    border: 1px solid rgba(217,123,46,.4);
-    color: #F3D9BB;
-    font-size: .78rem;
-    font-weight: 700;
-    padding: 5px 16px;
-    border-radius: 999px;
-    margin-bottom: 16px;
-    text-decoration: none;
-    font-family: 'Cairo',system-ui,sans-serif;
-    transition: background .18s ease, border-color .18s ease;
-}
-.eq8-post-category:hover { background: rgba(217,123,46,.4); border-color: rgba(217,123,46,.6); }
 .eq8-post-h1 { font-size:clamp(1.6rem,3.8vw,2.3rem); font-weight:800; color:#fff; margin:0 0 18px; line-height:1.35; font-family:'Cairo',system-ui,sans-serif; }
 
 .eq8-post-meta-bar { display:flex; align-items:center; flex-wrap:wrap; gap:16px; font-size:.85rem; color:#F3D9BB; font-family:'Cairo',sans-serif; }
 .eq8-post-meta-bar__item { display:flex; align-items:center; gap:5px; }
 .eq8-post-meta-bar__icon { width:15px; height:15px; }
+.eq8-post-meta-bar__item--category {
+    text-decoration: none;
+    color: #F3D9BB;
+    background: rgba(217,123,46,.2);
+    border: 1px solid rgba(217,123,46,.35);
+    padding: 3px 12px;
+    border-radius: 999px;
+    transition: background .18s ease, border-color .18s ease;
+}
+.eq8-post-meta-bar__item--category:hover { background: rgba(217,123,46,.35); border-color: rgba(217,123,46,.55); }
 
 .eq8-post-featured-img { width:100%; max-height:420px; object-fit:cover; border-radius:16px; margin-bottom:28px; display:block; }
 
