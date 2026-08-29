@@ -100,6 +100,7 @@
                 <tr>
                     <th class="px-4 py-3 text-right w-12"></th>
                     <th class="px-4 py-3 text-right">{{ __('admin.common.title_ar') }}</th>
+                    <th class="px-4 py-3 text-right hidden md:table-cell">{{ __('admin.posts.cluster') }}</th>
                     <th class="px-4 py-3 text-right">{{ __('admin.common.status') }}</th>
                     <th class="px-4 py-3 text-right hidden md:table-cell">{{ __('admin.posts.publish_date') }}</th>
                     <th class="px-4 py-3 text-right hidden lg:table-cell">{{ __('admin.posts.sort_order') }}</th>
@@ -139,6 +140,16 @@
                                 <p class="text-gray-600 text-xs mt-1 truncate max-w-sm">
                                     {{ Str::limit(strip_tags($post->getTranslation('excerpt', 'ar')), 60) }}
                                 </p>
+                            @endif
+                        </td>
+
+                        {{-- Cluster --}}
+                        <td class="px-4 py-3 hidden md:table-cell">
+                            @if($post->cluster)
+                                <p class="text-gray-300 text-xs truncate max-w-40">{{ $post->cluster->getTranslation('title', 'ar') }}</p>
+                                <p class="text-gray-600 text-xs truncate max-w-40">{{ $post->cluster->getTranslation('title', 'en') }}</p>
+                            @else
+                                <span class="text-gray-700 text-xs">—</span>
                             @endif
                         </td>
 
@@ -212,7 +223,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="6" class="py-16 text-center">
+                        <td colspan="7" class="py-16 text-center">
                             <div class="flex flex-col items-center gap-3">
                                 <div class="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center">
                                     <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">

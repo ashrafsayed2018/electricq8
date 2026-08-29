@@ -26,7 +26,8 @@ class Index extends Component
 
     public function render()
     {
-        $posts = Post::when($this->status, fn ($q) => $q->where('status', $this->status))
+        $posts = Post::with('cluster')
+            ->when($this->status, fn ($q) => $q->where('status', $this->status))
             ->when($this->search, fn ($q) => $q
                 ->where('title->ar', 'like', "%{$this->search}%")
                 ->orWhere('title->en', 'like', "%{$this->search}%"))

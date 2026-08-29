@@ -67,6 +67,10 @@
     {{-- Post hero --}}
     <header class="eq8-post-hero">
         <div class="eq8-post-hero__inner">
+            @if($post->cluster)
+            <a href="{{ $isAr ? route('clusters.show', $post->cluster->getTranslation('slug', 'ar')) : route('en.clusters.show', $post->cluster->getTranslation('slug', 'en')) }}"
+               class="eq8-post-category">{{ $post->cluster->getTranslation('title', $locale) }}</a>
+            @endif
             <h1 class="eq8-post-h1">{{ $postTitle }}</h1>
             <div class="eq8-post-meta-bar">
                 @if($post->published_at)
@@ -210,6 +214,21 @@
     overflow: hidden;
 }
 .eq8-post-hero__inner { position: relative; max-width: 780px; margin: 0 auto; }
+.eq8-post-category {
+    display: inline-block;
+    background: rgba(217,123,46,.25);
+    border: 1px solid rgba(217,123,46,.4);
+    color: #F3D9BB;
+    font-size: .78rem;
+    font-weight: 700;
+    padding: 5px 16px;
+    border-radius: 999px;
+    margin-bottom: 16px;
+    text-decoration: none;
+    font-family: 'Cairo',system-ui,sans-serif;
+    transition: background .18s ease, border-color .18s ease;
+}
+.eq8-post-category:hover { background: rgba(217,123,46,.4); border-color: rgba(217,123,46,.6); }
 .eq8-post-h1 { font-size:clamp(1.6rem,3.8vw,2.3rem); font-weight:800; color:#fff; margin:0 0 18px; line-height:1.35; font-family:'Cairo',system-ui,sans-serif; }
 
 .eq8-post-meta-bar { display:flex; align-items:center; flex-wrap:wrap; gap:16px; font-size:.85rem; color:#F3D9BB; font-family:'Cairo',sans-serif; }
