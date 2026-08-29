@@ -94,16 +94,16 @@ Route::get('/locale/{locale}', function (string $locale) {
 })->name('locale.switch')->middleware('web');
 
 // Auth
-Route::middleware(['locale', 'guest'])->group(function () {
+Route::middleware(['locale:session', 'guest'])->group(function () {
     Route::get('/login',     [LoginController::class,    'showLoginForm'])->name('login');
     Route::post('/login',    [LoginController::class,    'login']);
     // Route::get('/register',  [RegisterController::class, 'showRegistrationForm'])->name('register');
     // Route::post('/register', [RegisterController::class, 'register']);
 });
-Route::post('/logout', [LoginController::class, 'logout'])->name('logout')->middleware(['locale', 'auth']);
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout')->middleware(['locale:session', 'auth']);
 
 // Admin — any authenticated user with any assigned role may enter; individual routes restrict further
-Route::prefix('admin')->middleware(['locale', 'auth', 'role:admin|writer'])->group(function () {
+Route::prefix('admin')->middleware(['locale:session', 'auth', 'role:admin|writer'])->group(function () {
     Route::get('/',              \App\Livewire\Admin\Dashboard::class)->name('admin.dashboard');
     Route::get('/analytics',     \App\Livewire\Admin\Analytics\Index::class)->name('admin.analytics');
 
