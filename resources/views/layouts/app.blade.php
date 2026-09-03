@@ -57,6 +57,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="eq8-body antialiased">
+@include('partials.loader')
 <style>
 :root {
     color-scheme: light;
