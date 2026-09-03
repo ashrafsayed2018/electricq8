@@ -47,8 +47,7 @@
                         $postExcerpt = Str::limit(strip_tags($post->getTranslation('excerpt', $postLocale)), 140);
                         $postSlug    = $post->getTranslation('slug', $postLocale);
                         $postRoute   = $isAr ? route('posts.show', $postSlug) : route('en.posts.show', $postSlug);
-                        $wordCount   = str_word_count(strip_tags($post->getTranslation('content', $postLocale) ?? ''));
-                        $readMinutes = max(1, (int) ceil($wordCount / 200));
+                        $readMinutes = $post->readMinutes($postLocale);
                     @endphp
                     <a href="{{ $postRoute }}" class="eq8-post-card">
 

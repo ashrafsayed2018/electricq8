@@ -5,8 +5,7 @@
     $locale    = app()->getLocale();
     $postTitle = $post->getTranslation('title', $locale);
     $postExcerpt = strip_tags($post->getTranslation('excerpt', $locale) ?: $post->getTranslation('meta_description', $locale));
-    $wordCount   = str_word_count(strip_tags($post->getTranslation('content', $locale) ?? ''));
-    $readMinutes = max(1, (int) ceil($wordCount / 200));
+    $readMinutes = $post->readMinutes($locale);
     $blogRoute   = $isAr ? route('posts.index') : route('en.posts.index');
     $siteName    = \App\Models\SiteSetting::get('site_name_' . $locale) ?: 'ElectricQ8';
     $siteUrl     = config('app.url');

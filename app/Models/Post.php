@@ -42,6 +42,24 @@ class Post extends Model
         return $this->belongsToMany(Tag::class);
     }
 
+    /**
+     * Estimated reading time in whole minutes for the given locale's content.
+     *
+     * str_word_count() only recognises Latin-script words, so it silently
+     * returns 0 for Arabic text — every Arabic post ended up floored to
+     * "1 minute" regardless of actual length. This counts Unicode word
+     * characters (letters/digits, Arabic included) instead.
+     */
+    public function readMinutes(?string $locale = null, int $wordsPerMinute = 200): int
+    {
+        $locale = $locale ?: app()->getLocale();
+
+        $text = strip_tags($this->getTranslation('content', $locale) ?? '');
+        $wordCount = preg_match_all('/[\p{L}\p{N}\'-]+/u', $text);
+
+        return max(1, (int) ceil($wordCount / $wordsPerMinute));
+    }
+
     public function scopePublished($query)
     {
         return $query->where('status', PostStatus::Published)
