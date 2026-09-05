@@ -113,7 +113,8 @@
             @if($post->tags->isNotEmpty())
             <div class="eq8-post-tags">
                 @foreach($post->tags as $tag)
-                <span class="eq8-post-tags__item">{{ $tag->getTranslation('name', $locale) }}</span>
+                <a href="{{ $isAr ? route('tags.show', $tag->getTranslation('slug', 'ar')) : route('en.tags.show', $tag->getTranslation('slug', 'en')) }}"
+                   class="eq8-post-tags__item">{{ $tag->getTranslation('name', $locale) }}</a>
                 @endforeach
             </div>
             @endif
@@ -253,7 +254,8 @@
 @media (max-width: 560px) { .eq8-post-card-body { padding: 24px 18px; border-radius: 14px; } }
 
 .eq8-post-tags { display:flex; flex-wrap:wrap; gap:8px; margin-top:24px; }
-.eq8-post-tags__item { background:var(--altBg); color:var(--body); border:1px solid var(--border); border-radius:999px; padding:5px 14px; font-size:.78rem; font-weight:600; font-family:'Cairo',sans-serif; }
+.eq8-post-tags__item { background:var(--altBg); color:var(--body); border:1px solid var(--border); border-radius:999px; padding:5px 14px; font-size:.78rem; font-weight:600; font-family:'Cairo',sans-serif; text-decoration:none; transition:background .18s ease, border-color .18s ease, color .18s ease; }
+.eq8-post-tags__item:hover { background:var(--primary); color:#fff; border-color:var(--primary); }
 
 .eq8-post-back { margin-top:32px; padding-top:24px; }
 .eq8-post-back__link { display:inline-flex; align-items:center; gap:7px; color:var(--accent); font-size:.85rem; font-weight:600; text-decoration:none; font-family:'Cairo',sans-serif; }

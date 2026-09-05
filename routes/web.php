@@ -14,6 +14,7 @@ use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\ClusterController;
 use App\Http\Controllers\PillarController;
 use App\Http\Controllers\ServiceLocationController;
+use App\Http\Controllers\TagController;
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
@@ -38,6 +39,7 @@ Route::middleware('locale')->group(function () {
     Route::get('/blog/{post}',            [PostController::class, 'show'])->name('posts.show');
     Route::get('/clusters/{cluster}',     [ClusterController::class, 'show'])->name('clusters.show');
     Route::get('/pillars/{pillar}',       [PillarController::class,  'show'])->name('pillars.show');
+    Route::get('/tags/{tag}',             [TagController::class,     'show'])->name('tags.show');
     Route::get('/sitemap',                [SitemapController::class, 'page'])->name('sitemap.page');
 
     // English — /en/ prefix
@@ -55,6 +57,7 @@ Route::middleware('locale')->group(function () {
         Route::get('/blog/{post}',            [PostController::class, 'show'])->name('posts.show');
         Route::get('/clusters/{cluster}',     [ClusterController::class, 'show'])->name('clusters.show');
         Route::get('/pillars/{pillar}',       [PillarController::class,  'show'])->name('pillars.show');
+        Route::get('/tags/{tag}',             [TagController::class,     'show'])->name('tags.show');
         Route::get('/sitemap',                [SitemapController::class, 'page'])->name('sitemap.page');
     });
 });

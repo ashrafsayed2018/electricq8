@@ -23,4 +23,18 @@ class Tag extends Model
     {
         return $this->belongsToMany(Cluster::class);
     }
+
+    public function resolveRouteBinding($value, $field = null): ?static
+    {
+        if ($field === 'id' || is_numeric($value)) {
+            return static::find($value) ?? abort(404);
+        }
+
+        foreach (config('app.available_locales') as $locale) {
+            $model = static::whereJsonContains("slug->{$locale}", $value)->first();
+            if ($model) return $model;
+        }
+
+        abort(404);
+    }
 }
